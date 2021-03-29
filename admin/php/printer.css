@@ -1,0 +1,89 @@
+table.greyGridTable {
+  border: 2px solid #FFFFFF;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  border-left: 2px solid #333333;
+  border-right: 2px solid #333333;
+}
+.legend{
+    border: 2px solid #333333;
+    margin: 20px 20px 20px 0;
+    max-width: 40%;
+}
+table.greyGridTable td, table.greyGridTable th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 4px;
+}
+table.greyGridTable tbody td {
+  font-size: 13px;
+}
+table.greyGridTable thead {
+  background: #FFFFFF;
+  border-bottom: 2px solid #333333;
+}
+table.greyGridTable thead th {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  border: 2px solid #333333;
+  
+}
+table.greyGridTable tfoot th:nth-child(2n) {
+  border-right: 2px solid #333333;
+}
+#secondTable tbody td:nth-child(2n) {
+  border-right: 2px solid #333333;
+}
+#secondTable tfoot th:nth-child(2n-1) {
+  text-align: center;
+}
+#secondTable tfoot th {
+  border-right: 2px solid #333333;
+}
+table.greyGridTable tr td span{
+  font-weight: 700;
+}
+#printout table:last-child {
+  color: #333333;
+  border-bottom: 2px solid #333333;
+}
+table.greyGridTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  border-top: 4px solid #333333;
+}
+table.greyGridTable tfoot td {
+  font-size: 14px;
+}
+
+#printout{
+    max-width: 700px;
+}
+ @media print {
+    body * {
+        visibility: hidden;
+    }
+     #printout {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        visibility: visible;
+        overflow: visible !important; /* Remove scrollbar for printing. */
+    }
+    #printout * {
+        visibility: visible;
+        overflow: visible;
+    }
+    
+    @page {
+        size: auto;   /* auto is the initial value */
+        size: A4 portrait;
+        margin: 0;  /* this affects the margin in the printer settings */
+        border: 1px solid red;  /* set a border for all printed pages */
+    }
+}

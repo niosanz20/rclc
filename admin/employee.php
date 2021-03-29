@@ -83,8 +83,9 @@
                         <!-- <td><?php echo date('M d, Y', strtotime($row['created_on'])) ?></td> -->
                         <td><?php echo $row['description']; ?></td>
                         <td>
-                          <button class="btn btn-success btn-sm edit btn-flat" data-card-widget="edit" data-toggle="tooltip" title="Edit" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-edit"></i> </button>
-                          <button class="btn btn-danger btn-sm delete btn-flat" data-card-widget="delete" data-toggle="tooltip" title="Delete" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-trash"></i> </button>
+                          <button class="viewEmployee btn btn-info btn-sm btn-flat" data-card-widget="view" data-toggle="tooltip" title="View" id="<?php echo $row['empid']; ?>"><i class="glyphicon glyphicon-eye-open"></i> View</button>
+                          <button class="btn btn-success btn-sm edit btn-flat" data-card-widget="edit" data-toggle="tooltip" title="Edit" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-edit"></i> Edit</button>
+                          <button class="btn btn-danger btn-sm delete btn-flat" data-card-widget="delete" data-toggle="tooltip" title="Delete" data-id="<?php echo $row['empid']; ?>"><i class="fa fa-trash"></i> Delete</button>
                         </td>
                       </tr>
                     <?php
@@ -101,10 +102,34 @@
 
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/employee_modal.php'; ?>
+
+    <div id="viewEmployee" class="modal fade">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="">
+          <!-- <div class="modal-header">
+
+            <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-file"></span>Worker's Information<strong id="employee_name"></strong></h4>
+          </div> -->
+          <div class="modal-body" id="modal-view-employee">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
   <?php include 'includes/scripts.php'; ?>
   <script>
     $(function() {
+      $(document).on('click', '.view', function() {
+        // e.preventDefault();
+        $('#view').modal('show');
+        var id = $(this).data('id');
+        getRow(id);
+      });
+
       $(document).on('click', '.edit', function() {
         // e.preventDefault();
         $('#edit').modal('show');
@@ -127,6 +152,32 @@
 
     });
 
+    /*--
+     Display Modal of Info for Employee
+     -----------------------------------*/
+    $(document).on('click', '.viewEmployee', function() {
+      var empID = $(this).attr("id");
+      $.ajax({
+        url: "includes/viewinfo_employee.php",
+        method: "POST",
+        data: {
+          empID: empID
+        },
+        dataType: 'json',
+        success: function(data) {
+          //  content of payroll summary
+          $('#modal-view-employee').html(data.employee_modal);
+          // $('#employee_name').text(data.empName);
+          //  content of breakdown of specific payroll (printable)
+          // $('#printout').html(data.payroll_details);
+          $('#viewEmployee').modal('show');
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+    });
+
     function getRow(id) {
       $.ajax({
         type: 'POST',
@@ -140,6 +191,7 @@
           $('.employee_id').html(response.employee_id);
           $('.del_employee_name').html(response.firstname + ' ' + response.lastname);
           $('#employee_name').html(response.firstname + ' ' + response.lastname);
+          $('#view_firstname').val(response.firstname);
           $('#edit_firstname').val(response.firstname);
           $('#edit_lastname').val(response.lastname);
           $('#edit_address').val(response.address);

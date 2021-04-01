@@ -101,7 +101,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                           <h3>Payroll Report (Pay Date) | </h3>
                         </div>
                         <div class="col-lg-6" style="margin-top: 15px; max-width: 300px;">
-                          <select class="form-control">
+                          <select class="form-control cutoffdate" id="cuttoffdate_value">
                             <option value="" selected> Select Cut-Off Date</option>
                             <?php
                             $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
@@ -111,58 +111,17 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                               $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
                               $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
                               echo "
-                                            <option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
-                                         ";
+										<option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
+									 ";
                             }
                             ?>
                           </select>
                         </div>
                       </div>
-                   
-                      <table id="example3" class="table table-bordered">
-                        <thead>
-                          <th>Name</th>
-                          <th>Total Hr</th>
-                          <th>Cash Advance</th>
-                          <th>Cost of Damage Materials</th>
-                          <th>SSS</th>
-                          <th>PhilHealth</th>
-                          <th>Pag-ibig</th>
-                          <th>OT</th>
-                          <th>Actions</th>
-                        </thead>
-                        <tbody>
-                          <?php
-                          $sql = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id";
-                          $query = $conn->query($sql);
-                          while ($row = $query->fetch_assoc()) {
-                          ?>
-                            <tr>
-                              <td></td>
-                              <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                              <td><?php echo $row['description']; ?></td>
-                              <td><?php echo $row['contact_info']; ?></td>
-                              <td></td>
-                              <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                              <td><?php echo $row['description']; ?></td>
-                              <td><?php echo $row['contact_info']; ?></td>
-                              <td>
-                                <button class="viewPayroll btn btn-success btn-sm edit btn-flat" data-toggle="tooltip" title="Print" id="<?php echo $row['employee_id']; ?>"><i class="glyphicon glyphicon-print"></i> Print</button>
-                                <button class="viewAttendance btn btn-success btn-sm edit btn-flat" data-toggle="tooltip" title="View" id="<?php echo $row['employee_id']; ?>"><i class="fa fa-eye"></i> View</button>
-                              </td>
-                            </tr>
-                          <?php
-                          }
-                          ?>
-                        </tbody>
-                      </table>
-                      <div class="row">
-                        <center>
-                          <form method="POST" class="form-inline" id="payForm" action="payroll_generate.php" target="_blank">
-                            <button type="submit" class="btn btn-success btn-lg btn-flat" id="payroll"><span class="glyphicon glyphicon-print"></span> Generate Payroll</button>
-                          </form>
-                        </center>
-                      </div>
+                        <div class="panel" id="attendanceRecord_table">
+						
+					    </div> 
+                      
                     </div>
                     <!-- /.tab-pane -->
                   </div>
@@ -209,6 +168,29 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
   <?php include 'includes/scripts.php'; ?>
   <script>
     $(document).ready(function() {
+        
+    loadAttendanceRecord(0);
+	insertEmployeePayslip();
+	
+	/*--
+      Insert Data OnLoad of page for Payslip of every Employee
+      -----------------------------------*/
+	function insertEmployeePayslip(){
+		 var dateNow = Date.now();
+		$.ajax({
+			url: "php/insertEmployeePayslip.php",
+			method: "POST",
+			data:{dateNow:dateNow},
+			success: function(data){
+				//alert(data);
+			},
+			error: function(){
+				console.log('There is something wrong!');
+			}
+			
+		});
+	}
+        
 
       /*--
       Display Modal of Payroll for Employee
@@ -266,12 +248,13 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     -----------------------------------*/
       $(document).on('click', '.viewAttendance', function() {
         var empID = $(this).attr("id");
-
+		var cutoffID = $(this).attr("refid");		
         $.ajax({
           url: "php/view_attendanceRecord.php",
           method: "POST",
           data: {
-            empID: empID
+            empID: empID,
+			cutoffID: cutoffID
           },
           success: function(data) {
 
@@ -283,6 +266,39 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
           }
         });
       });
+      
+      /*--
+    Display Modal of Payroll for CutOff
+    -----------------------------------*/
+      $(document).on('click', '.cutoffdate', function() {
+        var cutoff_id = $('#cuttoffdate_value').val();
+		
+		if(cutoff_id != ""){
+		  loadAttendanceRecord(cutoff_id);
+		}
+		
+       
+      });
+	  
+	  function loadAttendanceRecord(cutoff_id){
+		 $.ajax({
+          url: "php/load_attendancerecord.php",
+          method: "POST",
+		  data: {
+            cutoff_id: cutoff_id
+          },
+          dataType: "json",
+          success: function(data) {
+			  
+			$('#attendanceRecord_table').html(data.attendanceRecord);
+			
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });  
+	
+    }
 
     });
   </script>

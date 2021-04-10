@@ -44,10 +44,10 @@
         </ul>
       </li>
       <li><a href="attendance.php"><i class="fa fa-calendar"></i> <span>Attendance</span></a></li>
-      <li><a href="deduction.php"><i class="fa fa-file-text"></i> <span>Deductions</span></a></li>
-      
-      
-      
+      <!-- <li><a href="deduction.php"><i class="fa fa-file-text"></i> <span>Deductions</span></a></li> -->
+
+
+
       <!--<li class="treeview">-->
       <!--  <a href="#">-->
       <!--    <i class="fa fa-users"></i>-->
@@ -61,18 +61,16 @@
       <!--    <li><a href="damagematerial.php"><i class="fa fa-circle-o"></i> Damage Materials</a></li>-->
       <!--  </ul>-->
       <!--</li>-->
-      
-      
-      
-      
+
       <li class="header">MAINTENANCES</li>
-      <li><a href="schedule.php"><i class="fa fa-circle-o"></i> Schedules</a></li>
-      <li><a href="position.php"><i class="fa fa-suitcase"></i> <span>Positions</span></a></li>
-      <li><a href="materials.php"><i class="fa fa-suitcase"></i> <span>Materials</span></a></li>
-      <li><a href="list_materials.php"><i class="fa fa-suitcase"></i> <span>Equipments</span></a></li>
+     <!--  <li><a href="schedule.php"><i class="fa fa-circle-o"></i> <span>Schedules</span></a></li> -->
+      <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li>
+      <li><a href="position.php"><i class="fa fa-address-card-o"></i> <span>Positions</span></a></li>
+      <li><a href="materials.php"><i class="fa fa-cogs"></i> <span>Materials</span></a></li>
+      <li><a href="list_materials.php"><i class="fa fa-wrench"></i> <span>Equipments</span></a></li>
       <li class="header">REPORTS</li>
       <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li>
-      <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li>
+      <!-- <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li> -->
     </ul>
   </section>
   <!-- /.sidebar -->

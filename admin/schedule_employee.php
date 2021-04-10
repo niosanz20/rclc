@@ -48,6 +48,7 @@
           <div class="box">
             <div class="box-header with-border">
               <a href="schedule_print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print" ></span> Print</a>
+              <a  href="schedule.php" class="btn btn-primary btn-sm btn-flat pull-right"><span class="glyphicon glyphicon-cog" ></span> Settings</a>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">

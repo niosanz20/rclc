@@ -47,7 +47,7 @@ if (isset($_POST['empID'])) {
                                 <h6 class="mb-0"><b>SSS</b></h6>
                             </div>
                             <div class="col-sm-4 text-secondary" style="margin-top: 7px;">
-                                TBA
+                                ' . $rowprofile['sss'] . '
                             </div>
                         </div>
                         <hr>
@@ -62,7 +62,7 @@ if (isset($_POST['empID'])) {
                                 <h6 class="mb-0"><b>Pag-ibig</b></h6>
                             </div>
                             <div class="col-sm-4 text-secondary" style="margin-top: 7px;">
-                                TBA
+                                ' . $rowprofile['pagibig'] . '
                             </div>
                         </div>
                         <hr>
@@ -77,7 +77,7 @@ if (isset($_POST['empID'])) {
                                 <h6 class="mb-0"><b>Philhealth</b></h6>
                             </div>
                             <div class="col-sm-4 text-secondary" style="margin-top: 7px;">
-                               TBA
+                               ' . $rowprofile['philhealth'] . '
                             </div>
                         </div>
                         <hr>
@@ -92,7 +92,7 @@ if (isset($_POST['empID'])) {
                                 <h6 class="mb-0"><b>Tin</b></h6>
                             </div>
                             <div class="col-sm-4 text-secondary" style="margin-top: 7px;">
-                                TBA
+                                ' . $rowprofile['tin'] . '
                             </div>
                         </div>
                         <hr>

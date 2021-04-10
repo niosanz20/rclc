@@ -13,6 +13,10 @@ if (isset($_POST['add'])) {
 	$gender = $_POST['gender'];
 	$position = $_POST['position'];
 	$schedule = $_POST['schedule'];
+	$sss = $_POST['sss'];
+	$philhealth = $_POST['philhealth'];
+	$pagibig = $_POST['pagibig'];
+	$tin = $_POST['tin'];
 	$filename = $_FILES['photo']['name'];
 	// $qrimage = $_FILES['qrimage'];
 	if (!empty($filename)) {
@@ -45,8 +49,11 @@ if (isset($_POST['add'])) {
 
 	// Displaying the stored QR code from directory 
 	// echo "<center><img src='".$qrimage."'></center>";
+	$ytdtax = $ytdsss = $ytdphilhealth = $ytdpagibig = $ytdgross_income = 0;
 
-	$sql = "INSERT INTO employees (employee_id, firstname, lastname, address, birthdate, contact_info, gender, position_id, schedule_id, photo, created_on, qrimage) VALUES ('$employee_id', '$firstname', '$lastname', '$address', '$birthdate', '$contact', '$gender', '$position', '$schedule', '$filename', NOW(), '$qrimage')";
+	$sqlytd = "INSERT INTO yeartodate (employee_id, tax, sss, philhealth, pagibig, gross_income) VALUES ('$employee_id', '$ytdtax', '$ytdsss', '$ytdphilhealth', '$ytdpagibig', '$ytdgross_income')";
+	$conn->query($sqlytd);
+	$sql = "INSERT INTO employees (employee_id, firstname, lastname, address, birthdate, contact_info, gender, position_id, schedule_id, photo, created_on, sss, philhealth, pagibig, tin, qrimage) VALUES ('$employee_id', '$firstname', '$lastname', '$address', '$birthdate', '$contact', '$gender', '$position', '$schedule', '$filename', NOW(), '$sss', '$philhealth', '$pagibig', '$tin', '$qrimage')";
 	if ($conn->query($sql)) {
 		echo "
 		<div class='modal-dialog'>

@@ -74,21 +74,6 @@
                                                 <td><?php echo $row['project_name']; ?></td>
                                                 <td><?php echo $row['project_address']; ?></td>
                                                 <td><?php echo $row['project_owner']; ?></td>
-                                                <!-- Picture ng mga workers sa project -->
-                                                <!--<td>-->
-                                                <!-- <img src="<?php echo (!empty($row['photo'])) ? '../images/projectimg/' . $row['photo'] : '../images/projectimg/profile.jpg'; ?>" width="30px" height="30px" class="img-circle img-fluid img-margin"> -->
-                                                <!--    <ul class="list-inline">-->
-                                                <!--        <li class="list-inline-item">-->
-                                                <!--            <img alt="Avatar" width="30px" height="30px" class="table-avatar img-circle img-fluid img-margin" src="../images/avatar.png">-->
-                                                <!--        </li>-->
-                                                <!--        <li class="list-inline-item">-->
-                                                <!--            <img alt="Avatar" width="30px" height="30px" class="table-avatar img-circle img-fluid img-margin" src="../images/avatar2.png">-->
-                                                <!--        </li>-->
-                                                <!--        <li class="list-inline-item">-->
-                                                <!--            <img alt="Avatar" width="30px" height="30px" class="table-avatar img-circle img-fluid img-margin" src="../images/avatar3.png">-->
-                                                <!--        </li>-->
-                                                <!--    </ul>-->
-                                                <!--</td>-->
                                                 <?php
                                                 if ($row['project_status'] == "Active") {
                                                     echo ' <td class="project-state "><span class="badge badge-active rclc-center"> ' . $row['project_status'] . ' </span></td> ';
@@ -111,8 +96,8 @@
                                                             <li><a class="edit" data-id="<?php echo $row['project_id']; ?>">Edit</a></li>
                                                             <!--<li><a href="#">Assign Employee</a></li>
                                                             <li><a href="#">Assign Materials </a></li> -->
-                                                            <li class="divider"></li>
-                                                            <li><a class="delete" data-id="<?php echo $row['project_id']; ?>">Delete</a></li>
+                                                            <!-- <li class="divider"></li>
+                                                            <li><a class="delete" data-id="<?php echo $row['project_id']; ?>">Delete</a></li> -->
                                                         </ul>
                                                     </div>
 

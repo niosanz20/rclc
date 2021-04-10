@@ -62,31 +62,40 @@
           },
           dataType: "json",
           success: function(data) {
-            if (data.status == "Warning") {
-              Swal.fire({
-                title: data.status,
-                html: data.message,
-                icon: 'warning'
-              });
-            } else {
-              Swal.fire({
-                title: data.status,
-                html: data.message,
-                icon: 'success'
-              });
+            switch(data.status){
+
+                case 'Invalid QR Code':
+                SweetAlert(data, 'error');
+                break;
+
+                case 'Time-in':
+                SweetAlert(data, 'success');
+                break;
+
+                case 'Time-out':
+                SweetAlert(data, 'success');
+                break;
+
+                default: //Already Time-in, Already Time-out, No project on-going, Warning, will fall here...
+                SweetAlert(data, 'warning');
+                break;
             }
           },
           error: function(data) {
-            Swal.fire({
-              title: 'Error',
-              html: data.message,
-              icon: 'danger'
-            });
+            SweetAlert(data, 'error');
           }
         });
       }
 
     });
+
+    function SweetAlert(data, icon){
+       Swal.fire({
+        title: data.status,
+        html: data.message,
+        icon: icon
+      });
+    }
 
     Instascan.Camera.getCameras().then(function(cameras) {
       if (cameras.length > 0) {

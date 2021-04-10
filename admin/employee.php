@@ -187,6 +187,12 @@
         },
         dataType: 'json',
         success: function(response) {
+          //reset inputted value without saving
+          $('#edit_philhealth').val("");
+          $('#edit_sss').val("");
+          $('#edit_pagibig').val("");
+          $('#edit_tin').val("");
+
           $('.empid').val(response.empid);
           $('.employee_id').html(response.employee_id);
           $('.del_employee_name').html(response.firstname + ' ' + response.lastname);
@@ -200,6 +206,18 @@
           $('#gender_val').val(response.gender).html(response.gender);
           $('#position_val').val(response.position_id).html(response.description);
           $('#schedule_val').val(response.schedule_id).html(response.time_in + ' - ' + response.time_out);
+          if (response.sss != "N/A") {
+            $('#edit_sss').val(response.sss);
+          }
+          if (response.philhealth != "N/A") {
+            $('#edit_philhealth').val(response.philhealth);
+          }
+          if (response.pagibig != "N/A") {
+            $('#edit_pagibig').val(response.pagibig);
+          }
+          if (response.tin != "N/A" || !empty(response.tin)) {
+            $('#edit_tin').val(response.tin);
+          }
         }
       });
     }

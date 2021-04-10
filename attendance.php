@@ -12,14 +12,14 @@ if (isset($_POST['employee'])) {
 	$employee = $_POST['employee'];
 	$status = $_POST['status'];
 
-
-	// 		$sql = "SELECT * FROM employees WHERE employee_id = '$employee'";
-
-	// 		$sql = "SELECT *, employees.employee_id FROM employees LEFT JOIN project_employee ON project_employee.name=employees.employee_id WHERE employees.employee_id = '$employee'";
-
-	$sql = "SELECT *, employees.employee_id FROM employees LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid WHERE employees.employee_id = '$employee'";
-
+	$sql = "SELECT * FROM employees WHERE employee_id = '$employee'";
 	$query = $conn->query($sql);
+
+	//if Employee Exist
+	if($query->num_rows > 0){
+		$sql = "SELECT * FROM employees LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid WHERE employees.employee_id = '$employee' AND project_employee.status = 'On going'";
+	$query = $conn->query($sql);
+
 
 	if ($query->num_rows > 0) {
 		$row = $query->fetch_assoc();
@@ -51,13 +51,11 @@ if (isset($_POST['employee'])) {
 					// 		$output['message'] = 'Location: '.$row['project_name'];
 				} else {
 					$output['error'] = true;
+					$output['status'] = "Warning";
 					$output['message'] = $conn->error;
 				}
 			}
 		} else {
-			// $sql = "SELECT *, attendance.id AS uid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id WHERE attendance.employee_id = '$id' AND date = '$date_now'";
-
-			// $sql = "SELECT *, attendance.employee_id AS uid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE attendance.employee_id = '$id' AND date = '$date_now'";
 
 			$sql = "SELECT *, attendance.employee_id AS uid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid WHERE attendance.employee_id = '$id' AND date = '$date_now'";
 
@@ -123,16 +121,6 @@ if (isset($_POST['employee'])) {
 							$time_out = $time_out;
 						}
 
-						// $time_in = new DateTime($time_in);
-						// $time_out = new DateTime($time_out);
-						// $interval = $time_in->diff($time_out);
-						// $hrs = $interval->format('%h'); //6:45  == 6
-						// $mins = $interval->format('%i'); //6:45 == 45
-						// $mins = $mins / 60;
-						// $int = $hrs + $mins;
-						// if ($int > 4) {
-						// 	$int = $int - 1;
-						// }
 
 						$time_out = DateTime::createFromFormat('H:i:s', $urow['time_out']);
 						$hour = date_diff($time_in, $time_out)->format('%H');
@@ -158,9 +146,21 @@ if (isset($_POST['employee'])) {
 				}
 			}
 		}
-	} else {
+	}
+	// } else if ($query2->num_rows > 0) {
+	// 	$row2 = $query2->fetch_assoc();
+	// 	$output['error'] = true;
+	// 	$output['message'] = 'Employee has no project!';
+	// } 
+	else {
 		$output['error'] = true;
-		$output['message'] = 'Employee ID not found';
+		$output['status'] = "No project on-going";
+		$output['message'] = 'Employee has no project on-going';
+	}
+	}else{
+		$output['error'] = true;
+		$output['status'] = "Invalid QR Code";
+		$output['message'] = 'Employee not found!';
 	}
 }
 

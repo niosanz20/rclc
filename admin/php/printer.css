@@ -1,10 +1,10 @@
 table.greyGridTable {
-  border: 2px solid #FFFFFF;
   width: 100%;
   text-align: left;
   border-collapse: collapse;
   border-left: 2px solid #333333;
   border-right: 2px solid #333333;
+  border: 2px solid #333333;
 }
 .legend{
     border: 2px solid #333333;
@@ -12,14 +12,12 @@ table.greyGridTable {
     max-width: 40%;
 }
 table.greyGridTable td, table.greyGridTable th {
-  border: 1px solid #FFFFFF;
   padding: 3px 4px;
 }
 table.greyGridTable tbody td {
   font-size: 13px;
 }
 table.greyGridTable thead {
-  background: #FFFFFF;
   border-bottom: 2px solid #333333;
 }
 table.greyGridTable thead th {
@@ -28,7 +26,6 @@ table.greyGridTable thead th {
   color: #333333;
   text-align: center;
   border: 2px solid #333333;
-  
 }
 table.greyGridTable tfoot th:nth-child(2n) {
   border-right: 2px solid #333333;
@@ -53,7 +50,8 @@ table.greyGridTable tfoot {
   font-size: 14px;
   font-weight: bold;
   color: #333333;
-  border-top: 4px solid #333333;
+  border-top: 2px solid #333333;
+  border-bottom: 2px solid #333333;
 }
 table.greyGridTable tfoot td {
   font-size: 14px;
@@ -78,6 +76,20 @@ table.greyGridTable tfoot td {
     #printout * {
         visibility: visible;
         overflow: visible;
+    }
+
+    #payroll-all-employees {
+    page-break-after: avoid;
+    
+        visibility: visible;
+        overflow: visible !important; /* Remove scrollbar for printing. */
+    }
+
+    #payroll-all-employees * {
+        visibility: visible;
+        overflow: visible;
+    
+    page-break-inside : avoid;
     }
     
     @page {

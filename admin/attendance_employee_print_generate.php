@@ -1,5 +1,5 @@
 <?php
-include 'includes/session.php'; 
+include 'includes/session.php';
 
 
 $range = $_POST['date_range'];
@@ -34,16 +34,9 @@ $contents = '';
 
 // $sql = "SELECT *, employees.employee_id AS empid, attendance.employee_id AS attempid, attendance.id AS attid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
 
-    // $sql = "SELECT *, employees.employee_id AS empid, attendance.employee_id AS attempid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
-    
-    $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attempid, attendance.employee_id AS attempid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
-    
-    // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
-    
+// $sql = "SELECT *, employees.employee_id AS empid, attendance.employee_id AS attempid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
 
-//   $sql = "SELECT *, employees.employee_id AS empid, attendance.employee_id AS attempid, attendance.id AS attid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
-   
-
+$sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attempid, attendance.employee_id AS attempid, schedules.time_in AS schedin, schedules.time_out AS schedout FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN schedules ON employees.schedule_id = schedules.id WHERE date BETWEEN '$from' AND '$to' GROUP BY employees.employee_id ORDER BY employees.employee_id ,attendance.date DESC ";
 $query = $conn->query($sql);
 while ($row = $query->fetch_assoc()) {
     $ontime = 0;
@@ -70,18 +63,17 @@ while ($row = $query->fetch_assoc()) {
                     <th width="25%" align="left"><b>Minutes of Late</b></th>
                 </tr>';
     // $asql = "SELECT *, employees.employee_id AS empid, attendance.date, lastname, firstname, attendance.time_in, attendance.time_out, attendance.status AS schedstatus FROM employees LEFT JOIN attendance ON attendance.employee_id=employees.id WHERE date BETWEEN '$from' AND '$to' AND (attendance.employee_id = '$attidemp') ORDER BY employees.employee_id, attendance.date DESC ";
-    
+
     $asql = "SELECT *, employees.employee_id AS empid, attendance.date, lastname, firstname, attendance.time_in, attendance.time_out, attendance.status AS schedstatus FROM employees LEFT JOIN attendance ON attendance.employee_id=employees.employee_id WHERE date BETWEEN '$from' AND '$to' AND (attendance.employee_id = '$attidemp') ORDER BY employees.employee_id, attendance.date DESC ";
-    
+
     $aquery = $conn->query($asql);
     while ($arow = $aquery->fetch_assoc()) {
-        if ($arow['schedstatus'] == 0) {
+        if ($arow['schedstatus'] == 1) {
             $status = "Ontime";
             $ontime++;
             $late = 0;
         } else {
             $status = "Late";
-            $late++;
             $time1 = DateTime::createFromFormat('H:i:s', $row['schedin']);
             $time2 = DateTime::createFromFormat('H:i:s', $arow['time_in']);
             $hour = date_diff($time1, $time2)->format('%H');

@@ -183,6 +183,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
 			data:{dateNow:dateNow},
 			success: function(data){
 				//alert(data);
+        console.log(data);
 			},
 			error: function(){
 				console.log('There is something wrong!');
@@ -299,6 +300,38 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         });  
 	
     }
+
+    /*--
+    Generate Payroll of all employees
+    -----------------------------------*/
+      $(document).on('click', '.generate-all-payroll', function() {
+        var cutoff_id = $(this).attr("id");
+		//alert(cutoff_id);
+		if(cutoff_id != ""){
+		  $.ajax({
+          url: "php/generate_payroll.php",
+          method: "POST",
+		  data: {
+            cutoff_id: cutoff_id
+          },
+          dataType: "json",
+          success: function(data) {
+			$('#payroll-all-employees').html(data.output);
+			
+			document.getElementById("printout").style.display = "none";
+			document.getElementById("payroll-all-employees").style.display = "block";
+			 window.addEventListener('load', window.print());
+			 document.getElementById("payroll-all-employees").style.maxHeight = "10px";
+          },
+		  complete: function(data){
+			  document.getElementById("wrapper-height").style.overflow = "hidden";
+			},
+          error: function(data) {
+            console.log(data);
+          }
+        });
+		}
+      });
 
     });
   </script>

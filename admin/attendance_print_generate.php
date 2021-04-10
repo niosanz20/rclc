@@ -1,18 +1,18 @@
 <?php
-include 'includes/session.php'; 
+include 'includes/session.php';
 
 function generateRow($from, $to, $conn)
 {
     $contents = '';
 
     // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
-    
+
     $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
 
 
     $query = $conn->query($sql);
     while ($row = $query->fetch_assoc()) {
-        if ($row['status'] == 0)
+        if ($row['status'] == 1)
             $status = "Ontime";
         else $status = "Late";
         $contents .= '

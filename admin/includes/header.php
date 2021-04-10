@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- RCLC style -->
   <link rel="stylesheet" href="../dist/css/rclc.css">
+  <!-- AdminLTE updated -->
+  <link rel="stylesheet" href="dist/css/adminlte_updated.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- daterange picker -->

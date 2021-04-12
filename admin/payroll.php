@@ -19,6 +19,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
       <section class="content-header">
         <h1>
           Payroll
+          <!-- Tophe ehhehe -->
         </h1>
         <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

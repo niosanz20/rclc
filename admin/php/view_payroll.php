@@ -112,7 +112,7 @@ if (isset($_POST['empID'])) {
 
   echo json_encode($data);
 }
-
+// delete me
 // TAB 2
 if (isset($_POST['empID2'])) {
   $empID = $_POST['empID2'];

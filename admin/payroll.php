@@ -133,8 +133,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
   <script>
     $(document).ready(function() {
         
-  // loadAttendanceRecord(0);
-  loadEmployeeList()
+  loadEmployeeList();
 	insertEmployeePayslip();
 
   $(document).on('change', '#tableSelection', function() {
@@ -144,12 +143,12 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     switch(index){
       case 0:
         document.getElementById('filter-date-section').style.display = "none";
-        document.getElementById('tableSection').innerHTML = "";
+        // document.getElementById('tableSection').innerHTML = "";
         loadEmployeeList();
       break;
       case 1:
         document.getElementById('filter-date-section').style.display = "block";
-        document.getElementById('tableSection').innerHTML = "";
+        // document.getElementById('tableSection').innerHTML = "";
         var cutoff_id = $('#cuttoffdate_value').val();
         loadAttendanceRecord(cutoff_id);
       break;

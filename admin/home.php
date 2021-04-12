@@ -8,8 +8,8 @@ $day = date('d');
 if (isset($_GET['year'])) {
   $year = $_GET['year'];
 }
-
-if ($day == 11) {
+// 11 - 15
+if ($day > 10 && $day < 16) {
   $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
   $squerycut = $conn->query($sqlcut);
   $cutrow = $squerycut->fetch_assoc();
@@ -28,8 +28,8 @@ if ($day == 11) {
     $conn->query($sql);
   }
 }
-
-if ($day == 26) {
+//26 -31
+if ($day > 25 && $day <= 31) {
   $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
   $squerycut = $conn->query($sqlcut);
   $cutrow = $squerycut->fetch_assoc();

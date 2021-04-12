@@ -26,7 +26,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         </ol>
       </section>
       <!-- Main content -->
-      <section class="content">
+      <section class="content"> 
         <?php
         if (isset($_SESSION['error'])) {
           echo "
@@ -57,51 +57,17 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                 </div>
               </div>
               <div class="box-body">
-                <div class="nav-tabs-custom">
-                  <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Employee List</a></li>
-                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Employee filtered by date</a></li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1">
-                      <center>
-                        <h3>Payroll Report (Pay Date)</h3>
-                      </center>
-                      <table id="example5" class="table table-bordered">
-                        <thead>
-                          <th>Name</th>
-                          <th>Position</th>
-                          <th>Contact Info</th>
-                          <th>Action</th>
-                        </thead>
-                        <tbody>
-                          <?php
-                          $sql = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id";
-                          $query = $conn->query($sql);
-                          while ($row = $query->fetch_assoc()) {
-                          ?>
-                            <tr>
-                              <td><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></td>
-                              <td><?php echo $row['description']; ?></td>
-                              <td><?php echo $row['contact_info']; ?></td>
-                              <td>
-                                <button class="viewPayroll btn btn-success btn-sm edit btn-flat" data-toggle="tooltip" title="View" id="<?php echo $row['employee_id']; ?>"><i class="fa fa-eye"></i> View </button>
-                              </td>
-                            </tr>
-                          <?php
-                          }
-                          ?>
-                        </tbody>
-                      </table>
+                <div class="row">
+                  <div class="col-lg-2">
+                     <span><strong>Filter by: </strong></span>
+                      <select class="form-control" id="tableSelection">
+                        <option>Employee</option>
+                        <option>Cutoff Date</option>
+                      </select>
                     </div>
-                    <!-- /.tab-pane -->
-                     <div class="tab-pane" id="tab_2">
-                      <div class="row">
-                        <div class="col-lg-6" style="text-align: right;">
-                          <h3>Payroll Report (Pay Date) | </h3>
-                        </div>
-                        <div class="col-lg-6" style="margin-top: 15px; max-width: 300px;">
-                          <select class="form-control cutoffdate" id="cuttoffdate_value">
+                    <div class="col-lg-2" id="filter-date-section" style="display: none">
+                      <span><strong>Select Cutoff Date: </strong></span>
+                       <select class="form-control cutoffdate" id="cuttoffdate_value">
                             <option value="" selected> Select Cut-Off Date</option>
                             <?php
                             $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
@@ -111,22 +77,19 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                               $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
                               $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
                               echo "
-										<option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
-									 ";
+                    <option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
+                   ";
                             }
                             ?>
                           </select>
-                        </div>
-                      </div>
-                        <div class="panel" id="attendanceRecord_table">
-						
-					    </div> 
-                      
                     </div>
-                    <!-- /.tab-pane -->
-                  </div>
-                  <!-- /.tab-content -->
                 </div>
+                <div class="row col-lg-12">
+                  <div class="panel" id="tableSection">
+                    
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
@@ -169,12 +132,85 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
   <script>
     $(document).ready(function() {
         
-    loadAttendanceRecord(0);
+  // loadAttendanceRecord(0);
+  loadEmployeeList()
 	insertEmployeePayslip();
+
+  $(document).on('change', '#tableSelection', function() {
+    //get selected value in dropdown selection
+    var index = $("select[id='tableSelection'] option:selected").index();
+
+    switch(index){
+      case 0:
+        document.getElementById('filter-date-section').style.display = "none";
+        document.getElementById('tableSection').innerHTML = "";
+        loadEmployeeList();
+      break;
+      case 1:
+        document.getElementById('filter-date-section').style.display = "block";
+        document.getElementById('tableSection').innerHTML = "";
+        var cutoff_id = $('#cuttoffdate_value').val();
+        loadAttendanceRecord(cutoff_id);
+      break;
+    }
+  });
+
+  /*--
+  Load Attendance Record by CutOff Date
+  -----------------------------------*/
+    $(document).on('click', '.cutoffdate', function() {
+      var cutoff_id = $('#cuttoffdate_value').val();
+  
+      if(cutoff_id != ""){
+        loadAttendanceRecord(cutoff_id);
+      }
+    });
+
+  /*--
+  Display Table: Employee List
+  -----------------------------------*/
+  function loadEmployeeList(){
+     $.ajax({
+          url: "php/load_employeeList.php",
+          method: "POST",
+          data: {},
+          dataType: "json",
+          success: function(data) {
+          
+           $('#tableSection').html(data.employeeList);
+      
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });  
+  }
+  /*--
+  Display Table: Employee List Filtered by Cutoofdate
+  -----------------------------------*/
+  function loadAttendanceRecord(cutoff_id){
+     $.ajax({
+          url: "php/load_attendancerecord.php",
+          method: "POST",
+      data: {
+            cutoff_id: cutoff_id
+          },
+          dataType: "json",
+          success: function(data) {
+        
+           $('#tableSection').html(data.attendanceRecord);
+      
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });  
+  
+    }
 	
 	/*--
-      Insert Data OnLoad of page for Payslip of every Employee
-      -----------------------------------*/
+  Insert Data OnLoad of page for Payslip of every Employee
+  -----------------------------------*/
 	function insertEmployeePayslip(){
 		 var dateNow = Date.now();
 		$.ajax({
@@ -182,8 +218,6 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
 			method: "POST",
 			data:{dateNow:dateNow},
 			success: function(data){
-				//alert(data);
-        console.log(data);
 			},
 			error: function(){
 				console.log('There is something wrong!');
@@ -191,7 +225,6 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
 			
 		});
 	}
-        
 
       /*--
       Display Modal of Payroll for Employee
@@ -267,46 +300,13 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
           }
         });
       });
-      
-      /*--
-    Display Modal of Payroll for CutOff
-    -----------------------------------*/
-      $(document).on('click', '.cutoffdate', function() {
-        var cutoff_id = $('#cuttoffdate_value').val();
-		
-		if(cutoff_id != ""){
-		  loadAttendanceRecord(cutoff_id);
-		}
-		
-       
-      });
-	  
-	  function loadAttendanceRecord(cutoff_id){
-		 $.ajax({
-          url: "php/load_attendancerecord.php",
-          method: "POST",
-		  data: {
-            cutoff_id: cutoff_id
-          },
-          dataType: "json",
-          success: function(data) {
-			  
-			$('#attendanceRecord_table').html(data.attendanceRecord);
-			
-          },
-          error: function(data) {
-            console.log(data);
-          }
-        });  
-	
-    }
 
     /*--
     Generate Payroll of all employees
     -----------------------------------*/
       $(document).on('click', '.generate-all-payroll', function() {
         var cutoff_id = $(this).attr("id");
-		//alert(cutoff_id);
+		
 		if(cutoff_id != ""){
 		  $.ajax({
           url: "php/generate_payroll.php",

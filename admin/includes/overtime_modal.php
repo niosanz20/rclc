@@ -163,6 +163,14 @@
             <p>Are you sure you want to decline this overtime?</p>
             <h2 class="employee_name bold"></h2>
             <h4 class="othour"></h4>
+            <div class="form-group">
+                <input type="radio" name="Late OT" value="">Reason 1
+                <input type="radio" name="Late OT" value="">Reason 2
+            </div>
+            <div class="form-group">
+              <label for="others">Others: </label>
+              <input type="text" name="others">
+            </div>
           </div>
       </div>
       <div class="modal-footer">

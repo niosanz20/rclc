@@ -1,3 +1,11 @@
+.flexDisplay{
+  display: flex;
+  flex-wrap: nowrap;
+}
+.flexDisplay .legend{
+  margin: 10px;
+  text-align: center;
+}
 table.greyGridTable {
   width: 100%;
   text-align: left;

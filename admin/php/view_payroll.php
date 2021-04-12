@@ -236,33 +236,65 @@ if (isset($_POST['empID2'])) {
             </tr>
             </tbody>
             </table>
-            <div class="legend">
-              <table style="border:none">
-                <thead>
-                  <th colspan="4">LEGEND</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>LH -</td>
-                    <td>Legal Holiday</td>
-                    <td>OT -</td>
-                    <td>Overtime</td>
-                  </tr>
-                  <tr>
-                    <td>SH -</td>
-                    <td>Special Holiday &nbsp</td>
-                    <td>RD -</td>
-                    <td>Rest Day</td>
-                  </tr>
-                  <tr>
-                    <td>DH -</td>
-                    <td>Double Holiday</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
 
-                </tbody>
-              </table>
+            <div class="flexDisplay">
+              <div class="legend">
+                <table style="border:none">
+                  <thead>
+                    <th colspan="4">LEGEND</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>LH -</td>
+                      <td>Legal Holiday</td>
+                      <td>OT -</td>
+                      <td>Overtime</td>
+                    </tr>
+                    <tr>
+                      <td>SH -</td>
+                      <td>Special Holiday &nbsp</td>
+                      <td>RD -</td>
+                      <td>Rest Day</td>
+                    </tr>
+                    <tr>
+                      <td>DH -</td>
+                      <td>Double Holiday</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+               <div class="legend">
+                  <table style="border:none">
+                    <thead>
+                      <th colspan="4">COMPUTATION</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Computation ng rate per hour</td>
+                        <td>(OT)</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </div>
+
             </div>
             </div>
   ';

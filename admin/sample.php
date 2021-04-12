@@ -1,46 +1,105 @@
 <!DOCTYPE html>
 <html>
-
 <body>
 
-    <?php
-    echo  DateTime::createFromFormat('H:i:s',  date_create('08:00:00'));
-    // $stime_in = ;
-    // $time_in = date_create('08:00:00');
-    // $stime_out = '17:00:00';
-    // $time_out = '19:00:00';
+    <?php 
+    $string = "densoten";
+    if(strlen($string) > 50 || strlen($string) < 5){
+        echo "Invalid Input!\nLetters Contains between 5 and  50 only!";
+    }
+    else
+    {
+        $newString = substr($string, 1, -1);
+        $firstChar = $string[0];
+        $lastChar = $string[strlen($string)-1];
 
-    // $rate = 100;
-    // if (date_create($stime_out) < date_create($time_out)) {
+        echo $lastChar . $newString . $firstChar;
+    }
+     ?>
+    <form action="sample.php" method="POST">
+        <label>Enter Number:</label>
+        <input type="number" name="numTable">
+        <input type="submit" name="submit" value="Submit">
+    </form>
+   
+          
+<?php
+if(isset($_POST['submit'])){
+    $count = 1;    
+    $sumrow = array();
+    $sumcol = array([],[]);
+    $num = $_POST['numTable'];
+    $total = 0; 
+    $row = 0;
+    $column = 0;
+    echo "
+     <table>
+        <tbody>
+    ";
+    // A. Table
+    for($i = 0; $i < $num; $i++) { // column
+        echo "<tr>";
 
-    //     //$othour = date_diff($stime_out, $time_out)->format('%H');
-    //     $othour = date_diff(date_create($stime_out), date_create($time_out))->format('%H');
-    //     $otmin = date_diff(date_create($stime_out), date_create($time_out))->format('%i');
-    //     $otint = $othour * 60 + $otmin;
+        for($x = 0; $x < $num ; $x++){ // row
 
-    //     if ($otint > 30) {
-    //         $amount = ($rate * ($otint / 60)) * .25;
-    //         $time_out = $stime_out;
-    //     } else $time_out = $stime_out;
-    // } else $time_out = $time_out;
+    // B. Sum of Row
+        $row += $count;
 
-    // $hour = date_diff(date_create('08:00:00'), date_create($time_out))->format('%H');
-    // $min = date_diff($stime_in, $time_out)->format('%i');
-    // $int = $hour + ($min / 60);
+        echo "<td>".$sumcol[$i][$x] = $count++. "</td>";
+        if ($x == $num - 1)
+            $sumrow[$i] = $row;
 
-    // if ($hour >= 9)
-    //     $int = $int - 1.0;
-    // else if ($hour >= 6 && $hour < 9)
-    //     $int = $int - .75;
-    // else if (($hour >= 4) && $hour < 6)
-    //     $int = $int - .5;
+        } // end of row
 
-    // echo "Total Hour : " . $int . "<br>";
-    // echo "Total minutes of OT : " . $otint . " minutes<br>";
-    // echo "OT Rate : " . $amount;
 
-    ?>
+
+        echo "</tr>";
+        $total += $row;
+        $row = 0;    
+    } // end of column
+    echo "
+      </tbody>
+    </table>
+    ";
+    $count = 0;
+    $col_result = array();
+    $row_result = array();
+    $sum = 0;
+    for($x = 0; $x < $num; $x++)
+    {
+        $sum = 0;
+        for($y = 0;$y < $num; $y++)
+        {
+            $sum = $sum + (int)$sumcol[$x][$y];
+        }
+        $col_result[$x] = $sum;
+    }
+
+     for($x = 0; $x < $num; $x++)
+    {
+        $sum = 0;
+        for($y = 0;$y < $num; $y++)
+        {
+            $sum = $sum + (int)$sumcol[$y][$x];
+        }
+        $row_result[$x] = $sum;
+    }
+    
+    foreach ($sumrow as $value) {
+        echo $value .", ";
+    }
+    echo "<br>Total: ".$total."<br>";
+     foreach ($col_result as $value) {
+        echo $value .", ";
+    }
+    echo "<br>";
+     foreach ($row_result as $value) {
+        echo $value .", ";
+    }
+}
+?>
+
+
 
 </body>
-
 </html>

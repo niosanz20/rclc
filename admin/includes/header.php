@@ -7,8 +7,8 @@
   <title>RCLC | Monitoring System</title>
   <link rel="icon" href="../images/logo.jpg" type="image/x-icon">
 
-  <link href="../assets/vendor/bootstrap4/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/css/auth.css" rel="stylesheet">
+  <!-- <link href="../assets/vendor/bootstrap4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/auth.css" rel="stylesheet"> -->
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -22,7 +22,7 @@
   <!-- RCLC style -->
   <link rel="stylesheet" href="../dist/css/rclc.css">
   <!-- AdminLTE updated -->
-  <link rel="stylesheet" href="dist/css/adminlte_updated.min.css">
+  <!-- <link rel="stylesheet" href="..dist/css/adminlte.min.css"> -->
   <!-- DataTables -->
   <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- daterange picker -->

@@ -54,14 +54,13 @@
                 <table id="example1" class="table table-bordered">
                   <thead>
                     <th class="hidden"></th>
-                    <th>Date</th>
-                    <!--<th>Employee ID</th>-->
                     <th>Name</th> <!-- with position -->
                     <th>Shift Schedule</th>
                     <th>QR Logs</th>
                     <th>Minutes of OT</th>
                     <th>OT Amount</th>
                     <th>Tools</th>
+                    <th>Reasons</th>
                   </thead>
                   <tbody>
                     <?php
@@ -72,11 +71,11 @@
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>" . date('M d, Y', strtotime($row['date_overtime'])) . "</td>
+                          
                        <!--   <td>" . $row['empid'] . "</td> -->
-                          <td>" . $row['firstname'] . ' ' . $row['lastname'] . ' | ' . $row['description'] . "</td>
+                          <td><strong>" . $row['firstname'] . ' ' . $row['lastname'] . '</strong> | ' . $row['description'] . "</td>
                           <td>" . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . "</td> 
-                          <td>" . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . "</td>
+                          <td>(". date('M d, Y', strtotime($row['date_overtime'])) .' | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . ")</td>
                           <td>" . $row['hours'] . "</td>
                           <td>" . number_format($row['amount'], 2) . "</td>
                           <td> ";
@@ -85,6 +84,7 @@
                             <button class='btn btn-success btn-sm btn-flat edit' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ok-circle'></i> Approve</button>
                             <button class='btn btn-danger btn-sm btn-flat delete' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ban-circle'></i> Decline</button>
                           </td>
+                          <td>REASONS</td>
                         </tr>
                       ";
                       } else if ($row['ot_status'] == "Approved") {
@@ -92,11 +92,13 @@
                             <button class='btn btn-success btn-sm btn-flat edit' disabled data-id='" . $row['otid'] . "'><i class=' glyphicon glyphicon-ok-circle'></i> Approved</button>
                           </td>
                         </tr>
+                        <td>REASONS</td>
                         ";
                       } else if ($row['ot_status'] == "Declined") {
                         echo "
                             <button class='btn btn-danger btn-sm btn-flat delete' disabled data-id='" . $row['otid'] . "'><i class=' glyphicon glyphicon-ban-circle'></i> Declined</button>
                           </td>
+                          <td>REASONS</td>
                         </tr>
                         ";
                       }

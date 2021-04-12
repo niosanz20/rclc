@@ -2,7 +2,12 @@
 include '../includes/conn.php';
 
 if (isset($_POST['cutoff_id'])) {
-	$output = '<table id="example3" class="table table-bordered">
+	$output = '
+			 <div class="col-lg-12" style="text-align: center;">
+                          <h3>Payroll Report (Pay Date)</h3>
+                        </div>
+	';
+	$output .= '<table id="example3" class="table table-bordered">
 					  
                         <thead>
                           <th>Name</th>

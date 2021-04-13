@@ -3502,4 +3502,8 @@ small,
     display: -ms-flexbox !important;
     display: flex !important;
   }
+
+  .hidecolumn {
+display: none;
+  }
   

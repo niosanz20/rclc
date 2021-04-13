@@ -23,6 +23,7 @@ if (isset($_POST['empID'])) {
       </div>
       <table id="viewAttendanceTable" class="table table-bordered">
         <thead>
+          <th class="hidecolumn">ID</th>
           <th>Date</th>
           <th>Day</th>
           <th>Shift Schedule</th>
@@ -62,7 +63,7 @@ if (isset($_POST['empID'])) {
 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";			 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";
-          $sql = "SELECT *, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out  
+          $sql = "SELECT attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out, attendance.date, attendance.time_in, attendance.time_out, attendance.num_hr, project.project_name, project.project_address, attendance.id as attID  
         FROM attendance 
         LEFT JOIN employees ON employees.employee_id=attendance.employee_id 
 			  LEFT JOIN overtime ON overtime.employee_id=employees.employee_id 
@@ -70,7 +71,7 @@ if (isset($_POST['empID'])) {
 			  LEFT JOIN project ON project.project_id=project_employee.projectid 
 			  LEFT JOIN position ON position.id=employees.position_id 
         LEFT JOIN schedules ON schedules.id=employees.schedule_id 
-			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate' GROUP BY attendance.date ";
+			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate' GROUP BY attendance.date ORDER BY attID DESC ";
           $query = $conn->query($sql);
           while ($row = $query->fetch_assoc()) {
 
@@ -85,6 +86,7 @@ if (isset($_POST['empID'])) {
 
           ?>
             <tr>
+              <td class="hidecolumn"><?php echo $row['attID'] ?></td>
               <td><?php echo date("M j, Y", strtotime($row['date'])) ?></td>
               <td><?php echo date('D', strtotime($row['date'])) ?></td>
               <td><?php echo date('h:i A', strtotime($row['time_in'])) . " - " . date('h:i A', strtotime($row['time_out']));  ?></td>

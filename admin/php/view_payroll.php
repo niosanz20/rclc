@@ -18,7 +18,7 @@ if (isset($_POST['empID'])) {
     <div class="box-body">
       <table id="example6" class="table table-bordered" style=" width:100%">
         <thead>
-          <th>Ref. ID</th>
+          <th class="hidecolumn">Ref. ID</th>
           <th style="width: 100%">Cut-Off Date</th>
           <th>Gross Income</th>
           <th>Total Amount (O.T.)</th>
@@ -65,7 +65,7 @@ if (isset($_POST['empID'])) {
 
       $output .= '
               <tr>
-                <td>' . $cutoff_id . '</td>
+                <td class="hidecolumn">' . $cutoff_id . '</td>
                 <td style="width: 100%">' . $start_date . " - " . $end_date . '</td>
                 <td>₱ ' . number_format($gross, 2) . '</td>
                 <td>₱ ' . number_format($rowpaylsipcutoffsummary['ot'], 2) . '</td> 

@@ -187,6 +187,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         success: function(response) {
           $('#datepicker_edit').val(response.date);
           $('#attendance_date').html(response.date);
+          $('#attendance_date').val(response.date);
           $('#edit_time_in').val(response.time_in);
           $('#edit_time_out').val(response.time_out);
           $('#attid').val(response.attid);

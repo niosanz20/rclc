@@ -62,11 +62,15 @@ if (isset($_POST['empID'])) {
 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";			 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";
-          $sql = "SELECT *, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out  FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id 
-			  LEFT JOIN overtime ON overtime.employee_id=employees.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id 
+          $sql = "SELECT *, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out  
+        FROM attendance 
+        LEFT JOIN employees ON employees.employee_id=attendance.employee_id 
+			  LEFT JOIN overtime ON overtime.employee_id=employees.employee_id 
+        LEFT JOIN project_employee ON project_employee.name=employees.employee_id 
 			  LEFT JOIN project ON project.project_id=project_employee.projectid 
-			  LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id 
-			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate'";
+			  LEFT JOIN position ON position.id=employees.position_id 
+        LEFT JOIN schedules ON schedules.id=employees.schedule_id 
+			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate' GROUP BY empid ";
           $query = $conn->query($sql);
           while ($row = $query->fetch_assoc()) {
 

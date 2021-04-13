@@ -19,7 +19,7 @@
       <div class="box-header with-border">
         <i class="fa fa-bullhorn"></i>
         <h4 class="box-title">Camera</h4>
-        <h1>Hiiii!</h1>
+        <h1>HELLOOOO, Tophe</h1>
         <input type="hidden" readonly="readonly" class="form-control input-lg" id="employee" name="employee" required>
       </div>
       <!-- /.box-header -->
@@ -63,21 +63,21 @@
           },
           dataType: "json",
           success: function(data) {
-            switch(data.status){
+            switch (data.status) {
 
-                case 'Invalid QR Code':
+              case 'Invalid QR Code':
                 SweetAlert(data, 'error');
                 break;
 
-                case 'Time-in':
+              case 'Time-in':
                 SweetAlert(data, 'success');
                 break;
 
-                case 'Time-out':
+              case 'Time-out':
                 SweetAlert(data, 'success');
                 break;
 
-                default: //Already Time-in, Already Time-out, No project on-going, Warning, will fall here...
+              default: //Already Time-in, Already Time-out, No project on-going, Warning, will fall here...
                 SweetAlert(data, 'warning');
                 break;
             }
@@ -90,8 +90,8 @@
 
     });
 
-    function SweetAlert(data, icon){
-       Swal.fire({
+    function SweetAlert(data, icon) {
+      Swal.fire({
         title: data.status,
         html: data.message,
         icon: icon

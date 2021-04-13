@@ -51,6 +51,7 @@ if (isset($_POST['empID'])) {
 
     //gross
     $sqlCutoffpayslipsummary = "SELECT * FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id WHERE employees.employee_id='$empID' AND cutoff.cutoff_id = '$cutoff_id'";
+
     $resultCutoffpayslipsummary = $conn->query($sqlCutoffpayslipsummary);
     $rowpaylsipcutoffsummary = $resultCutoffpayslipsummary->fetch_assoc();
     $gross = $rowpaylsipcutoffsummary['basic_pay'];
@@ -163,8 +164,8 @@ if (isset($_POST['empID2'])) {
             <td width="10%" align="left">: ' . $rowpaylsipcutoff['empphil'] . '</td>
           </tr>
           <tr>
-            <td width="20%" align="left"></td>
-            <td width="10%" align="left"></td>
+            <td width="20%" align="left"><strong>PROJECT NAME: </strong>(<a style="font-style: italic; ">Current</a>)</td>
+            <td width="10%" align="left">: project name here</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>HDMIF NO.</b></td>
             <td width="10%" align="left">: ' . $rowpaylsipcutoff['emppag'] . '</td>
@@ -185,54 +186,62 @@ if (isset($_POST['empID2'])) {
           <tr>
             <th>TOTAL <br> COMPENSATION
             </th>
-            <th>₱ ' . $rowpaylsipcutoff['total_compensation'] . '</th>
+            <th>₱ ' . number_format($rowpaylsipcutoff['total_compensation'], 2) . '</th>
             <th>TOTAL <br> DEDUCTIONS
             </th>
-            <th>₱ ' . $rowpaylsipcutoff['total_deduc'] . '</th>
+            <th>₱ ' . number_format($rowpaylsipcutoff['total_deduc'], 2) . '</th>
             <th>NET PAY</th>
-            <th>₱ ' . $rowpaylsipcutoff['netpay'] . '</th>
+            <th>₱ ' . number_format($rowpaylsipcutoff['netpay'], 2) . '</th>
           </tr>
         </tfoot>
         <tbody>
           <tr>
             <td width="20%" align="left"><b>RATE per HOUR</b></td>
-            <td width="10%" align="left">' . $rowpaylsipcutoff['rate'] . '</td>
-            <td width="20%" align="left"><b>CASH ADVANCE</b></td>
-            <td width="10%" align="right">' . $rowpaylsipcutoff['cash_advance'] . '</td>
+            <td width="10%" align="left">' . number_format($rowpaylsipcutoff['rate'], 2) . '</td>
+            <td width="20%" align="left"><strong>TAX</strong></td>
+            <td width="10%" align="right">TAX VALUE HERE</td>
             <td width="20%" align="left"><b>TAX</b></td>
-            <td width="10%" align="right">' . $rowpaylsipcutoff['tax'] . '</td>
+            <td width="10%" align="right">' . number_format($rowpaylsipcutoff['tax'], 2) . '</td>
             </tr>
             <tr>
               <td width="20%" align="left"><b>TOTAL HOURS</b></td>
               <td width="10%" align="right">' . $rowpaylsipcutoff['total_hour'] . '</td>
               <td width="20%" align="left"><b>SSS</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['sss'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['sss'], 2) . '</td>
               <td width="20%" align="left"><b>SSS</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['ytd_sss'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['ytd_sss'], 2) . '</td>
             </tr>
             <tr>
               <td width="20%" align="left"><b>BASIC</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['basic_pay'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['basic_pay'], 2) . '</td>
               <td width="20%" align="left"><b>PHILHEALTH</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['philhealth'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['philhealth'], 2) . '</td>
               <td width="20%" align="left"><b>PHILHEALTH</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['ytd_philhealth'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['ytd_philhealth'], 2) . '</td>
             </tr>
             <tr>
               <td width="20%" align="left"><b>OT (' . $rowpaylsipcutoff['ot_hours'] . ' hrs)</b></td>
               <td width="10%" align="right">' . $rowpaylsipcutoff['ot'] . '</td>
               <td width="20%" align="left"><b>HDMIF</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['hdmif'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['hdmif'], 2) . '</td>
               <td width="20%" align="left"><b>HDMIF</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['ytd_hdmif'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['ytd_hdmif'], 2) . '</td>
             </tr>
             <tr>
               <td width="20%" align="left"><b></b></td>
               <td width="10%" align="right"></td>
               <td width="20%" align="left"><b>MATERIAL LOST</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['material_cost'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['material_cost'], 2) . '</td>
               <td width="20%" align="left"><b>GROSS INCOME</b></td>
-              <td width="10%" align="right">' . $rowpaylsipcutoff['ytd_grossincome'] . '</td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['ytd_grossincome'], 2) . '</td>
+            </tr>
+            <tr>
+              <td width="20%" align="left"><b></b></td>
+              <td width="10%" align="right"></td>
+              <td width="20%" align="left"><b>CASH ADVANCE</b></td>
+              <td width="10%" align="right">' . number_format($rowpaylsipcutoff['cash_advance'], 2) . '</td>
+              <td width="20%" align="left"><b></b></td>
+              <td width="10%" align="right"></td>
             </tr>
             </tbody>
             </table>
@@ -279,12 +288,12 @@ if (isset($_POST['empID2'])) {
                         <td></td>
                       </tr>
                       <tr>
-                        <td></td>
+                        <td>Computation for TAX</td>
                         <td></td>
                         <td></td>
                         <td></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td></td>
                         <td></td>
                         <td></td>

@@ -132,7 +132,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
   <?php include 'includes/scripts.php'; ?>
   <script>
     $(document).ready(function() {
-        
+   loadAttendanceRecord(0);
   loadEmployeeList();
 	insertEmployeePayslip();
 
@@ -245,6 +245,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
             //  content of breakdown of specific payroll (printable)
             $('#printout').html(data.payroll_details);
             $('#viewPayroll').modal('show');
+
           },
           error: function(data) {
             console.log(data);

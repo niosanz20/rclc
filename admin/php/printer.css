@@ -3,8 +3,9 @@
   flex-wrap: nowrap;
 }
 .flexDisplay .legend{
-  margin: 10px;
+  margin: 10px 10px 10px 0;
   text-align: center;
+  padding: 3px;
 }
 table.greyGridTable {
   width: 100%;
@@ -12,7 +13,6 @@ table.greyGridTable {
   border-collapse: collapse;
   border-left: 2px solid #333333;
   border-right: 2px solid #333333;
-  /*border: 2px solid #333333;*/
 }
 .legend{
     border: 2px solid #333333;

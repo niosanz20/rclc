@@ -6,14 +6,13 @@
   margin: 10px;
   text-align: center;
 }
-/*delete me*/
 table.greyGridTable {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
   border-left: 2px solid #333333;
   border-right: 2px solid #333333;
-  border: 2px solid #333333;
+  /*border: 2px solid #333333;*/
 }
 .legend{
     border: 2px solid #333333;

@@ -75,7 +75,7 @@
                        <!--   <td>" . $row['empid'] . "</td> -->
                           <td><strong>" . $row['firstname'] . ' ' . $row['lastname'] . '</strong> | ' . $row['description'] . "</td>
                           <td>" . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . "</td> 
-                          <td>(". date('M d, Y', strtotime($row['date_overtime'])) .' | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . ")</td>
+                          <td>(<strong>". date('M d, Y', strtotime($row['date_overtime'])) .'</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . ")</td>
                           <td>" . $row['hours'] . "</td>
                           <td>" . number_format($row['amount'], 2) . "</td>
                           <td> ";

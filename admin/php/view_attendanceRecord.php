@@ -70,7 +70,7 @@ if (isset($_POST['empID'])) {
 			  LEFT JOIN project ON project.project_id=project_employee.projectid 
 			  LEFT JOIN position ON position.id=employees.position_id 
         LEFT JOIN schedules ON schedules.id=employees.schedule_id 
-			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate' GROUP BY empid ";
+			  WHERE employees.employee_id = '$empID' AND attendance.date BETWEEN '$cutoffstartdate' AND '$cutoffenddate' GROUP BY attendance.date ";
           $query = $conn->query($sql);
           while ($row = $query->fetch_assoc()) {
 

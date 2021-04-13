@@ -98,8 +98,9 @@
                       <?php
                       $sql = "SELECT * FROM schedules";
                       $query = $conn->query($sql);
-                      while ($srow = $query->fetch_assoc()) {
-                        echo " <option value='" . $srow['id'] . "'>" . $srow['time_in'] . ' - ' . $srow['time_out'] . "</option> ";
+                      while ($srow = $query->fetch_assoc()) { //date('h:i A', strtotime($row['time_in']))
+                        echo " <option value='" . $srow['id'] . "'>" . date('h:i A', strtotime($srow['time_in'])) . ' - ' . date('h:i A', strtotime($srow['time_out'])) . "</option> ";
+                        //echo " <option value='" . $srow['id'] . "'>" . $srow['time_in'] . ' - ' . $srow['time_out'] . "</option> ";
                       } ?>
                     </select>
                   </div>
@@ -245,7 +246,7 @@
                       $sql = "SELECT * FROM schedules";
                       $query = $conn->query($sql);
                       while ($srow = $query->fetch_assoc()) {
-                        echo " <option value='" . $srow['id'] . "'>" . $srow['time_in'] . ' - ' . $srow['time_out'] . "</option> ";
+                        echo " <option value='" . $srow['id'] . "'>" . date('h:i A', strtotime($srow['time_in'])) . ' - ' . date('h:i A', strtotime($srow['time_out'])) . "</option> ";
                       } ?>
                     </select>
                   </div>

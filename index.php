@@ -19,7 +19,7 @@
       <div class="box-header with-border">
         <i class="fa fa-bullhorn"></i>
         <h4 class="box-title">Camera</h4>
-        <h1>HELLOOOO</h1>
+        <h1>Hiiii!</h1>
         <input type="hidden" readonly="readonly" class="form-control input-lg" id="employee" name="employee" required>
       </div>
       <!-- /.box-header -->

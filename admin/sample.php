@@ -2,7 +2,7 @@
 <html>
 <body>
 
-    <?php 
+    <!-- <?php 
     $string = "densoten";
     if(strlen($string) > 50 || strlen($string) < 5){
         echo "Invalid Input!\nLetters Contains between 5 and  50 only!";
@@ -15,14 +15,29 @@
 
         echo $lastChar . $newString . $firstChar;
     }
-     ?>
-    <form action="sample.php" method="POST">
-        <label>Enter Number:</label>
-        <input type="number" name="numTable">
-        <input type="submit" name="submit" value="Submit">
-    </form>
+     ?> -->
+    <label>Enter Text:</label>
+    <input type="txt" id="setText" value="">
+    <input type="button" id="getText" value="Submit" onclick="getText()">
+
+<script type="text/javascript">
+    function getText(){
+        var txt = document.getElementById('setText').value;
+
+        if(txt.length >= 5 && txt.length <= 50)
+        {
+            alert(txt[txt.length - 1] + txt.substring(1, (txt.length - 1)) + txt[0]);
+        }
+        else
+        {
+            alert('Invalid Input String. Must Contain 5 up to 50 characters only!');
+        }
    
-          
+    }
+</script>
+
+
+
 <?php
 if(isset($_POST['submit'])){
     $count = 1;    
@@ -78,7 +93,7 @@ if(isset($_POST['submit'])){
      for($x = 0; $x < $num; $x++)
     {
         $sum = 0;
-        for($y = 0;$y < $num; $y++)
+        for($y = 0;$y < $num; $y++) 
         {
             $sum = $sum + (int)$sumcol[$y][$x];
         }

@@ -142,7 +142,11 @@ $projectname = $_GET['projectname'];
                     <div class="form-group">
                         <label for="edit_position" class="col-sm-3 control-label">Position</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="position" id="edit_position" required>
+                            <?php 
+                            //Validate the Condition if it is correct
+                            $isDisabled = date('d') >= 10 && date('d') <= 25 ? "disabled" : "";
+                            ?>
+                            <select class="form-control" name="position" id="edit_position" <?php echo $isDisabled?> required>
                                 <option value="" selected>- Select -</option>
                                 <?php
                                 $sql = "SELECT * FROM position";
@@ -175,6 +179,13 @@ $projectname = $_GET['projectname'];
                                 <input type="date" class="form-control" id="edit_project_date_end" name="project_date_end" min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
 
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <center>
+                                <span><strong style="color: red">Note:</strong> Changing position of an employee enable only every start date of cutoff.</span>
+                            </center>
                         </div>
                     </div>
 

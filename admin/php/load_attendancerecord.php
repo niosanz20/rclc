@@ -52,7 +52,6 @@ if (isset($_POST['cutoff_id'])) {
 			  <td>₱ ' . number_format($row['ot'], 2) . '</td>
 			  <td>
 				<button class="viewPayrollDetails btn btn-success btn-sm btn-flat" refid="' . $cutoffID . '" data-toggle="tooltip" title="Print" id="' . $row['employee_id'] . '"><i class="glyphicon glyphicon-print"></i> Print</button>
-				<button class="viewAttendance btn btn-success btn-sm  btn-flat" data-toggle="tooltip" refid="' . $cutoffID . '" title="View" id="' . $row['employee_id'] . '"><i class="fa fa-eye"></i> View</button>
 			  </td>
 			</tr>';
 		}

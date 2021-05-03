@@ -30,9 +30,8 @@ if (isset($_POST['empID'])) {
           <th>QR Logs</th>
           <th>OT (hrs.)</th>
           <th>Total Hours</th>
-          <th>Project Name</th>
-          <th>Project Location</th>
-          <!--<th>Actions</th> -->
+         <!--  <th>Project Name</th>
+          <th>Project Location</th> -->
         </thead>
         <tbody>
           <!--
@@ -93,11 +92,8 @@ if (isset($_POST['empID'])) {
               <td><?php echo date('h:i A', strtotime($row['att_time_in'])) . " - " . date('h:i A', strtotime($row['att_time_out']));  ?></td>
               <td><?php echo number_format($rowOT, 2) ?></td>
               <td><?php echo number_format($row['num_hr'] + $rowOT, 2) ?></td>
-              <td><?php echo $row['project_name']; ?></td>
-              <td><?php echo $row['project_address']; ?></td>
-              <!--<td>
-					<button class="btn btn-success btn-sm edit btn-flat" data-toggle="tooltip" title="Print" id="<?php echo $row['employee_id']; ?>" onclick="window.addEventListener('load', window.print());"><i class="glyphicon glyphicon-print"></i> Print</button>
-					</td> -->
+         <!--      <td><?php echo $row['project_name']; ?></td>
+              <td><?php echo $row['project_address']; ?></td> -->
             </tr>
 
 

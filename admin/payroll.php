@@ -143,12 +143,10 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     switch(index){
       case 0:
         document.getElementById('filter-date-section').style.display = "none";
-        // document.getElementById('tableSection').innerHTML = "";
-        loadEmployeeList();
+        loadEmployeeList(0);
       break;
       case 1:
         document.getElementById('filter-date-section').style.display = "block";
-        // document.getElementById('tableSection').innerHTML = "";
         var cutoff_id = $('#cuttoffdate_value').val();
         loadAttendanceRecord(cutoff_id);
       break;
@@ -278,29 +276,29 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         });
       });
 
-      /*--
+    /*--
     Display Modal of Payroll for Employee
     -----------------------------------*/
-      $(document).on('click', '.viewAttendance', function() {
-        var empID = $(this).attr("id");
-		var cutoffID = $(this).attr("refid");		
-        $.ajax({
-          url: "php/view_attendanceRecord.php",
-          method: "POST",
-          data: {
-            empID: empID,
-			cutoffID: cutoffID
-          },
-          success: function(data) {
+  //     $(document).on('click', '.viewAttendance', function() {
+  //       var empID = $(this).attr("id");
+		// var cutoffID = $(this).attr("refid");		
+  //       $.ajax({
+  //         url: "php/view_attendanceRecord.php",
+  //         method: "POST",
+  //         data: {
+  //           empID: empID,
+		// 	cutoffID: cutoffID
+  //         },
+  //         success: function(data) {
 
-            $('#modal-view-attendance').html(data);
-            $('#viewAttendance').modal('show');
-          },
-          error: function(data) {
-            console.log(data);
-          }
-        });
-      });
+  //           $('#modal-view-attendance').html(data);
+  //           $('#viewAttendance').modal('show');
+  //         },
+  //         error: function(data) {
+  //           console.log(data);
+  //         }
+  //       });
+  //     });
 
     /*--
     Generate Payroll of all employees

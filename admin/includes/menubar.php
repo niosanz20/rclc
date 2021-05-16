@@ -70,7 +70,7 @@
       <li><a href="list_materials.php"><i class="fa fa-wrench"></i> <span>Equipments</span></a></li>
       <li class="header">REPORTS</li>
       <li><a href="payroll.php"><i class="fa fa-files-o"></i> <span>Payroll</span></a></li>
-      <!-- <li><a href="schedule_employee.php"><i class="fa fa-clock-o"></i> <span>Schedule</span></a></li> -->
+      <li><a href="overtime_report.php"><i class="fa fa-clock-o"></i> <span>Overtime</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->

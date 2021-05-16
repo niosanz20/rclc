@@ -60,7 +60,6 @@
                     <th>Minutes of OT</th>
                     <th>OT Amount</th>
                     <th>Tools</th>
-                    <th class="hidden">Reasons</th>
                   </thead>
                   <tbody>
                     <?php
@@ -77,30 +76,11 @@
                           <td><strong>" . date('M d, Y', strtotime($row['date_overtime'])) . '</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . "</td>
                           <td>" . $row['hours'] . "</td>
                           <td>" . number_format($row['amount'], 2) . "</td>
-                          <td> ";
-                      if ($row['ot_status'] == "New") {
-                        echo "
+                          <td>
                             <button class='btn btn-success btn-sm btn-flat edit' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ok-circle'></i> Approve</button>
                             <button class='btn btn-danger btn-sm btn-flat delete' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ban-circle'></i> Decline</button>
                           </td>
-                        </tr>
-                      ";
-                      }
-                      // else if ($row['ot_status'] == "Approved") {
-                      //   echo "
-                      //       <button class='btn btn-success btn-sm btn-flat edit' disabled data-id='" . $row['otid'] . "'><i class=' glyphicon glyphicon-ok-circle'></i> Approved</button>
-                      //     </td>
-                      //     <td>REASONS</td>
-                      //   </tr>
-                      //   ";
-                      // } else if ($row['ot_status'] == "Declined") {
-                      //   echo "
-                      //       <button class='btn btn-danger btn-sm btn-flat delete' disabled data-id='" . $row['otid'] . "'><i class=' glyphicon glyphicon-ban-circle'></i> Declined</button>
-                      //     </td>
-                      //     <td>REASONS</td>
-                      //   </tr>
-                      //   ";
-                      // }
+                       </tr>";
                     }
                     ?>
                   </tbody>
@@ -119,13 +99,12 @@
   <script>
     $(function() {
       $('.edit').click(function() {
-        // e.preventDefault();
         $('#edit').modal('show');
         var id = $(this).data('id');
         getRow(id);
       });
       $('.delete').click(function() {
-        // e.preventDefault();
+        // e.preventDefault()
         $('#delete').modal('show');
         var id = $(this).data('id');
         getRow(id);

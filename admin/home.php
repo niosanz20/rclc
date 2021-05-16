@@ -58,7 +58,22 @@ if ($day > 25 && $day <= 31) {
     <?php include 'includes/menubar.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
+
     <div class="content-wrapper">
+
+      <div class="box box-solid box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">REMINDERS</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          Paki-approve nalang agad yung mga OT bago mag-cutoff date. Tutal wala ka pa namang ginagawa at puro ka lang cellphone. Kung ok lang at hindi naman nakakahiya sayo.
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>

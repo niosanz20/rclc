@@ -64,65 +64,65 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="attendance-logs">
-                      <div class="box-header with-border">
-                          <a onclick=" window.open('../index.php','_blank')" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="glyphicon glyphicon-qrcode"></i> New</a>
-                          <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New Attendance</a>
-                          <!--<a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>-->
-                          <div class="pull-right">
-                            <form method="POST" class="form-inline" id="attendanceForm" action="attendance_employee_print_generate.php" target="_blank">
-                              <div class="input-group">
-                                <div class="input-group-addon">
-                                  <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="text" class="form-control pull-right col-sm-8" id="reservation" name="date_range" value="<?php echo (isset($_GET['range'])) ? $_GET['range'] : $range_from . ' - ' . $range_to; ?>">
-                              </div>
-                              <button type="button" class="btn btn-success btn-sm btn-flat" id="attendanceprint"><span class="glyphicon glyphicon-print"></span> Print</button>
-                              <!--<button type="button" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button>-->
-                             <!--  <button type="submit" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button> -->
-                              <!--<a href="attendance_print.php" class="btn btn-danger btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print All Attendance</a>-->
-                            </form>
+                    <div class="box-header with-border">
+                      <a onclick=" window.open('../index.php','_blank')" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="glyphicon glyphicon-qrcode"></i> New</a>
+                      <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New Attendance</a>
+                      <!--<a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>-->
+                      <div class="pull-right">
+                        <form method="POST" class="form-inline" id="attendanceForm" action="attendance_employee_print_generate.php" target="_blank">
+                          <div class="input-group">
+                            <div class="input-group-addon">
+                              <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right col-sm-8" id="reservation" name="date_range" value="<?php echo (isset($_GET['range'])) ? $_GET['range'] : $range_from . ' - ' . $range_to; ?>">
                           </div>
+                          <!-- <button type="button" class="btn btn-success btn-sm btn-flat" id="attendanceprint"><span class="glyphicon glyphicon-print"></span> Print</button> -->
+                          <!-- <button type="button" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button>-->
+                          <!-- <button type="submit" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button> -->
+                          <!-- <a href="attendance_print.php" class="btn btn-danger btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print All Attendance</a>-->
+                        </form>
                       </div>
-                      <div class="box-body">
-                        <table id="example1" class="table table-bordered">
-                          <thead>
-                            <th class="hidden"></th>
-                            <th>Date</th>
-                            <!--<th>Employee ID</th>-->
-                            <th>Name</th>
-                            <th>Time In</th>
-                            <th>Time Out</th>
-                            <th>Location</th>
-                            <th>Project</th>
-                            <th>Tools</th>
-                          </thead>
-                          <tbody>
-                            <?php
-                            // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
+                    </div>
+                    <div class="box-body">
+                      <table id="example1" class="table table-bordered">
+                        <thead>
+                          <th class="hidden"></th>
+                          <th>Date</th>
+                          <!--<th>Employee ID</th>-->
+                          <th>Name</th>
+                          <th>Time In</th>
+                          <th>Time Out</th>
+                          <th>Location</th>
+                          <th>Project</th>
+                          <th>Tools</th>
+                        </thead>
+                        <tbody>
+                          <?php
+                          // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                            $to = date('Y-m-d');
-                            $from = date('Y-m-d', strtotime('-30 day', strtotime($to)));
+                          $to = date('Y-m-d');
+                          $from = date('Y-m-d', strtotime('-30 day', strtotime($to)));
 
-                            if (isset($_GET['range'])) {
-                              $range = $_GET['range'];
-                              $ex = explode(' - ', $range);
-                              $from = date('Y-m-d', strtotime($ex[0]));
-                              $to = date('Y-m-d', strtotime($ex[1]));
-                            }
+                          if (isset($_GET['range'])) {
+                            $range = $_GET['range'];
+                            $ex = explode(' - ', $range);
+                            $from = date('Y-m-d', strtotime($ex[0]));
+                            $to = date('Y-m-d', strtotime($ex[1]));
+                          }
 
-                            // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
+                          // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                            $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid, 
+                          $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid, 
                             attendance.status AS astatus FROM attendance LEFT JOIN employees ON 
                             employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON
                              project_employee.name=employees.employee_id LEFT JOIN project ON
                               project.project_id=project_employee.projectid WHERE date 
                               BETWEEN '$from' AND '$to' AND project_employee.status = 'On going' ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                            $query = $conn->query($sql);
-                            while ($row = $query->fetch_assoc()) {
-                              $status = ($row['astatus']) ? '<span class="label label-warning pull-right">ontime</span>' : '<span class="label label-danger pull-right">late</span>';
-                              echo "
+                          $query = $conn->query($sql);
+                          while ($row = $query->fetch_assoc()) {
+                            $status = ($row['astatus']) ? '<span class="label label-warning pull-right">ontime</span>' : '<span class="label label-danger pull-right">late</span>';
+                            echo "
                                 <tr>
                                   <td class='hidden'></td>
                                   <td>" . date('Y-m-d', strtotime($row['date'])) . "</td>
@@ -138,11 +138,11 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                   </td>
                                 </tr>
                               ";
-                            }
-                            ?>
-                          </tbody>
-                        </table>
-                      </div>
+                          }
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="attendance-records">
@@ -150,25 +150,25 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                       <h3>Payroll Report (Pay Date)</h3>
                       <div class="col-lg-2">
                         <select class="form-control cutoffdate" id="cuttoffdate_value" style="margin-top: 1em">
-                            <option value="" selected> Select Cut-Off Date</option>
-                            <?php
-                            $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
-                            $querycutoff = $conn->query($sqlcutoff);
-                            while ($rowcutoff = $querycutoff->fetch_assoc()) {
-                              $cutoff_id = $rowcutoff['cutoff_id'];
-                              $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
-                              $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
-                              echo "
+                          <option value="" selected> Select Cut-Off Date</option>
+                          <?php
+                          $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
+                          $querycutoff = $conn->query($sqlcutoff);
+                          while ($rowcutoff = $querycutoff->fetch_assoc()) {
+                            $cutoff_id = $rowcutoff['cutoff_id'];
+                            $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
+                            $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
+                            echo "
                     <option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
                    ";
-                            }
-                            ?>
-                          </select>
+                          }
+                          ?>
+                        </select>
                       </div>
-                       
+
                     </div>
                     <div class="panel" id="tableSection">
-                  
+
                     </div>
                   </div>
                 </div>
@@ -256,64 +256,64 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
       });
     }
 
-     $(document).ready(function()  {
-       loadAttendanceRecord(0);
+    $(document).ready(function() {
+      loadAttendanceRecord(0);
       /*--
       Display Table: Employee List Filtered by Cutoofdate
       -----------------------------------*/
-      function loadAttendanceRecord(cutoff_id){
-         $.ajax({
-              url: "php/load_attendanceRecordPerCutoff.php",
-              method: "POST",
+      function loadAttendanceRecord(cutoff_id) {
+        $.ajax({
+          url: "php/load_attendanceRecordPerCutoff.php",
+          method: "POST",
           data: {
-                cutoff_id: cutoff_id
-              },
-              dataType: "json",
-              success: function(data) {
-            
-               $('#tableSection').html(data.attendanceRecord);
-          
-              },
-              error: function(data) {
-                console.log(data);
-              }
-            });  
-      
-        }
+            cutoff_id: cutoff_id
+          },
+          dataType: "json",
+          success: function(data) {
+
+            $('#tableSection').html(data.attendanceRecord);
+
+          },
+          error: function(data) {
+            console.log(data);
+          }
+        });
+
+      }
 
       /*--
       Load Attendance Record by CutOff Date
       -----------------------------------*/
-        $(document).on('click', '.cutoffdate', function() {
-          var cutoff_id = $('#cuttoffdate_value').val();
-      
-          if(cutoff_id != ""){
-            loadAttendanceRecord(cutoff_id);
-          }
-        });
+      $(document).on('click', '.cutoffdate', function() {
+        var cutoff_id = $('#cuttoffdate_value').val();
+
+        if (cutoff_id != "") {
+          loadAttendanceRecord(cutoff_id);
+        }
+      });
 
       /*--
       Display Modal of Payroll for Employee
       -----------------------------------*/
-        $(document).on('click', '.viewAttendance', function() {
-          var empID = $(this).attr("id");
-          var cutoffID = $(this).attr("refid");   
-          $.ajax({
-            url: "php/view_attendanceRecord.php",
-            method: "POST",
-            data: {
-              empID: empID,
-              cutoffID: cutoffID
-            },
-            success: function(data) {
-              $('#modal-view-attendance').html(data);
-              $('#viewAttendance').modal('show');
-            },
-            error: function(data) {
-              console.log(data);
-            }
-          });
+      $(document).on('click', '.viewAttendance', function() {
+        var empID = $(this).attr("id");
+        var cutoffID = $(this).attr("refid");
+        $.ajax({
+          url: "php/view_attendanceRecord.php",
+          method: "POST",
+          data: {
+            empID: empID,
+            cutoffID: cutoffID
+          },
+          success: function(data) {
+            $('#modal-view-attendance').html(data);
+            $('#viewAttendance').modal('show');
+          },
+          error: function(data) {
+            console.log(data);
+          }
         });
+      });
 
       $("#reservation").on('change', function() {
         var range = encodeURI($(this).val());

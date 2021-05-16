@@ -3,11 +3,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content" style="max-height: 580px">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><span class="glyphicon glyphicon-file"></span>OVERTIME LOGS</h4>
             </div>
             <div class="modal-body">
-
-                <h4><strong>OVERTIME LOGS</strong></h4>
                 <div class="box-body">
                     <table id="overtime-table" class="table table-bordered">
                         <thead>

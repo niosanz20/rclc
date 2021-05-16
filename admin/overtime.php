@@ -60,7 +60,6 @@
                     <th>Minutes of OT</th>
                     <th>OT Amount</th>
                     <th>Tools</th>
-                    <th class="hidden">Reasons</th>
                   </thead>
                   <tbody>
                     <?php

@@ -53,8 +53,6 @@
                             <div class="box-body">
                                 <table id="example1" class="table table-bordered">
                                     <thead>
-                                        <!--<th>Project ID</th>-->
-                                        <th>Photo</th>
                                         <th>Name</th>
                                         <th>Address</th>
                                         <th>Owner</th>
@@ -69,8 +67,6 @@
 
                                         ?>
                                             <tr>
-                                                <!--<td><?php echo $row['project_id']; ?></td>-->
-                                                <td><img src="<?php echo (!empty($row['photo'])) ? '../images/projectimg/' . $row['photo'] : '../images/projectimg/profile.jpg'; ?>" width="30px" height="30px" class="img-circle img-fluid img-margin"> <a href="#edit_photo" data-toggle="modal" class="pull-right photo" data-id="<?php echo $row['project_id']; ?>"><span class="fa fa-edit"></span></a></td>
                                                 <td><?php echo $row['project_name']; ?></td>
                                                 <td><?php echo $row['project_address']; ?></td>
                                                 <td><?php echo $row['project_owner']; ?></td>

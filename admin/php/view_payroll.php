@@ -54,10 +54,19 @@ if (isset($_POST['empID'])) {
 
     $resultCutoffpayslipsummary = $conn->query($sqlCutoffpayslipsummary);
     $rowpaylsipcutoffsummary = $resultCutoffpayslipsummary->fetch_assoc();
-    $gross = $rowpaylsipcutoffsummary['basic_pay'];
-    $sss = $rowpaylsipcutoffsummary['sss'];
-    $philhealth = $rowpaylsipcutoffsummary['philhealth'];
-    $pagibig = $rowpaylsipcutoffsummary['hdmif'];
+    
+    if($rowpaylsipcutoffsummary){
+      $gross = $rowpaylsipcutoffsummary['basic_pay'];
+      $sss = $rowpaylsipcutoffsummary['sss'];
+      $philhealth = $rowpaylsipcutoffsummary['philhealth'];
+      $pagibig = $rowpaylsipcutoffsummary['hdmif'];
+    }else{
+      $gross = 0;
+      $sss = 0;
+      $philhealth = 0;
+      $pagibig = 0;
+    }
+    
 
 
     if ($gross != 0) { // para mag-print lang is yung may mga gross sa cut-off date
@@ -113,14 +122,22 @@ if (isset($_POST['empID'])) {
 
   echo json_encode($data);
 }
-// delete me
+
 // TAB 2
 if (isset($_POST['empID2'])) {
   $empID = $_POST['empID2'];
   $cutoffID = $_POST['cutoffID'];
 
-  $sqlCutoffpayslip = $cutoffID != 0 ? "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id WHERE payslip.cutoff_id='$cutoffID' AND employees.employee_id='$empID'" :
-    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id WHERE payslip.cutoff_id=(SELECT MAX(cutoff_id) FROM cutoff) AND employees.employee_id='$empID'";
+  $sqlCutoffpayslip = $cutoffID != 0 
+  ? 
+  "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id 
+  LEFT JOIN project_employee ON project_employee.name=employees.employee_id
+  WHERE payslip.cutoff_id='$cutoffID' AND employees.employee_id='$empID'" 
+  :
+    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees 
+    LEFT JOIN payslip ON payslip.employee_id=employees.employee_id
+    LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
+    WHERE payslip.cutoff_id=(SELECT MAX(cutoff_id) FROM cutoff) AND employees.employee_id='$empID'";
 
   // $sqlCutoffpayslip = "SELECT * FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id='$empID'";
   $resultCutoffpayslip = $conn->query($sqlCutoffpayslip);
@@ -165,11 +182,10 @@ if (isset($_POST['empID2'])) {
           </tr>
           <tr>
             <td width="20%" align="left"><strong>PROJECT NAME: </strong>(<a style="font-style: italic; ">Current</a>)</td>
-            <td width="10%" align="left">: project name here</td>
+            <td width="10%" align="left">: Project name</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>HDMIF NO.</b></td>
             <td width="10%" align="left">: ' . $rowpaylsipcutoff['emppag'] . '</td>
-          </tr>
         </tbody>
       </table>
       <table class="greyGridTable" id="secondTable">

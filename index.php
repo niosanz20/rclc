@@ -30,7 +30,7 @@
 
         <div class="form-group">
           <select class="btn dropdown-toggle center-block" name="status" id="status" style="width: 110px; border: solid 2px #517B97; font-size: 15px; font-weight:bold;">
-            <option value="in">Time In</option>
+            <option value="in">Time Ins</option>
             <option value="out">Time Out</option>
           </select>
         </div>

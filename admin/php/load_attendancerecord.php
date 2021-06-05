@@ -62,8 +62,8 @@ if (isset($_POST['cutoff_id'])) {
                       <div class="row">
                         <center>
                           <form method="POST" action="php/generate_all_payroll.php" target="_blank">
-								<input type="hidden" value="'.$cutoffID .'" name="cutoff_id">
-								<button  type="submit" class="generate-all-payrollsdasd btn btn-success btn-lg btn-flat" id="'.$cutoffID .'"><span class="glyphicon glyphicon-print"></span> Generate Payroll</button>
+								<input type="hidden" value="' . $cutoffID . '" name="cutoff_id">
+								<button  type="submit" class="generate-all-payrollsdasd btn btn-success btn-lg btn-flat" id="' . $cutoffID . '"><span class="glyphicon glyphicon-print"></span> Generate Payroll</button>
 							</form>
                         </center>
                       </div>

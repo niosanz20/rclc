@@ -52,23 +52,19 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
-                            <div class="box-header with-border" style="max-height:10px">
-                                <div class="panel" id="printout" style="visibility: hidden;">
-                                </div>
-                            </div>
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-2">
                                         <span><strong>Status: </strong></span>
-                                        <select class="form-control" id="">
-                                            <option>View All</option>
-                                            <option>Approved</option>
-                                            <option>Declined</option>
+                                        <select class="form-control" id="ot-filter-status">
+                                            <option value="">View All</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Declined">Declined</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-2" id="filter-date-section">
+                                    <div class="col-lg-2">
                                         <span><strong>Select Cutoff Date: </strong></span>
-                                        <select class="form-control cutoffdate" id="cuttoffdate_value">
+                                        <select class="form-control cutoffdate" id="ot-filter-date">
                                             <option value="" selected> Select Cut-Off Date</option>
                                             <?php
                                             $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
@@ -86,73 +82,36 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     </div>
                                     <div class="col-lg-2">
                                         <span><strong>Project: </strong></span>
-                                        <select class="form-control" id="">
-                                            <option>View All</option>
-                                            <option>Approved</option>
-                                            <option>Declined</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12" style="text-align: center;">
-                                    <h3>Overtime for Approved | From: old_date to: new_date</h3>
-                                </div>
-                                <div class="row col-lg-12">
-                                    <div class="panel" id="">
-                                        <table id="example1" class="table table-bordered">
-                                            <thead>
-                                                <th class="hidden"></th>
-                                                <th>Name</th> <!-- with position -->
-                                                <th>Shift Schedule</th>
-                                                <th>QR Logs</th>
-                                                <th>Minutes of OT</th>
-                                                <th>OT Amount</th>
-                                                <th>Status | Timestamps</th>
-                                                <th>Reasons</th>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                            // $sql = "SELECT *, overtime.id AS otid, employees.employee_id AS empid FROM overtime LEFT JOIN employees ON employees.id=overtime.employee_id ORDER BY date_overtime DESC";
-                                            $sql = "SELECT *, overtime.id AS otid, employees.employee_id AS empid, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in AS ttime_in, attendance.time_out AS ttime_out FROM overtime LEFT JOIN employees ON employees.employee_id=overtime.employee_id LEFT JOIN position ON position.id=employees.position_id LEFT JOIN attendance ON attendance.employee_id=overtime.employee_id LEFT JOIN schedules ON schedules.id=employees.schedule_id 
-                                            WHERE overtime.date_overtime=attendance.date AND ot_status != 'New' ORDER BY date_overtime DESC ";
-                                            $query = $conn->query($sql);
-                                            while ($row = $query->fetch_assoc()) {
+                                        <select class="form-control cutoffdate" id="ot-filter-project">
+                                            <option value="" selected> Select Project</option>
+                                            <?php
+                                            $sql = "SELECT * FROM project ORDER BY project_name";
+                                            $querycutoff = $conn->query($sql);  
+                                            while ($row = $querycutoff->fetch_assoc()) {
                                             echo "
-                                                <tr>
-                                                <td class='hidden'></td>
-                                                <td><strong>" . $row['firstname'] . ' ' . $row['lastname'] . '</strong> | ' . $row['description'] . "</td>
-                                                <td>" . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . "</td> 
-                                                <td><strong>" . date('M d, Y', strtotime($row['date_overtime'])) . '</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . "</td>
-                                                <td>" . $row['hours'] . "</td>
-                                                <td>" . number_format($row['amount'], 2) . "</td>
-                                                <td>";
-                                                if ($row['ot_status'] == "Approved") {
-                                                    echo "
-                                                    <p class='btn btn-success btn-sm btn-flat' data-id='" . $row['otid'] . "' style='cursor: text'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on timestamp</p>
-                                                ";
-                                                            } else if ($row['ot_status'] == "Declined") {
-                                                                echo "
-                                                    <a class='btn btn-danger btn-sm btn-flat' data-id='" . $row['otid'] . "' style='cursor: text'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on timestamp</a>
-                                                ";
-                                                            }
-                                                            echo "
-                                                </td>
-                                                <td>REASONS</td>
-                                            </tr>
+                                            <option value='" . $row['project_id'] . "'>" . $row['project_name'] . "</option>
                                             ";
                                             }
                                             ?>
-                                            <style>
-                                                a{
-                                                    cursor: d;
-                                                }
-                                            </style>
-                                            </tbody>
-                                        </table>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2" style="margin-top: 20px;">
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-md btn-flat filter-record">
+                                            <i class="fa fa-filter"></i>
+                                        Filter</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12" style="text-align: center;">
+                                    <h3 id="ot-header-report">Overtime Reports</h3>
+                                </div>
+                                <div class="row col-lg-12">
+                                    <div class="panel" id="overtime-records">
+                                        
                                     </div>
                                 </div>
                                 <div class="row">
                                     <center>
-                                    <form method="POST" action="php/generate_all_payroll.php" target="_blank">
+                                        <form method="POST" action="php/generate_all_payroll.php" target="_blank">
                                             <input type="hidden" value="'.$cutoffID .'" name="cutoff_id">
                                             <button  type="submit" class="generate-all-payrollsdasd btn btn-success btn-lg btn-flat" id="'.$cutoffID .'"><span class="glyphicon glyphicon-print"></span> Generate Report</button>
                                         </form>
@@ -170,39 +129,79 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     </div>
     <?php include 'includes/scripts.php'; ?>
     <script>
-    /*--
-    Generate Payroll of all employees
-    -----------------------------------*/
-    $(document).on('click', '.generate-all-payroll', function() {
-    var cutoff_id = $(this).attr("id");
+    $(document).ready(function() {
+        filter_data("", 0, "");
 
-    if (cutoff_id != "") {
-        $.ajax({
-            url: "php/generate_payroll.php",
-            method: "POST",
-            data: {
-                cutoff_id: cutoff_id
-            },
-            dataType: "json",
-            success: function(data) {
-                $('#payroll-all-employees').html(data.output);
+        /*--
+        Generate Payroll of all employees
+        -----------------------------------*/
+        $(document).on('click', '.generate-all-payroll', function() {
+        var cutoff_id = $(this).attr("id");
 
-                document.getElementById("printout").style.display = "none";
-                document.getElementById("payroll-all-employees").style.display = "block";
-                window.addEventListener('load', window.print());
-                document.getElementById("payroll-all-employees").style.maxHeight = "10px";
-            },
-            complete: function(data) {
-                document.getElementById("wrapper-height").style.overflow = "hidden";
-            },
-            error: function(data) {
-                console.log(data);
+            if (cutoff_id != "") {
+                $.ajax({
+                    url: "php/generate_payroll.php",
+                    method: "POST",
+                    data: {
+                        cutoff_id: cutoff_id
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        $('#payroll-all-employees').html(data.output);
+
+                        document.getElementById("printout").style.display = "none";
+                        document.getElementById("payroll-all-employees").style.display = "block";
+                        window.addEventListener('load', window.print());
+                        document.getElementById("payroll-all-employees").style.maxHeight = "10px";
+                    },
+                    complete: function(data) {
+                        document.getElementById("wrapper-height").style.overflow = "hidden";
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
             }
         });
-    }
-    });
 
-    });
+        /*--
+        Filter Reports
+        -----------------------------------*/
+        $(document).on('click', '.filter-record', function() {
+            filter_data($("#ot-filter-status").val(), $("#ot-filter-date").val(),  $("#ot-filter-project").val());
+        });
+
+        function setHeaderReport(){
+            var cutoffDate = document.getElementById('ot-filter-date');
+            var projectName = document.getElementById('ot-filter-project');
+
+            var headerStatus = $("#ot-filter-status").val() != "" ? $("#ot-filter-status").val() + " Overtime Reports" : "Overtime Reports";
+            var headerCutoffDate = $("#ot-filter-date").val() != 0 ? "<br> Cutoff Date:  " +  cutoffDate.options[cutoffDate.selectedIndex].text : "";
+            var headerProjectName = $("#ot-filter-project").val() != 0 ? "<br> Project Name: " + projectName.options[projectName.selectedIndex].text : "";
+
+            $('#ot-header-report').html(headerStatus + headerCutoffDate + headerProjectName);
+        }
+
+        function filter_data(status, cutoff_id, project_id){
+            $.ajax({
+                url: "php/overtime/load_overtimeRecordReports.php",
+                method: "POST",
+                data: {
+                    status: status, 
+                    cutoff_id: cutoff_id,
+                    project_id: project_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#overtime-records').html(data.output);
+                    setHeaderReport();
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+    }); 
     </script>
 </body>
 

@@ -165,7 +165,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         });
 
         /*--
-        Filter Reports
+        Filter Reports sexy [paaaaaaaats]
         -----------------------------------*/
         $(document).on('click', '.filter-record', function() {
             filter_data($("#ot-filter-status").val(), $("#ot-filter-date").val(),  $("#ot-filter-project").val());

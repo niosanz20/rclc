@@ -131,9 +131,11 @@ if (isset($_POST['empID2'])) {
   $sqlCutoffpayslip = $cutoffID != 0
     ?
     "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id 
+
     LEFT JOIN project_employee ON project_employee.name=employees.employee_id
     LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
     WHERE payslip.cutoff_id='$cutoffID' AND employees.employee_id='$empID'"
+
     :
     "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees 
     LEFT JOIN payslip ON payslip.employee_id=employees.employee_id

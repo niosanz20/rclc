@@ -14,6 +14,7 @@
         <p id="time" class="bold"></p>
     </div>
     <!-- ATTENDANCE -->
+    <!-- new line -->
     <div class="row">
         <!-- CAMERA -->
         <div class="box box-default rclcbox">

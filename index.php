@@ -2,7 +2,7 @@
 <?php include 'header.php'; ?>
 <? include 'includes/conn.php'; ?>
 <!--Connection -->
-<!--sample -->
+<!--sampless -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <!-- Instascan JS - 10/23/2020 -->

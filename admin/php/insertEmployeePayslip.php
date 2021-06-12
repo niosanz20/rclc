@@ -113,24 +113,23 @@ if (isset($_POST['dateNow'])) {
         $gross_payslip = $gross;                    //gross per cut-off passing to payslip history
         $compensation_total = $gross + $total_ot;   //total compensation per cut-off
         $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-off
-        $netpay = $compensation_total - $deduction_total; //net pay per cut-off
-
-
+        
         //tax computation
         $salary_annual = ($gross - $deduction_contribution) * 12;
 
         if ($salary_annual <= 250000)
         $tax_income = 0;
         else if ($salary_annual > 250000 && $salary_annual <= 400000)
-        $tax_income = (($gross * 12) - 250000) * .20) / 12;
+        $tax_income = ((($gross * 12) - 250000) * .20) / 12;
         else if ($salary_annual > 400000 && $salary_annual <= 800000)
-        $tax_income = ((($gross * 12) - 400000) * .20) + 30000) / 12;
+        $tax_income = (((($gross * 12) - 400000) * .20) + 30000) / 12;
         else if ($salary_annual > 800000 && $salary_annual <= 2000000)
-        $tax_income = ((($gross * 12) - 800000) * .20) + 130000) / 12;
+        $tax_income = (((($gross * 12) - 800000) * .20) + 130000) / 12;
 
         $tax_payslip = $tax_income / 2;
 
-        $deduction_total = $gross - $tax_payslip;
+        $deduction_total =  $deduction_contribution + $tax_payslip;
+        $netpay = $compensation_total - $deduction_total; //net pay per cut-off
 
 
         //insert to yeartodate

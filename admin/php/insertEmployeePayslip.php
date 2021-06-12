@@ -32,7 +32,7 @@ if (isset($_POST['dateNow'])) {
       if ($gross != 0) { // para mag-print lang is yung may mga gross sa cut-off date
 
         //cost of damage materials
-        m$sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_aterials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
+        $sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_aterials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
         $resultAdvanceDam = mysqli_query($conn, $sqlAdvanceDam);
         $rowAdvanceDam = mysqli_fetch_assoc($resultAdvanceDam);
 

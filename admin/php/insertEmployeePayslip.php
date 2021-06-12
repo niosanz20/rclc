@@ -105,14 +105,14 @@ if (isset($_POST['dateNow'])) {
         $material_loss = $price;                    //material cost damages per cut-off
         $philhealth = $gross * 0.035 / 2;           //philhealth per cut-off
         $pagibig = 50;                              //pag-ibig per cut-off
-        //cash advance per cut-off
         $sss_payslip = $sss;                        //sss per cut-off passing to payslip history
         $philhealth_payslip = $philhealth;          //philhealth per cut-off  passing to payslip history
         $pagibig_payslip = $pagibig;                //pag-ibig per cut-off passing to payslip history
-        //    $tax_payslip = $tax;                        //tax per cut-off passing to payslip history
         $gross_payslip = $gross;                    //gross per cut-off passing to payslip history
         $compensation_total = $gross + $total_ot;   //total compensation per cut-off
-        $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-off
+        $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-of
+
+
 
         //tax computation
         $salary_annual = ($gross - $deduction_contribution) * 12;
@@ -128,7 +128,8 @@ if (isset($_POST['dateNow'])) {
 
         $tax_payslip = $tax_income / 2;
 
-        $deduction_total =  $deduction_contribution + $tax_payslip;
+        $deduction_total = $deduction_contribution + $tax_payslip;
+
         $netpay = $compensation_total - $deduction_total; //net pay per cut-off
 
 

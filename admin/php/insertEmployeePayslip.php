@@ -131,6 +131,7 @@ if (isset($_POST['dateNow'])) {
         $deduction_total =  $deduction_contribution + $tax_payslip;
         $netpay = $compensation_total - $deduction_total; //net pay per cut-off
 
+
         //insert to yeartodate
         $sqlYTD = "SELECT * from yeartodate WHERE employee_id = '$empID'";
         $resultYTD = mysqli_query($conn, $sqlYTD);

@@ -32,7 +32,7 @@ if (isset($_POST['dateNow'])) {
       if ($gross != 0) { // para mag-print lang is yung may mga gross sa cut-off date
 
         //cost of damage materials
-        $sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_aterials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
+        $sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_materials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
         $resultAdvanceDam = mysqli_query($conn, $sqlAdvanceDam);
         $rowAdvanceDam = mysqli_fetch_assoc($resultAdvanceDam);
 
@@ -112,8 +112,6 @@ if (isset($_POST['dateNow'])) {
         $compensation_total = $gross + $total_ot;   //total compensation per cut-off
         $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-of
 
-
-        // wala lang
         //tax computation
         $salary_annual = ($gross - $deduction_contribution) * 12;
 

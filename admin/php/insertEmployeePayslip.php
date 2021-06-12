@@ -27,12 +27,12 @@ if (isset($_POST['dateNow'])) {
       $resultGross = mysqli_query($conn, $sqlGross);
       $rowGross = mysqli_fetch_assoc($resultGross);
 
-      $gross = $rowGross['rate'] * $rowGross['total_numhr'];
+      $gross = $rowGross['rate'] * $rowGross['total_numhr'];    //gross income
 
       if ($gross != 0) { // para mag-print lang is yung may mga gross sa cut-off date
 
         //cost of damage materials
-        $sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_materials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
+        m$sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_aterials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
         $resultAdvanceDam = mysqli_query($conn, $sqlAdvanceDam);
         $rowAdvanceDam = mysqli_fetch_assoc($resultAdvanceDam);
 
@@ -95,6 +95,7 @@ if (isset($_POST['dateNow'])) {
           $sss = 450;
 
 
+
         // payslip data
         $total_hour = $rowGross['total_numhr'];     //total hour per cut-off
         $ot_hours = $rowOT['hour_ot'] / 60;         //total Hours of OT per cut-off
@@ -104,15 +105,33 @@ if (isset($_POST['dateNow'])) {
         $material_loss = $price;                    //material cost damages per cut-off
         $philhealth = $gross * 0.035 / 2;           //philhealth per cut-off
         $pagibig = 50;                              //pag-ibig per cut-off
-        $tax = 100;                                 //cash advance per cut-off
+                                   //cash advance per cut-off
         $sss_payslip = $sss;                        //sss per cut-off passing to payslip history
         $philhealth_payslip = $philhealth;          //philhealth per cut-off  passing to payslip history
         $pagibig_payslip = $pagibig;                //pag-ibig per cut-off passing to payslip history
-        $tax_payslip = $tax;                        //tax per cut-off passing to payslip history
+    //    $tax_payslip = $tax;                        //tax per cut-off passing to payslip history
         $gross_payslip = $gross;                    //gross per cut-off passing to payslip history
         $compensation_total = $gross + $total_ot;   //total compensation per cut-off
-        $deduction_total = $total_cashad + $tax_payslip + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-off
+        $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-off
         $netpay = $compensation_total - $deduction_total; //net pay per cut-off
+
+
+        //tax computation
+        $salary_annual = ($gross - $deduction_contribution) * 12;
+
+        if ($salary_annual <= 250000)
+        $tax_income = 0;
+        else if ($salary_annual > 250000 && $salary_annual <= 400000)
+        $tax_income = (($gross * 12) - 250000) * .20) / 12;
+        else if ($salary_annual > 400000 && $salary_annual <= 800000)
+        $tax_income = ((($gross * 12) - 400000) * .20) + 30000) / 12;
+        else if ($salary_annual > 800000 && $salary_annual <= 2000000)
+        $tax_income = ((($gross * 12) - 800000) * .20) + 130000) / 12;
+
+        $tax_payslip = $tax_income / 2;
+
+        $deduction_total = $gross - $tax_payslip;
+
 
         //insert to yeartodate
         $sqlYTD = "SELECT * from yeartodate WHERE employee_id = '$empID'";

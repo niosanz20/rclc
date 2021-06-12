@@ -113,7 +113,7 @@ if (isset($_POST['dateNow'])) {
         $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-of
 
 
-
+        // wala lang
         //tax computation
         $salary_annual = ($gross - $deduction_contribution) * 12;
 

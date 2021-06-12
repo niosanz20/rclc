@@ -135,11 +135,19 @@ if (isset($_POST['dateNow'])) {
                     WHERE employee_id = '$empID'";
       $conn->query($sqlYear);*/
 
+        // Postion & Rate
         $sqlp = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id WHERE employees.employee_id='$empID'";
         $queryp = $conn->query($sqlp);
         $rowp = $queryp->fetch_assoc();
         $position = $rowp['description'];
         $rph = $rowp['rate'];
+
+        // Project
+        $sqlproj = "SELECT employees.employee_id, project.project_name AS empproj FROM employees LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project on project.project_id=project_employee.projectid WHERE employees.employee_id='$empID'";
+        $queryproj = $conn->query($sqlproj);
+        $rowproj = $queryproj->fetch_assoc();
+        $projectname = $rowproj['empproj'];
+
 
         // $empID, $cutoff_id, $position, $tax_stat, $gross_payslip, $total_ot, $total_cashad, $sss_payslip, $philhealth_payslip, $pagibig_payslip, $tax_payslip,$material_loss, $sss, $philhealth, $pagibig, $gross, $compensation_total, $deduction_total, $netpay 
 
@@ -152,8 +160,8 @@ if (isset($_POST['dateNow'])) {
         if ($cutoff_id != $payslip_cutoffID && $empID != $payslip_empID) {
 
           $sqlpayslip = "INSERT INTO payslip 
-        (employee_id, cutoff_id, position, rate, tax_status, basic_pay, total_hour, ot_hours, ot, cash_advance, sss, philhealth, hdmif, tax, material_cost, ytd_sss, ytd_philhealth, ytd_hdmif, ytd_grossincome, total_compensation, total_deduc, netpay) 
-        VALUES ('$empID', '$cutoff_id', '$position', '$rph', '$tax_stat', '$gross_payslip', '$total_hour', '$ot_hours', '$total_ot', '$total_cashad', '$sss_payslip', '$philhealth_payslip', '$pagibig_payslip', '$tax_payslip', '$material_loss', '$sss', '$philhealth', '$pagibig', '$gross', '$compensation_total', '$deduction_total', '$netpay')";
+        (employee_id, cutoff_id, project_name, position, rate, tax_status, basic_pay, total_hour, ot_hours, ot, cash_advance, sss, philhealth, hdmif, tax, material_cost, ytd_sss, ytd_philhealth, ytd_hdmif, ytd_grossincome, total_compensation, total_deduc, netpay) 
+        VALUES ('$empID', '$cutoff_id', '$projectname', '$position', '$rph', '$tax_stat', '$gross_payslip', '$total_hour', '$ot_hours', '$total_ot', '$total_cashad', '$sss_payslip', '$philhealth_payslip', '$pagibig_payslip', '$tax_payslip', '$material_loss', '$sss', '$philhealth', '$pagibig', '$gross', '$compensation_total', '$deduction_total', '$netpay')";
 
           $data = $conn->query($sqlpayslip) ? 'working' : "Error3." . $sqlpayslip . "<br>" . $conn->error;
           if ($data  == NULL) {

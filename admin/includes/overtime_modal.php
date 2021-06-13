@@ -165,8 +165,8 @@
             <h2 class="employee_name bold"></h2>
             <h4 class="othour"></h4>
             <div class="form-group">
-                <input type="radio" name="Late OT" value="">Reason 1
-                <input type="radio" name="Late OT" value="">Reason 2
+                <input type="checkbox" name="reason[]" value="Reason 1">Reason 1
+                <input type="checkbox" name="reason[]" value="Reason 2">Reason 2
             </div>
             <div class="form-group">
               <label for="others">Others: </label>

@@ -57,7 +57,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     <div class="col-lg-2">
                                         <span><strong>Status: </strong></span>
                                         <select class="form-control" id="ot-filter-status">
-                                            <option value="">View All</option>
+                                            <option value="">Select All</option>
                                             <option value="Approved">Approved</option>
                                             <option value="Declined">Declined</option>
                                         </select>
@@ -65,7 +65,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     <div class="col-lg-2">
                                         <span><strong>Select Cutoff Date: </strong></span>
                                         <select class="form-control cutoffdate" id="ot-filter-date">
-                                            <option value="" selected> Select Cut-Off Date</option>
+                                            <option value="" selected> Select All</option>
                                             <?php
                                             $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
                                             $querycutoff = $conn->query($sqlcutoff);
@@ -83,7 +83,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     <div class="col-lg-2">
                                         <span><strong>Project: </strong></span>
                                         <select class="form-control cutoffdate" id="ot-filter-project">
-                                            <option value="" selected> Select Project</option>
+                                            <option value="" selected> Select All</option>
                                             <?php
                                             $sql = "SELECT * FROM project ORDER BY project_name";
                                             $querycutoff = $conn->query($sql);  
@@ -130,7 +130,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     <?php include 'includes/scripts.php'; ?>
     <script>
     $(document).ready(function() {
-        filter_data("", 0, "");
+        filter_data("", "", "");
 
         /*--
         Generate Payroll of all employees

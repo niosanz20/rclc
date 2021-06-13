@@ -47,9 +47,6 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="box">
-              <div class="box-header with-border">
-                <a href="javascript:void(0)" class="btn btn-primary btn-sm btn-flat overtime"><i class="fa fa-eye"></i> View Overtime Logs</a>
-              </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
@@ -63,8 +60,12 @@
                   </thead>
                   <tbody>
                     <?php
-                    // $sql = "SELECT *, overtime.id AS otid, employees.employee_id AS empid FROM overtime LEFT JOIN employees ON employees.id=overtime.employee_id ORDER BY date_overtime DESC";
-                    $sql = "SELECT *, overtime.id AS otid, employees.employee_id AS empid, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in AS ttime_in, attendance.time_out AS ttime_out FROM overtime LEFT JOIN employees ON employees.employee_id=overtime.employee_id LEFT JOIN position ON position.id=employees.position_id LEFT JOIN attendance ON attendance.employee_id=overtime.employee_id LEFT JOIN schedules ON schedules.id=employees.schedule_id 
+                    $sql = "SELECT *, overtime.id AS otid, employees.employee_id AS empid, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in AS ttime_in, attendance.time_out AS ttime_out 
+                    FROM overtime 
+                    LEFT JOIN employees ON employees.employee_id=overtime.employee_id 
+                    LEFT JOIN position ON position.id=employees.position_id 
+                    LEFT JOIN attendance ON attendance.employee_id=overtime.employee_id 
+                    LEFT JOIN schedules ON schedules.id=employees.schedule_id 
                     WHERE overtime.date_overtime=attendance.date AND ot_status = 'New' ORDER BY date_overtime DESC ";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
@@ -77,8 +78,8 @@
                           <td>" . $row['hours'] . "</td>
                           <td>" . number_format($row['amount'], 2) . "</td>
                           <td>
-                            <button class='btn btn-success btn-sm btn-flat edit' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ok-circle'></i> Approve</button>
-                            <button class='btn btn-danger btn-sm btn-flat delete' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ban-circle'></i> Decline</button>
+                            <button class='btn btn-success btn-sm btn-flat approve' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ok-circle'></i> Approve</button>
+                            <button class='btn btn-danger btn-sm btn-flat decline' data-id='" . $row['otid'] . "'><i class='glyphicon glyphicon-ban-circle'></i> Decline</button>
                           </td>
                        </tr>";
                     }
@@ -91,26 +92,22 @@
         </div>
       </section>
     </div>
-    <?php include 'includes/overtime_logs_modal.php'; ?>
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/overtime_modal.php'; ?>
   </div>
   <?php include 'includes/scripts.php'; ?>
   <script>
-    $(function() {
-      $('.edit').click(function() {
-        $('#edit').modal('show');
-        var id = $(this).data('id');
-        getRow(id);
-      });
-      $('.delete').click(function() {
-        // e.preventDefault()
-        $('#delete').modal('show');
-        var id = $(this).data('id');
-        getRow(id);
-      });
-
+    $('.approve').click(function() {
+      $('#edit').modal('show');
+      var id = $(this).data('id');
+      getRow(id);
     });
+    $('.decline').click(function() {
+      $('#delete').modal('show');
+      var id = $(this).data('id');
+      getRow(id);
+    });
+
     $('#overtime-table').DataTable({
       "order": [
         [0, "desc"]
@@ -124,12 +121,6 @@
       "info": true,
       "autoWidth": false
     })
-    /*--
-    Display Modal of Overtime Logs for Employees
-    -----------------------------------*/
-    $(document).on('click', '.overtime', function() {
-      $('#overtime-logs').modal('show');
-    });
 
     function getRow(id) {
       $.ajax({
@@ -141,14 +132,11 @@
         dataType: 'json',
         success: function(response) {
           var time = response.hours;
-          // if(time.includes('.')){
-          //   alert(time);
-          // }else{alert('No Period');}
           var split = time.split('.');
           var hour = split[0];
           var min = '.' + split[1];
           min = min * 60;
-          console.log(min);
+          
           $('.employee_name').html(response.firstname + ' ' + response.lastname);
           $('.otid').val(response.otid);
           $('.othour').html(response.hours + ' minutes');
@@ -158,10 +146,23 @@
           $('#hours_edit').val(hour);
           $('#mins_edit').val(min);
           $('#rate_edit').val(response.rate);
+          
         },
-        error: function() {
-          console.log(data);
-        }
+        complete: function() { log_overtime(id); },
+        error: function() { console.log(data); }
+      });
+    }
+
+    function log_overtime(cutoffID){
+      $.ajax({
+        type: 'POST',
+        url: 'php/overtime/overtime_log.php',
+        data: {
+          cutoffID: cutoffID
+        },
+        dataType: 'json',
+        success: function(data) { console.log(data) },
+        error: function() { console.log(data); }
       });
     }
   </script>

@@ -1,13 +1,13 @@
 <?php
 include 'includes/session.php';
+define('TIMEZONE', 'Asia/Singapore');
+date_default_timezone_set(TIMEZONE);
 
 if (isset($_POST['edit'])) {
 	$id = $_POST['id'];
-	$date = $_POST['date'];
-	$hours = $_POST['hours'] + ($_POST['mins'] / 60);
-	$rate = $_POST['rate'];
+	$timestamp = date("Y-m-d H:i:s");
 
-	$sql = "UPDATE overtime SET ot_status = 'Approved' WHERE id = '$id'";
+	$sql = "UPDATE overtime SET ot_status = 'Approved', timestamp = '$timestamp' WHERE id = '$id'";
 	if ($conn->query($sql)) {
 		$_SESSION['success'] = 'Overtime approved successfully';
 	} else {

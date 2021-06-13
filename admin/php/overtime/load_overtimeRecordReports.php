@@ -19,9 +19,9 @@ if (isset($_POST['status'])) {
     $project_id = $_POST['project_id'];
 	$cutoffID = $_POST['cutoff_id'];
 
-    $sqlCutoff = $cutoffID != 0 ? "AND payslip.cutoff_id='$cutoffID'" : "AND payslip.cutoff_id=(SELECT MAX(cutoff_id) FROM cutoff)";
+    $sqlCutoff =  !empty($cutoffID) ? "AND payslip.cutoff_id='$cutoffID'" : "AND payslip.cutoff_id=(SELECT MAX(payslip.cutoff_id) FROM cutoff)";
     $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
-    $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "";
+    $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
 
     $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in 
             AS ttime_in, attendance.time_out AS ttime_out, project_employee.name AS project_name
@@ -33,21 +33,20 @@ if (isset($_POST['status'])) {
             LEFT JOIN position ON position.id = employees.position_id 
             LEFT JOIN attendance ON attendance.employee_id = overtime.employee_id 
             LEFT JOIN schedules ON schedules.id = employees.schedule_id
-            WHERE overtime.date_overtime=attendance.date AND overtime.ot_status != 'New' $sqlCutoff $sqlProject $sqlStatus
-            ORDER BY overtime.date_overtime DESC
+            WHERE overtime.date_overtime = attendance.date $sqlCutoff $sqlProject $sqlStatus GROUP BY timestamp
             ";
-   
+
     $result = $conn->query($sql);
     $projectName = $cutoffDate = "";
 	while ($row = $result->fetch_assoc()) {
-
+        $ot_status = "";
         if ($row['ot_status'] == "Approved") {
             $ot_status = "
-            <span class='label label-success' style='padding: 10px'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on timestamp</span>
+            <span class='label label-success' style='padding: 10px'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on ".  $row['timestamp']  ."</span>
                 ";
         } else if ($row['ot_status'] == "Declined") {
             $ot_status = "
-            <span class='label label-danger' style='padding: 10px'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on timestamp</span>
+            <span class='label label-danger' style='padding: 10px'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on ".  $row['timestamp']  ."</span>
                     ";
             }
 		$output .= "
@@ -59,7 +58,7 @@ if (isset($_POST['status'])) {
                 <td>" . $row['hours'] . "</td>
                 <td>" . number_format($row['amount'], 2) . "</td>
                 <td>  $ot_status </td>
-                <td>REASONS</td>
+                <td>".  $row['reason']  ."</td>
             </tr>";
 	}
 

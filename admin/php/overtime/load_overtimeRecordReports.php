@@ -42,11 +42,11 @@ if (isset($_POST['status'])) {
         $ot_status = "";
         if ($row['ot_status'] == "Approved") {
             $ot_status = "
-            <span class='label label-success' style='padding: 10px'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on " .  $row['timestamp']  . "</span>
+            <span class='badge badge-finish'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
                 ";
         } else if ($row['ot_status'] == "Declined") {
             $ot_status = "
-            <span class='label label-danger' style='padding: 10px'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on " .  $row['timestamp']  . "</span>
+            <span class='badge badge-pending'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
                     ";
         }
         $output .= "

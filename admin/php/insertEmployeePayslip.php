@@ -10,7 +10,7 @@ if (isset($_POST['dateNow'])) {
     $empID = $row['employee_id'];
 
     //pagkuha ng cut-off dates
-    $sqlCutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
+    $sqlCutoff = "SELECT * FROM cutoff ORDER BY end_date ASC";
     $resultCutoff = mysqli_query($conn, $sqlCutoff);
 
     // printing ng payroll summary ng employee
@@ -140,17 +140,18 @@ if (isset($_POST['dateNow'])) {
         $pagibig = $rowYTD['pagibig'] + $pagibig;
         $sss = $rowYTD['sss'] + $sss;
         $gross = $rowYTD['gross_income'] + $gross;
-
-        /*
-	  dapat mastore 'yung previous value 
-	  $sqlYear = "UPDATE yeartodate set
-                    tax = '$tax',
-                    sss = '$sss',
-                    philhealth = '$philhealth',
-                    pagibig = '$pagibig', 
+        $tax_payslip = $rowYTD['tax'] + $tax_payslip;
+        
+	      // dapat mastore 'yung previous value   //done
+	      $sqlYear = "UPDATE yeartodate set
+                    tax = '$tax_payslip',
+                    sss= '$sss',
+                    philhealth= '$philhealth',
+                    pagibig= '$pagibig', 
                     gross_income = '$gross'
                     WHERE employee_id = '$empID'";
-      $conn->query($sqlYear);*/
+        $conn->query($sqlYear) ? 'working' : "Error3." . $sqlYear . "<br>" . $conn->error;
+
 
         // Postion & Rate
         $sqlp = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id WHERE employees.employee_id='$empID'";

@@ -187,7 +187,7 @@ if (isset($_POST['empID2'])) {
             <td width="10%" align="left">: ' . $rowpayslipcutoff['empphil'] . '</td>
           </tr>
           <tr>
-            <td width="20%" align="left"><strong>PROJECT NAME: </strong>(<a style="font-style: italic; ">Current</a>)</td>
+            <td width="20%" align="left"><strong>PROJECT NAME: </strong></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['project_name'] . '</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>HDMIF NO.</b></td>
@@ -221,7 +221,7 @@ if (isset($_POST['empID2'])) {
             <td width="20%" align="left"><b>RATE per HOUR</b></td>
             <td width="10%" align="left">' . number_format($rowpayslipcutoff['rate'], 2) . '</td>
             <td width="20%" align="left"><strong>TAX</strong></td>
-            <td width="10%" align="right">'. number_format($rowpayslipcutoff['tax'], 2) . '</td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['tax'], 2) . '</td>
             <td width="20%" align="left"><b>TAX</b></td>
             <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_tax'], 2) . '</td>
             </tr>

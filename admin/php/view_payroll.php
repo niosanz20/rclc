@@ -130,15 +130,19 @@ if (isset($_POST['empID2'])) {
 
   $sqlCutoffpayslip = $cutoffID != 0
     ?
-    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id 
+    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth 
+    FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id 
     LEFT JOIN project_employee ON project_employee.name=employees.employee_id
     LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
+    LEFT JOIN yeartodate ON yeartodate.employee_id = payslip.employee_id
     WHERE payslip.cutoff_id='$cutoffID' AND employees.employee_id='$empID'"
 
     :
-    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin FROM employees 
+    "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth 
+    FROM employees 
     LEFT JOIN payslip ON payslip.employee_id=employees.employee_id
-    LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
+    LEFT JOIN cutoff ON cutoff.employee_id = payslip.employee_id
+    LEFT JOIN yeartodate ON yeartodate.employee_id = employees.employee_id
     WHERE payslip.cutoff_id=(SELECT MAX(cutoff_id) FROM cutoff) AND employees.employee_id='$empID'";
 
   // $sqlCutoffpayslip = "SELECT * FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id='$empID'";
@@ -219,13 +223,13 @@ if (isset($_POST['empID2'])) {
             <td width="20%" align="left"><strong>TAX</strong></td>
             <td width="10%" align="right">'. number_format($rowpayslipcutoff['tax'], 2) . '</td>
             <td width="20%" align="left"><b>TAX</b></td>
-            <td width="10%" align="right">' . number_format($rowpayslipcutoff['tax'], 2) . '</td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_tax'], 2) . '</td>
             </tr>
             <tr>
               <td width="20%" align="left"><b>TOTAL HOURS</b></td>
               <td width="10%" align="right">' . $rowpayslipcutoff['total_hour'] . '</td>
               <td width="20%" align="left"><b>SSS</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['sss'], 2) . '</td>
+              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_sss'], 2) . '</td>
               <td width="20%" align="left"><b>SSS</b></td>
               <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_sss'], 2) . '</td>
             </tr>
@@ -233,7 +237,7 @@ if (isset($_POST['empID2'])) {
               <td width="20%" align="left"><b>BASIC</b></td>
               <td width="10%" align="right">' . number_format($rowpayslipcutoff['basic_pay'], 2) . '</td>
               <td width="20%" align="left"><b>PHILHEALTH</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['philhealth'], 2) . '</td>
+              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_philhealth'], 2) . '</td>
               <td width="20%" align="left"><b>PHILHEALTH</b></td>
               <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_philhealth'], 2) . '</td>
             </tr>

@@ -194,6 +194,7 @@ if (isset($_POST['empID2'])) {
             <td width="10%" align="left">: ' . $rowpayslipcutoff['emppag'] . '</td>
         </tbody>
       </table>
+
       <table class="greyGridTable" id="secondTable">
         <thead>
           <tr>
@@ -224,110 +225,109 @@ if (isset($_POST['empID2'])) {
             <td width="10%" align="right">' . number_format($rowpayslipcutoff['tax'], 2) . '</td>
             <td width="20%" align="left"><b>TAX</b></td>
             <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_tax'], 2) . '</td>
-            </tr>
-            <tr>
-              <td width="20%" align="left"><b>TOTAL HOURS</b></td>
-              <td width="10%" align="right">' . $rowpayslipcutoff['total_hour'] . '</td>
-              <td width="20%" align="left"><b>SSS</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_sss'], 2) . '</td>
-              <td width="20%" align="left"><b>SSS</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_sss'], 2) . '</td>
-            </tr>
-            <tr>
-              <td width="20%" align="left"><b>BASIC</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['basic_pay'], 2) . '</td>
-              <td width="20%" align="left"><b>PHILHEALTH</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_philhealth'], 2) . '</td>
-              <td width="20%" align="left"><b>PHILHEALTH</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_philhealth'], 2) . '</td>
-            </tr>
-            <tr>
-              <td width="20%" align="left"><b>OT (' . $rowpayslipcutoff['ot_hours'] . ' hrs)</b></td>
-              <td width="10%" align="right">' . $rowpayslipcutoff['ot'] . '</td>
-              <td width="20%" align="left"><b>HDMIF</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['hdmif'], 2) . '</td>
-              <td width="20%" align="left"><b>HDMIF</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_hdmif'], 2) . '</td>
-            </tr>
-            <tr>
-              <td width="20%" align="left"><b></b></td>
-              <td width="10%" align="right"></td>
-              <td width="20%" align="left"><b>MATERIAL LOST</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['material_cost'], 2) . '</td>
-              <td width="20%" align="left"><b>GROSS INCOME</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_grossincome'], 2) . '</td>
-            </tr>
-            <tr>
-              <td width="20%" align="left"><b></b></td>
-              <td width="10%" align="right"></td>
-              <td width="20%" align="left"><b>CASH ADVANCE</b></td>
-              <td width="10%" align="right">' . number_format($rowpayslipcutoff['cash_advance'], 2) . '</td>
-              <td width="20%" align="left"><b></b></td>
-              <td width="10%" align="right"></td>
-            </tr>
+          </tr>
+          <tr>
+            <td width="20%" align="left"><b>TOTAL HOURS</b></td>
+            <td width="10%" align="right">' . $rowpayslipcutoff['total_hour'] . '</td>
+            <td width="20%" align="left"><b>SSS</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_sss'], 2) . '</td>
+            <td width="20%" align="left"><b>SSS</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_sss'], 2) . '</td>
+          </tr>
+          <tr>
+            <td width="20%" align="left"><b>BASIC</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['basic_pay'], 2) . '</td>
+            <td width="20%" align="left"><b>PHILHEALTH</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_philhealth'], 2) . '</td>
+            <td width="20%" align="left"><b>PHILHEALTH</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_philhealth'], 2) . '</td>
+          </tr>
+          <tr>
+            <td width="20%" align="left"><b>OT (' . $rowpayslipcutoff['ot_hours'] . ' hrs)</b></td>
+            <td width="10%" align="right">' . $rowpayslipcutoff['ot'] . '</td>
+            <td width="20%" align="left"><b>HDMIF</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['hdmif'], 2) . '</td>
+            <td width="20%" align="left"><b>HDMIF</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_hdmif'], 2) . '</td>
+          </tr>
+          <tr>
+            <td width="20%" align="left"><b></b></td>
+            <td width="10%" align="right"></td>
+            <td width="20%" align="left"><b>MATERIAL LOST</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['material_cost'], 2) . '</td>
+            <td width="20%" align="left"><b>GROSS INCOME</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_grossincome'], 2) . '</td>
+          </tr>
+          <tr>
+            <td width="20%" align="left"><b></b></td>
+            <td width="10%" align="right"></td>
+            <td width="20%" align="left"><b>CASH ADVANCE</b></td>
+            <td width="10%" align="right">' . number_format($rowpayslipcutoff['cash_advance'], 2) . '</td>
+            <td width="20%" align="left"><b></b></td>
+            <td width="10%" align="right"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flexDisplay">
+        <div class="legend">
+          <table style="border:none">
+            <thead>
+              <th colspan="4">LEGEND</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LH -</td>
+                <td>Legal Holiday</td>
+                <td>OT -</td>
+                <td>Overtime</td>
+              </tr>
+              <tr>
+                <td>SH -</td>
+                <td>Special Holiday &nbsp</td>
+                <td>RD -</td>
+                <td>Rest Day</td>
+              </tr>
+              <tr>
+                <td>DH -</td>
+                <td>Double Holiday</td>
+                <td></td>
+                <td></td>
+              </tr>
+
             </tbody>
-            </table>
+          </table>
+        </div>
 
-            <div class="flexDisplay">
-              <div class="legend">
-                <table style="border:none">
-                  <thead>
-                    <th colspan="4">LEGEND</th>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>LH -</td>
-                      <td>Legal Holiday</td>
-                      <td>OT -</td>
-                      <td>Overtime</td>
-                    </tr>
-                    <tr>
-                      <td>SH -</td>
-                      <td>Special Holiday &nbsp</td>
-                      <td>RD -</td>
-                      <td>Rest Day</td>
-                    </tr>
-                    <tr>
-                      <td>DH -</td>
-                      <td>Double Holiday</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-               <div class="legend">
-                  <table style="border:none">
-                    <thead>
-                      <th colspan="4">COMPUTATION</th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Computation ng rate per hour</td>
-                        <td>(OT)</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Computation for TAX</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr> 
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                    </tbody>
-                  </table>
-              </div>
-
-            </div>
-            </div>
+        <div class="legend">
+          <table style="border:none">
+            <thead>
+              <th colspan="4">COMPUTATION</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Computation ng rate per hour</td>
+                <td>(OT)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Computation for TAX</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   ';
 
   $data = array(

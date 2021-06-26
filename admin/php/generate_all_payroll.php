@@ -13,11 +13,11 @@ $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 $pdf->SetMargins(PDF_MARGIN_LEFT, '9', PDF_MARGIN_RIGHT);
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
-$pdf->SetAutoPageBreak(true, 50);
+$pdf->SetAutoPageBreak(true, 10);
 $pdf->SetFont('cid0cs', '', 8, '', false);
 $pdf->AddPage();
 $contents = '
- <style>' . file_get_contents('printer.css') . '</style>
+ <style>' . file_get_contents('payrollstyle.css') . '</style>
 
 ';
 if (isset($_POST['cutoff_id'])) {
@@ -60,8 +60,8 @@ if (isset($_POST['cutoff_id'])) {
 						<td width="15%" align="left"><b>NAME</b></td>
 						<td width="20%" align="left">: ' . $rowpayslipcutoff['firstname'] . ' ' . $rowpayslipcutoff['lastname'] . '</td>
 						<td width="15%"></td>
-						<td width="20%" align="left"><b>TAX STATUS</b></td>
-						<td width="20%" align="left">: ' . $rowpayslipcutoff['tax_status'] . '</td>
+						<td width="20%" align="left"></td>
+						<td width="20%" align="left"></td>
 					</tr>
 					<tr>
 						<td width="15%" align="left"><b>PAYROLL DATE</b></td>
@@ -167,35 +167,7 @@ if (isset($_POST['cutoff_id'])) {
 	}
 	$contents .=
 		'
-		<div class="legend">
-				  <table style="border:none">
-					<thead>
-					  <tr><th colspan="4">LEGEND</th></tr>
-					</thead>
-					<tbody>
-					  <tr>
-						<td>LH -</td>
-						<td>Legal Holiday</td>
-						<td>OT -</td>
-						<td>Overtime</td>
-					  </tr>
-					  <tr>
-						<td>SH -</td>
-						<td>Special Holiday &nbsp</td>
-						<td>RD -</td>
-						<td>Rest Day</td>
-					  </tr>
-					  <tr>
-						<td>DH -</td>
-						<td>Double Holiday</td>
-						<td></td>
-						<td></td>
-					  </tr>
-
-					</tbody>
-				  </table>
-				   <h3>Total of ' . $count . ' records.</h3>
-				</div>
+			<h3>Total of ' . $count . ' records.</h3>
 		';
 	$pdf->writeHTML($contents);
 	$pdf->Output('payslip.pdf', 'I');

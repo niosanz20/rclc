@@ -16,26 +16,27 @@ if (isset($_POST['status'])) {
                 <tbody>';
 
     $status = $_POST['status'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
     $project_id = $_POST['project_id'];
-    $cutoffID = $_POST['cutoff_id'];
 
-    $sqlCutoff =  !empty($cutoffID) ? "AND payslip.cutoff_id='$cutoffID'" : "AND payslip.cutoff_id=(SELECT MAX(payslip.cutoff_id) FROM cutoff)";
+    $sqlCutoff =  !empty($start_date) ? "AND overtime.date_overtime BETWEEN '" . date('Y-m-d', strtotime($start_date)) . "' AND '" . date('Y-m-d', strtotime($end_date)) . "' " : "";
     $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
     $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
 
     $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in 
-            AS ttime_in, attendance.time_out AS ttime_out, project_employee.name AS project_name
-            FROM employees
-            LEFT JOIN payslip ON payslip.employee_id = employees.employee_id
-            LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
-            LEFT JOIN project_employee ON project_employee.name = employees.employee_id
-            LEFT JOIN overtime ON overtime.employee_id = employees.employee_id 
-            LEFT JOIN position ON position.id = employees.position_id 
-            LEFT JOIN attendance ON attendance.employee_id = overtime.employee_id 
-            LEFT JOIN schedules ON schedules.id = employees.schedule_id
-            WHERE overtime.date_overtime = attendance.date $sqlCutoff $sqlProject $sqlStatus GROUP BY timestamp
+            AS ttime_in, attendance.time_out AS ttime_out, project.project_name AS project_name
+            FROM overtime 
+            LEFT JOIN employees ON employees.employee_id=overtime.employee_id 
+            LEFT JOIN position ON position.id=employees.position_id 
+            LEFT JOIN schedules ON schedules.id=employees.schedule_id 
+            LEFT JOIN project_employee ON project_employee.name=employees.employee_id 
+            LEFT JOIN project ON project.project_id=project_employee.projectid 
+            LEFT JOIN attendance ON attendance.employee_id=employees.employee_id
+            WHERE overtime.date_overtime=attendance.date $sqlCutoff $sqlProject $sqlStatus
+            ORDER BY date_overtime DESC
             ";
-
+    //echo $sql;
     $result = $conn->query($sql);
     $projectName = $cutoffDate = "";
 	while ($row = $result->fetch_assoc()) {

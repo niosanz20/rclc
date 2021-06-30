@@ -27,27 +27,27 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
             <!-- Main content -->
             <section class="content">
                 <?php
-        if (isset($_SESSION['error'])) {
-          echo "
+                if (isset($_SESSION['error'])) {
+                    echo "
             <div class='alert alert-danger alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-warning'></i> Error!</h4>
               " . $_SESSION['error'] . "
             </div>
           ";
-          unset($_SESSION['error']);
-        }
-        if (isset($_SESSION['success'])) {
-          echo "
+                    unset($_SESSION['error']);
+                }
+                if (isset($_SESSION['success'])) {
+                    echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-check'></i> Success!</h4>
               " . $_SESSION['success'] . "
             </div>
           ";
-          unset($_SESSION['success']);
-        }
-        ?>
+                    unset($_SESSION['success']);
+                }
+                ?>
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
@@ -107,31 +107,31 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                          // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
+                                                    // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.id=attendance.employee_id ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                          $to = date('Y-m-d');
-                          $from = date('Y-m-d', strtotime('-30 day', strtotime($to)));
+                                                    $to = date('Y-m-d');
+                                                    $from = date('Y-m-d', strtotime('-30 day', strtotime($to)));
 
-                          if (isset($_GET['range'])) {
-                            $range = $_GET['range'];
-                            $ex = explode(' - ', $range);
-                            $from = date('Y-m-d', strtotime($ex[0]));
-                            $to = date('Y-m-d', strtotime($ex[1]));
-                          }
+                                                    if (isset($_GET['range'])) {
+                                                        $range = $_GET['range'];
+                                                        $ex = explode(' - ', $range);
+                                                        $from = date('Y-m-d', strtotime($ex[0]));
+                                                        $to = date('Y-m-d', strtotime($ex[1]));
+                                                    }
 
-                          // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
+                                                    // $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id WHERE date BETWEEN '$from' AND '$to' ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                          $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid, 
+                                                    $sql = "SELECT *, employees.employee_id AS empid, attendance.id AS attid, 
                             attendance.status AS astatus FROM attendance LEFT JOIN employees ON 
                             employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON
                              project_employee.name=employees.employee_id LEFT JOIN project ON
                               project.project_id=project_employee.projectid WHERE date 
                               BETWEEN '$from' AND '$to' AND project_employee.status = 'On going' ORDER BY attendance.date DESC, attendance.time_in DESC";
 
-                          $query = $conn->query($sql);
-                          while ($row = $query->fetch_assoc()) {
-                            $status = ($row['astatus']) ? '<span class="label label-warning pull-right">ontime</span>' : '<span class="label label-danger pull-right">late</span>';
-                            echo "
+                                                    $query = $conn->query($sql);
+                                                    while ($row = $query->fetch_assoc()) {
+                                                        $status = ($row['astatus']) ? '<span class="label label-warning pull-right">ontime</span>' : '<span class="label label-danger pull-right">late</span>';
+                                                        echo "
                                 <tr>
                                   <td class='hidden'></td>
                                   <td>" . date('Y-m-d', strtotime($row['date'])) . "</td>
@@ -147,8 +147,8 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                   </td>
                                 </tr>
                               ";
-                          }
-                          ?>
+                                                    }
+                                                    ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -157,22 +157,22 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     <div class="tab-pane" id="attendance-records">
                                         <div class="col-lg-12" style="display: flex; justify-content: center;">
                                             <h3>Attendance Records</h3>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <select class="form-control cutoffdate" id="cuttoffdate_value"
                                                     style="margin-top: 1em">
                                                     <option value="" selected> Select Cut-Off Date</option>
                                                     <?php
-                          $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
-                          $querycutoff = $conn->query($sqlcutoff);
-                          while ($rowcutoff = $querycutoff->fetch_assoc()) {
-                            $cutoff_id = $rowcutoff['cutoff_id'];
-                            $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
-                            $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
-                            echo "
+                                                    $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
+                                                    $querycutoff = $conn->query($sqlcutoff);
+                                                    while ($rowcutoff = $querycutoff->fetch_assoc()) {
+                                                        $cutoff_id = $rowcutoff['cutoff_id'];
+                                                        $start_date = date("M j, Y", strtotime($rowcutoff['start_date']));
+                                                        $end_date = date("M j, Y", strtotime($rowcutoff['end_date']));
+                                                        echo "
                     <option value='" . $cutoff_id . "'>" . $start_date . ' - ' . $end_date . "</option>
                    ";
-                          }
-                          ?>
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
 
@@ -193,9 +193,14 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         <!-- Vertically Centered Modal End -->
         <div id="viewAttendance" class="modal fade">
             <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content" style="max-height: 580px">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-file"></span>Attendance Record (Cut-off
+                            date)
+                            <strong id="employee_name"></strong>
+                        </h4>
                     </div>
                     <div class="modal-body" id="modal-view-attendance">
 
@@ -283,6 +288,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
 
                     $('#tableSection').html(data.attendanceRecord);
 
+
                 },
                 error: function(data) {
                     console.log(data);
@@ -318,6 +324,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                 success: function(data) {
                     $('#modal-view-attendance').html(data);
                     $('#viewAttendance').modal('show');
+                    $('#employee_name').text(data.empName);
                 },
                 error: function(data) {
                     console.log(data);

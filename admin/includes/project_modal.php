@@ -21,7 +21,8 @@
 
                         <div class="col-sm-9">
                             <div class="date">
-                                <input type="text" class="form-control" id="datepicker_add" name="project_startdate" required>
+                                <input type="text" class="form-control" id="datepicker_add" name="project_startdate"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -30,7 +31,8 @@
 
                         <div class="col-sm-9">
                             <div class="date">
-                                <input type="text" class="form-control" id="datepicker_add" name="project_enddate" required>
+                                <input type="text" class="form-control" id="datepicker_add" name="project_enddate"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -38,7 +40,8 @@
                         <label for="project_description" class="col-sm-3 control-label">Description</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="project_description" id="project_description"></textarea>
+                            <textarea class="form-control" name="project_description"
+                                id="project_description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -52,14 +55,16 @@
                         <label for="project_address" class="col-sm-3 control-label">Address</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="project_address" id="project_address" required></textarea>
+                            <textarea class="form-control" name="project_address" id="project_address"
+                                required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="project_budget" class="col-sm-3 control-label">Estimated Budget</label>
 
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="project_budget" id="project_budget" pattern="[0-9]+"></textarea>
+                            <input type="text" class="form-control" name="project_budget" id="project_budget"
+                                pattern="[0-9]+"></textarea>
                         </div>
                     </div>
                     <!--<div class="form-group">-->
@@ -70,7 +75,7 @@
                     <!--            <option value="" selected>- Select -</option>-->
                     <!--            <option value="Active">Active</option>-->
                     <!--            <option value="Pending">Pending</option>-->
-                                <!--<option value="Finish">Finish</option>-->
+                    <!--<option value="Finish">Finish</option>-->
                     <!--        </select>-->
                     <!--    </div>-->
                     <!--</div>-->
@@ -83,8 +88,10 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i> Save</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i>
+                    Save</button>
                 </form>
             </div>
         </div>
@@ -115,7 +122,8 @@
 
                         <div class="col-sm-9">
                             <div class="date">
-                                <input type="text" class="form-control" id="datepicker_edit" name="project_startdate" required>
+                                <input type="text" class="form-control" id="datepicker_edit" name="project_startdate"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -124,7 +132,8 @@
 
                         <div class="col-sm-9">
                             <div class="date">
-                                <input type="text" class="form-control" id="datepicker_edit2" name="project_enddate" required>
+                                <input type="text" class="form-control" id="datepicker_edit2" name="project_enddate"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -132,10 +141,11 @@
                         <label for="edit_project_description" class="col-sm-3 control-label">Description</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="project_description" id="edit_project_description"></textarea>
+                            <textarea class="form-control" name="project_description"
+                                id="edit_project_description"></textarea>
                         </div>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="project_Owner" class="col-sm-3 control-label">*Owner</label>
 
                         <div class="col-sm-9">
@@ -146,14 +156,16 @@
                         <label for="edit_project_address" class="col-sm-3 control-label">Address</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" name="project_address" id="edit_project_address" required></textarea>
+                            <textarea class="form-control" name="project_address" id="edit_project_address"
+                                required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_project_budget" class="col-sm-3 control-label">Estimated Budget</label>
 
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="project_budget" id="edit_project_budget" pattern="[0-9]+"></textarea>
+                            <input type="text" class="form-control" name="project_budget" id="edit_project_budget"
+                                pattern="[0-9]+"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -164,15 +176,17 @@
                                 <option selected id="status_val"></option>
                                 <option value="Active">Active</option>
                                 <option value="Pending">Pending</option>
-                                <option value="Finish">Finished</option>
+                                <option value="Finished">Finished</option>
                             </select>
                         </div>
                     </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i>
+                    Update</button>
                 </form>
             </div>
         </div>
@@ -197,8 +211,10 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i>
+                    Delete</button>
                 </form>
             </div>
         </div>
@@ -215,7 +231,8 @@
                 <h4 class="modal-title"><b><span class="del_project_name"></span></b></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="project_edit_photo.php" enctype="multipart/form-data">
+                <form class="form-horizontal" method="POST" action="project_edit_photo.php"
+                    enctype="multipart/form-data">
                     <input type="hidden" class="project_id" name="id">
                     <div class="form-group">
                         <label for="photo" class="col-sm-3 control-label">Photo</label>
@@ -226,8 +243,10 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-success btn-flat" name="upload"><i class="fa fa-check-square-o"></i> Update</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-success btn-flat" name="upload"><i
+                        class="fa fa-check-square-o"></i> Update</button>
                 </form>
             </div>
         </div>

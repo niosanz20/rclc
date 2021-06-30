@@ -25,7 +25,7 @@ $projectname = $_GET['projectname'];
                             <select class="form-control" name="worker" id="worker" required>
                                 <option value="" selected>- Select -</option>
                                 <?php
-                                $sql = "SELECT * FROM employees LEFT JOIN project_employee ON employees.employee_id=project_employee.name WHERE project_employee.status = 'Vacant'";
+                                $sql = "SELECT * FROM employees WHERE NOT EXISTS (SELECT * FROM project_employee WHERE project_employee.name = employees.employee_id AND project_employee.status = 'Vacant')";
                                 $query = $conn->query($sql);
                                 while ($prow = $query->fetch_assoc()) {
                                     echo "
@@ -60,7 +60,8 @@ $projectname = $_GET['projectname'];
 
                         <div class="col-sm-9">
                             <div>
-                                <input type="date" class="form-control" id="project_date" name="project_date" min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
+                                <input type="date" class="form-control" id="project_date" name="project_date"
+                                    min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
                             </div>
                         </div>
                     </div>
@@ -83,7 +84,8 @@ $projectname = $_GET['projectname'];
 
                         <div class="col-sm-9">
                             <div class="">
-                                <input type="date" class="form-control" id="project_date_end" name="project_date_end" min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
+                                <input type="date" class="form-control" id="project_date_end" name="project_date_end"
+                                    min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
 
                             </div>
                         </div>
@@ -91,15 +93,18 @@ $projectname = $_GET['projectname'];
 
                     <div class="form-group">
                         <div class="col-sm-9">
-                            <input type="hidden" value="<?php echo $project_id ?>" ; class="form-control" name="projectid" id="projectid"></input>
+                            <input type="hidden" value="<?php echo $project_id ?>" ; class="form-control"
+                                name="projectid" id="projectid"></input>
                             <!--<input type="text" value="<?php echo $project_address ?>"; class="form-control" name="project_address" id="project_address"></input>-->
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                    <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                            class="fa fa-close"></i> Close</button>
+                    <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i>
+                        Save</button>
 
                 </div>
             </form>
@@ -118,7 +123,8 @@ $projectname = $_GET['projectname'];
                 <h4 class="modal-title"><b>Edit Project Worker</b></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="project_worker_edit.php" enctype="multipart/form-data">
+                <form class="form-horizontal" method="POST" action="project_worker_edit.php"
+                    enctype="multipart/form-data">
                     <input type="hidden" id="projworkerid" name="id">
                     <!--<div class="form-group">-->
                     <!--  <label for="position_leader" class="col-sm-3 control-label">Project Worker</label>-->
@@ -142,11 +148,12 @@ $projectname = $_GET['projectname'];
                     <div class="form-group">
                         <label for="edit_position" class="col-sm-3 control-label">Position</label>
                         <div class="col-sm-9">
-                            <?php 
+                            <?php
                             //Validate the Condition if it is correct
                             $isDisabled = date('d') >= 10 && date('d') <= 25 ? "disabled" : "";
                             ?>
-                            <select class="form-control" name="position" id="edit_position" <?php echo $isDisabled?> required>
+                            <select class="form-control" name="position" id="edit_position" <?php echo $isDisabled ?>
+                                required>
                                 <option value="" selected>- Select -</option>
                                 <?php
                                 $sql = "SELECT * FROM position";
@@ -166,7 +173,8 @@ $projectname = $_GET['projectname'];
 
                         <div class="col-sm-9">
                             <div>
-                                <input type="date" class="form-control" id="edit_project_date" name="project_date" min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
+                                <input type="date" class="form-control" id="edit_project_date" name="project_date"
+                                    min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
                             </div>
                         </div>
                     </div>
@@ -176,7 +184,9 @@ $projectname = $_GET['projectname'];
 
                         <div class="col-sm-9">
                             <div class="">
-                                <input type="date" class="form-control" id="edit_project_date_end" name="project_date_end" min="<?php echo $start_date ?>" max="<?php echo $end_date ?>">
+                                <input type="date" class="form-control" id="edit_project_date_end"
+                                    name="project_date_end" min="<?php echo $start_date ?>"
+                                    max="<?php echo $end_date ?>">
 
                             </div>
                         </div>
@@ -184,7 +194,8 @@ $projectname = $_GET['projectname'];
                     <div class="form-group">
                         <div class="col-lg-12">
                             <center>
-                                <span><strong style="color: red">Note:</strong> Changing position of an employee enable only every start date of cutoff.</span>
+                                <span><strong style="color: red">Note:</strong> Changing position of an employee enable
+                                    only every start date of cutoff.</span>
                             </center>
                         </div>
                     </div>
@@ -192,8 +203,10 @@ $projectname = $_GET['projectname'];
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-primary btn-flat" name="edit"><i class="fa fa-save"></i> Update</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-primary btn-flat" name="edit"><i class="fa fa-save"></i>
+                    Update</button>
                 </form>
             </div>
         </div>
@@ -212,15 +225,18 @@ $projectname = $_GET['projectname'];
                 <h4 class="modal-title"><b>Remove Project Worker</b></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="project_worker_delete.php" enctype="multipart/form-data">
+                <form class="form-horizontal" method="POST" action="project_worker_delete.php"
+                    enctype="multipart/form-data">
                     <input type="hidden" id="delprojworkerid" name="id">
                     <div class="text-center">
                         <h2 id="del_name" class="bold"></h2>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Remove</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                        class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i>
+                    Remove</button>
                 </form>
             </div>
         </div>

@@ -28,6 +28,8 @@ if (isset($_POST['empID'])) {
                     ";
     }
 
+    $photo = (!empty($rowprofile['photo'])) ? '../images/' . $rowprofile['photo'] : '../images/profile.jpg';
+
     $modalemployee = '
             <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
@@ -38,7 +40,7 @@ if (isset($_POST['empID'])) {
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex align-items-center text-center" style="justify-content: center">
-                            <img src="../images/' . $rowprofile['photo'] . '" alt="Admin" class="rounded-circle"
+                            <img src="' . $photo . '" alt="Admin" class="rounded-circle"
                                 style="max-height: 150px;max-width: 150px;">
                             <div class="mt-3" style="padding: 3rem;">
                                 <h4>' . $rowprofile['firstname'] . ' ' . $rowprofile['lastname'] . '</h4>

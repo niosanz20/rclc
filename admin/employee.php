@@ -23,26 +23,26 @@
             <!-- Main content -->
             <section class="content">
                 <?php
-        if (isset($_SESSION['error'])) {
-          echo "
+                if (isset($_SESSION['error'])) {
+                    echo "
             <div class='alert alert-danger alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-warning'></i> Error!</h4>
               " . $_SESSION['error'] . "
             </div>
           ";
-          unset($_SESSION['error']);
-        } else if (isset($_SESSION['success'])) {
-          echo "
+                    unset($_SESSION['error']);
+                } else if (isset($_SESSION['success'])) {
+                    echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
                 <h4><i class='icon fa fa-check'></i> Success!</h4>
                   " . $_SESSION['success'] . "
                 <hr>
             </div>";
-          unset($_SESSION['success']);
-        }
-        ?>
+                    unset($_SESSION['success']);
+                }
+                ?>
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
@@ -64,10 +64,10 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                    $sql = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id ORDER BY employees.firstname";
-                    $query = $conn->query($sql);
-                    while ($row = $query->fetch_assoc()) {
-                    ?>
+                                        $sql = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id ORDER BY employees.firstname";
+                                        $query = $conn->query($sql);
+                                        while ($row = $query->fetch_assoc()) {
+                                        ?>
                                         <tr>
                                             <!--<td><?php echo $row['employee_id']; ?></td>-->
                                             <td>
@@ -75,8 +75,10 @@
                                                 <img src="<?php echo (!empty($row['photo'])) ? '../images/' . $row['photo'] : '../images/profile.jpg'; ?>"
                                                     width="30px" height="30px" class="img-circle img-fluid "> <a
                                                     href="#edit_photo" data-toggle="modal" class="pull-right photo"
-                                                    data-id="<?php echo $row['empid']; ?>"><span
-                                                        class="fa fa-edit"></span></a>
+                                                    data-id="<?php echo $row['empid']; ?>"><button
+                                                        data-card-widget="edit" title="Edit Photo" data-toggle="tooltip"
+                                                        class="fa fa-edit"
+                                                        style="border: none; background-color: white;"></button></a>
                                             </td>
                                             <td>
                                                 <!-- QR Display -->
@@ -91,22 +93,22 @@
                                             <td><?php echo $row['description']; ?></td>
                                             <td>
                                                 <button class="viewEmployee btn btn-info btn-sm btn-flat"
-                                                    data-card-widget="view" data-toggle="tooltip" title="View"
+                                                    data-card-widget="view" title="View"
                                                     id="<?php echo $row['empid']; ?>"><i
                                                         class="glyphicon glyphicon-eye-open"></i> View</button>
                                                 <button class="btn btn-success btn-sm edit btn-flat"
-                                                    data-card-widget="edit" data-toggle="tooltip" title="Edit"
+                                                    data-card-widget="edit" title="Edit"
                                                     data-id="<?php echo $row['empid']; ?>"><i class="fa fa-edit"></i>
                                                     Edit</button>
                                                 <button class="btn btn-danger btn-sm delete btn-flat"
-                                                    data-card-widget="delete" data-toggle="tooltip" title="Delete"
+                                                    data-card-widget="delete" title="Delete"
                                                     data-id="<?php echo $row['empid']; ?>"><i class="fa fa-trash"></i>
                                                     Delete</button>
                                             </td>
                                         </tr>
                                         <?php
-                    }
-                    ?>
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

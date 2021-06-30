@@ -48,7 +48,8 @@
                     <div class="col-xs-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> New</a>
+                                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm"><i
+                                        class="fa fa-plus"></i> New</a>
                             </div>
                             <div class="box-body">
                                 <table id="example1" class="table table-bordered">
@@ -66,39 +67,44 @@
                                         while ($row = $query->fetch_assoc()) {
 
                                         ?>
-                                            <tr>
-                                                <td><?php echo $row['project_name']; ?></td>
-                                                <td><?php echo $row['project_address']; ?></td>
-                                                <td><?php echo $row['project_owner']; ?></td>
-                                                <?php
+                                        <tr>
+                                            <td><?php echo $row['project_name']; ?></td>
+                                            <td><?php echo $row['project_address']; ?></td>
+                                            <td><?php echo $row['project_owner']; ?></td>
+                                            <?php
                                                 if ($row['project_status'] == "Active") {
                                                     echo ' <td class="project-state "><span class="badge badge-active rclc-center"> ' . $row['project_status'] . ' </span></td> ';
                                                 } else if ($row['project_status'] == "Pending") {
                                                     echo ' <td class="project-state "><span class="badge badge-pending rclc-center"> ' . $row['project_status'] . ' </span></td> ';
-                                                } else if ($row['project_status'] == "Finish") {
+                                                } else if ($row['project_status'] == "Finished") {
                                                     echo ' <td class="project-state "><span class="badge badge-finish rclc-center"> ' . $row['project_status'] . ' </span></td> ';
                                                 }
                                                 ?>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action
-                                                            <span class="fa fa-caret-down"></span></button>
-                                                        <ul class="dropdown-menu" role="menu">
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                        data-toggle="dropdown" aria-expanded="false">Action
+                                                        <span class="fa fa-caret-down"></span></button>
+                                                    <ul class="dropdown-menu" role="menu">
 
-                                                            <li><a href="project_view.php?project_id=<?php echo $row['project_id'] ?>&start_date=<?php echo $row['project_startdate'] ?>&end_date=<?php echo $row['project_enddate'] ?>&projectname=<?php echo $row['project_name'] ?>">View</a></li>
+                                                        <li><a
+                                                                href="project_view.php?project_id=<?php echo $row['project_id'] ?>&start_date=<?php echo $row['project_startdate'] ?>&end_date=<?php echo $row['project_enddate'] ?>&projectname=<?php echo $row['project_name'] ?>">View</a>
+                                                        </li>
 
-                                                            <!--<li><a href="project_view.php?project_id=<?php echo $row['project_id'] ?>">View</a></li>-->
+                                                        <!--<li><a href="project_view.php?project_id=<?php echo $row['project_id'] ?>">View</a></li>-->
 
-                                                            <li><a class="edit" data-id="<?php echo $row['project_id']; ?>">Edit</a></li>
-                                                            <!--<li><a href="#">Assign Employee</a></li>
+                                                        <li><a class="edit"
+                                                                data-id="<?php echo $row['project_id']; ?>">Edit</a>
+                                                        </li>
+                                                        <!--<li><a href="#">Assign Employee</a></li>
                                                             <li><a href="#">Assign Materials </a></li> -->
-                                                            <!-- <li class="divider"></li>
+                                                        <!-- <li class="divider"></li>
                                                             <li><a class="delete" data-id="<?php echo $row['project_id']; ?>">Delete</a></li> -->
-                                                        </ul>
-                                                    </div>
+                                                    </ul>
+                                                </div>
 
-                                                </td>
-                                            </tr>
+                                            </td>
+                                        </tr>
                                         <?php
                                         }
                                         ?>
@@ -116,53 +122,53 @@
     </div>
     <?php include 'includes/scripts.php'; ?>
     <script>
-        $(function() {
-            $(document).on('click', '.edit', function() {
-                // e.preventDefault();
-                $('#edit').modal('show');
-                var project_id = $(this).data('id');
-                getRow(project_id);
-            });
-
-            $(document).on('click', '.delete', function() {
-                // e.preventDefault();
-                $('#delete').modal('show');
-                var id = $(this).data('id');
-                getRow(id);
-            });
-
-            $(document).on('click', '.photo', function() {
-                // e.preventDefault();
-                var project_id = $(this).data('id');
-                getRow(project_id);
-            });
-
+    $(function() {
+        $(document).on('click', '.edit', function() {
+            // e.preventDefault();
+            $('#edit').modal('show');
+            var project_id = $(this).data('id');
+            getRow(project_id);
         });
 
-        function getRow(project_id) {
-            $.ajax({
-                type: 'POST',
-                url: 'project_row.php',
-                data: {
-                    project_id: project_id
-                },
-                dataType: 'json',
-                success: function(response) {
-                    $('.project_id').val(response.project_id);
-                    $('#project_id').val(response.project_id);
-                    $('.del_project_name').html(response.project_name);
-                    $('#project_name').val(response.project_name);
-                    $('#edit_project_name').val(response.project_name);
-                    $('#datepicker_edit').val(response.project_startdate);
-                    $('#datepicker_edit2').val(response.project_enddate);
-                    $('#edit_project_description').val(response.project_description);
-                    $('#edit_project_owner').val(response.project_owner);
-                    $('#edit_project_address').val(response.project_address);
-                    $('#edit_project_budget').val(response.project_budget);
-                    $('#status_val').val(response.project_status).html(response.project_status);
-                }
-            });
-        }
+        $(document).on('click', '.delete', function() {
+            // e.preventDefault();
+            $('#delete').modal('show');
+            var id = $(this).data('id');
+            getRow(id);
+        });
+
+        $(document).on('click', '.photo', function() {
+            // e.preventDefault();
+            var project_id = $(this).data('id');
+            getRow(project_id);
+        });
+
+    });
+
+    function getRow(project_id) {
+        $.ajax({
+            type: 'POST',
+            url: 'project_row.php',
+            data: {
+                project_id: project_id
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('.project_id').val(response.project_id);
+                $('#project_id').val(response.project_id);
+                $('.del_project_name').html(response.project_name);
+                $('#project_name').val(response.project_name);
+                $('#edit_project_name').val(response.project_name);
+                $('#datepicker_edit').val(response.project_startdate);
+                $('#datepicker_edit2').val(response.project_enddate);
+                $('#edit_project_description').val(response.project_description);
+                $('#edit_project_owner').val(response.project_owner);
+                $('#edit_project_address').val(response.project_address);
+                $('#edit_project_budget').val(response.project_budget);
+                $('#status_val').val(response.project_status).html(response.project_status);
+            }
+        });
+    }
     </script>
 </body>
 

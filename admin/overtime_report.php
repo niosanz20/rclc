@@ -111,10 +111,15 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                 </div>
                                 <div class="row">
                                     <center>
-                                        <form method="POST" action="php/generate_all_payroll.php" target="_blank">
-                                            <input type="hidden" value="'.$cutoffID .'" name="cutoff_id">
-                                            <button type="submit" class="generate-all-payrollsdasd btn btn-success btn-lg btn-flat" id="'.$cutoffID .'"><span class="glyphicon glyphicon-print"></span>
-                                                Generate Report</button>
+                                        <form method="POST" action="php/overtime/generate_all_overtime.php" target="_blank">
+                                            <input type="hidden" value="" id="report-status" name="report-status">
+                                            <input type="hidden" value="" id="report-cutoff-start-date" name="report-cutoff-start-date">
+                                            <input type="hidden" value="" id="report-cutoff-end-date" name="report-cutoff-end-date">
+                                            <input type="hidden" value="" id="report-project" name="report-project">
+                                            <button type="submit" class="btn btn-success btn-lg btn-flat">
+                                                <i class="glyphicon glyphicon-print"></i>
+                                                Generate Report
+                                            </button>
                                         </form>
                                     </center>
                                 </div>
@@ -131,51 +136,69 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     <?php include 'includes/scripts.php'; ?>
     <script>
         $(document).ready(function() {
-            filter_data("", "", "");
+            filter_overtime_table("", "", "");
+
+            // /*--
+            // Generate Payroll of all employees
+            // -----------------------------------*/
+            // $(document).on('click', '.generate-all-overtimesss', function() {
+            //     var cutoff_id = $(this).attr("id");
+
+            //     if (cutoff_id != "") {
+            //         $.ajax({
+            //             url: "php/generate_overtime.php",
+            //             method: "POST",
+            //             data: {
+            //                 cutoff_id: cutoff_id
+            //             },
+            //             dataType: "json",
+            //             success: function(data) {
+            //                 $('#payroll-all-employees').html(data.output);
+
+            //                 document.getElementById("printout").style.display = "none";
+            //                 document.getElementById("payroll-all-employees").style.display =
+            //                     "block";
+            //                 window.addEventListener('load', window.print());
+            //                 document.getElementById("payroll-all-employees").style.maxHeight =
+            //                     "10px";
+            //             },
+            //             complete: function(data) {
+            //                 document.getElementById("wrapper-height").style.overflow = "hidden";
+            //             },
+            //             error: function(data) {
+            //                 console.log(data);
+            //             }
+            //         });
+            //     }
+            // });
 
             /*--
-            Generate Payroll of all employees
-            -----------------------------------*/
-            $(document).on('click', '.generate-all-payroll', function() {
-                var cutoff_id = $(this).attr("id");
-
-                if (cutoff_id != "") {
-                    $.ajax({
-                        url: "php/generate_payroll.php",
-                        method: "POST",
-                        data: {
-                            cutoff_id: cutoff_id
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            $('#payroll-all-employees').html(data.output);
-
-                            document.getElementById("printout").style.display = "none";
-                            document.getElementById("payroll-all-employees").style.display =
-                                "block";
-                            window.addEventListener('load', window.print());
-                            document.getElementById("payroll-all-employees").style.maxHeight =
-                                "10px";
-                        },
-                        complete: function(data) {
-                            document.getElementById("wrapper-height").style.overflow = "hidden";
-                        },
-                        error: function(data) {
-                            console.log(data);
-                        }
-                    });
-                }
-            });
-
-            /*--
-            Filter Reports sexy [paaaaaaaats]
+            Filter Reports
             -----------------------------------*/
             $(document).on('click', '.filter-record', function() {
-                filter_data($("#ot-filter-status").val(), $("#ot-filter-date").val(), $(
+                filter_overtime_table($("#ot-filter-status").val(), $("#ot-filter-date").val(), $(
+                    "#ot-filter-project").val());
+                set_generate_report_value($("#ot-filter-status").val(), $("#ot-filter-date").val(), $(
                     "#ot-filter-project").val());
             });
 
-            function setHeaderReport() {
+            function set_generate_report_value(status, cutoff_date, project_id) {
+                var start_date;
+                var end_date;
+
+                if (cutoff_date != "") {
+                    start_date = cutoff_date.split("-")[0];
+                    end_date = cutoff_date.split("-")[1];
+                } else start_date = end_date = "";
+
+                document.getElementById('report-status').value = status;
+                document.getElementById('report-cutoff-start-date').value = start_date;
+                document.getElementById('report-cutoff-end-date').value = end_date;
+                document.getElementById('report-project').value = project_id;
+                alert(start_date);
+            }
+
+            function set_overtime_report_header() {
                 var cutoffDate = document.getElementById('ot-filter-date');
                 var projectName = document.getElementById('ot-filter-project');
 
@@ -189,14 +212,13 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                 $('#ot-header-report').html(headerStatus + headerCutoffDate + headerProjectName);
             }
 
-            function filter_data(status, cutoff_date, project_id) {
+            function filter_overtime_table(status, cutoff_date, project_id) {
                 var start_date;
                 var end_date;
-                var date;
+
                 if (cutoff_date != "") {
-                    date = cutoff_date.split("-");
-                    start_date = date[0];
-                    end_date = date[1];
+                    start_date = cutoff_date.split("-")[0];
+                    end_date = cutoff_date.split("-")[1];
                 } else start_date = end_date = "";
 
                 $.ajax({
@@ -211,7 +233,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                     dataType: "json",
                     success: function(data) {
                         $('#overtime-records').html(data.output);
-                        setHeaderReport();
+                        set_overtime_report_header();
                     },
                     error: function(data) {
                         console.log(data);

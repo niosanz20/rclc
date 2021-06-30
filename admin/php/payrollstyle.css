@@ -23,6 +23,15 @@ table.greyGridTable th {
   border: 1px solid #000000;
   padding: 3px 4px;
 }
+table.greyGridTable .title{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+}
+table.greyGridTable .header, .tfoot-title{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.5rem;
+}
 table.greyGridTable tbody td {
   font-size: 13px;
 }
@@ -35,7 +44,8 @@ table.greyGridTable thead {
 }
 table.greyGridTable thead th {
   font-size: 15px;
-  font-weight: bold;
+  font-style: italic;
+  font-weight: 700;
   color: #333333;
   text-align: center;
   border-left: 2px solid #333333;
@@ -53,55 +63,4 @@ table.greyGridTable tfoot {
 }
 table.greyGridTable tfoot td {
   font-size: 14px;
-}
-#table-head1 {
-  column-span: 2;
-}
-#table-head2 {
-  column-span: 4;
-}
-#table-head3 {
-  column-span: 5;
-}
-
-#printout {
-  max-width: 700px;
-}
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #printout {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    visibility: visible;
-    overflow: visible !important; /* Remove scrollbar for printing. */
-  }
-  #printout * {
-    visibility: visible;
-    overflow: visible;
-  }
-
-  #payroll-all-employees {
-    page-break-after: avoid;
-
-    visibility: visible;
-    overflow: visible !important; /* Remove scrollbar for printing. */
-  }
-
-  #payroll-all-employees * {
-    visibility: visible;
-    overflow: visible;
-    page-break-inside: avoid;
-  }
-
-  @page {
-    size: auto; /* auto is the initial value */
-    size: A4 portrait;
-    margin: 0; /* this affects the margin in the printer settings */
-    border: 1px solid red; /* set a border for all printed pages */
-  }
 }

@@ -303,34 +303,34 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
     /*--
     Generate Payroll of all employees
     -----------------------------------*/
-      $(document).on('click', '.generate-all-payroll', function() {
-        var cutoff_id = $(this).attr("id");
+    //   $(document).on('click', '.generate-all-payroll', function() {
+    //     var cutoff_id = $(this).attr("id");
 		
-		if(cutoff_id != ""){
-		  $.ajax({
-          url: "php/generate_payroll.php",
-          method: "POST",
-		  data: {
-            cutoff_id: cutoff_id
-          },
-          dataType: "json",
-          success: function(data) {
-			$('#payroll-all-employees').html(data.output);
+		// if(cutoff_id != ""){
+		//   $.ajax({
+    //       url: "php/generate_payroll.php",
+    //       method: "POST",
+		//   data: {
+    //         cutoff_id: cutoff_id
+    //       },
+    //       dataType: "json",
+    //       success: function(data) {
+		// 	$('#payroll-all-employees').html(data.output);
 			
-			document.getElementById("printout").style.display = "none";
-			document.getElementById("payroll-all-employees").style.display = "block";
-			 window.addEventListener('load', window.print());
-			 document.getElementById("payroll-all-employees").style.maxHeight = "10px";
-          },
-		  complete: function(data){
-			  document.getElementById("wrapper-height").style.overflow = "hidden";
-			},
-          error: function(data) {
-            console.log(data);
-          }
-        });
-		}
-      });
+		// 	document.getElementById("printout").style.display = "none";
+		// 	document.getElementById("payroll-all-employees").style.display = "block";
+		// 	 window.addEventListener('load', window.print());
+		// 	 document.getElementById("payroll-all-employees").style.maxHeight = "10px";
+    //       },
+		//   complete: function(data){
+		// 	  document.getElementById("wrapper-height").style.overflow = "hidden";
+		// 	},
+    //       error: function(data) {
+    //         console.log(data);
+    //       }
+    //     });
+		// }
+    //   });
 
     });
   </script>

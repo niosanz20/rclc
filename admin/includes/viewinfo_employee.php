@@ -7,10 +7,26 @@ if (isset($_POST['empID'])) {
     $sqlprofile = "SELECT * FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id WHERE employees.id='$empID'";
     $queryprofile = $conn->query($sqlprofile);
     $rowprofile = $queryprofile->fetch_assoc();
+    $employeeID = $rowprofile['employee_id'];
 
-    // //pagkuha ng cut-off dates
-    // $sqlCutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
-    // $resultCutoff = mysqli_query($conn, $sqlCutoff);
+    $sqlproject = "SELECT * FROM project_employee LEFT JOIN project ON project.project_id=project_employee.projectid WHERE project_employee.name='$employeeID'";
+    $queryproject = $conn->query($sqlproject);
+    $rowproject = $queryproject->fetch_assoc();
+
+    $ot_status = "";
+    if ($rowproject['status'] == "On going") {
+        $ot_status = "
+            <span class='badge badge-active'>  " . $rowproject['status'] . "  </span>
+                ";
+    } else if ($rowproject['status'] == "Vacant") {
+        $ot_status = "
+            <span class='badge badge-pending'>  " . $rowproject['status'] . "  </span>
+                    ";
+    } else {
+        $ot_status = "
+            <span class='badge badge-pending'>  Vacant  </span>
+                    ";
+    }
 
     $modalemployee = '
             <div class="card bg-light">
@@ -31,6 +47,20 @@ if (isset($_POST['empID'])) {
                             </div>
                             <img src="' . $rowprofile['qrimage'] . '" alt="Admin" class="rounded-circle"
                                style="max-height: 150px;max-width: 150px;">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <h6 class="mb-0"><b>Project</b></h6>
+                            </div>
+                            <div class="col-sm-4 text-secondary" style="margin-top: 7px; font-weight: bolder;">
+                                <span class="badge badge-active"> ' . $rowproject['project_name'] . '</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6 class="mb-0"><b>Status</b></h6>
+                            </div>
+                            <div class="col-sm-4 text-secondary" style="margin-top: 7px; font-weight: bolder;">
+                                ' . $ot_status . '
+                            </div>
                         </div>
                     </div>
                 </div>

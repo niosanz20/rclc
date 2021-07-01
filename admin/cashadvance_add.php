@@ -4,6 +4,7 @@
 	if(isset($_POST['add'])){
 		$employee = $_POST['employee'];
 		$amount = $_POST['amount'];
+		$notes = $_POST['notes'];
 		
 		$sql = "SELECT * FROM employees WHERE employee_id = '$employee'";
 		$query = $conn->query($sql);
@@ -14,7 +15,7 @@
 			$row = $query->fetch_assoc();
 // 			$employee_id = $row['id'];
 	        $employee_id = $row['employee_id'];
-			$sql = "INSERT INTO cashadvance (employee_id, date_advance, amount) VALUES ('$employee_id', NOW(), '$amount')";
+			$sql = "INSERT INTO cashadvance (employee_id, date_advance, amount, notes) VALUES ('$employee_id', NOW(), '$amount', '$notes')";
 			if($conn->query($sql)){
 				$_SESSION['success'] = 'Cash Advance added successfully';
 			}
@@ -28,5 +29,3 @@
 	}
 
 	header('location: cashadvance.php');
-
-?>

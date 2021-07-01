@@ -337,6 +337,20 @@ if ($day > 25 && $day <= 31) {
                                             <a href="#" class="list-group-item">Porta ac consectetur ac</a>
                                             <a href="#" class="list-group-item">Vestibulum at eros</a> -->
                                         </div>
+                                        <div class="list-group" data-card-widget="edit" title="Click to view "
+                                            data-toggle="tooltip">
+                                            <?php
+                                            $sql = "SELECT * FROM `cashadvance`";
+                                            $otCA = $conn->query($sql);
+                                            ?>
+                                            <a href="cashadvance.php" class="list-group-item"
+                                                style="font-weight: bold;">
+                                                <span class="badge badge-pending"><?php echo $otCA->num_rows; ?></span>
+                                                Number of Employees who have Cash Advance</a>
+                                            <!-- <a href="#" class="list-group-item">Morbi leo risus</a>
+                                            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                                            <a href="#" class="list-group-item">Vestibulum at eros</a> -->
+                                        </div>
                                     </div>
                                     <!-- /.box-body -->
                                 </div><!-- /.box -->

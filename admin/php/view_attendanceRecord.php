@@ -18,9 +18,7 @@ if (isset($_POST['empID'])) {
 ?>
   <div class="panel" id="payrollSummary">
     <div class="box-body">
-      <div class="row">
-        <h4><span class="glyphicon glyphicon-file"></span>Attendance Record (Cut-off date)</h4>
-      </div>
+
       <table id="viewAttendanceTable" class="table table-bordered">
         <thead>
           <th class="hidecolumn">ID</th>
@@ -30,7 +28,7 @@ if (isset($_POST['empID'])) {
           <th>QR Logs</th>
           <th>OT (hrs.)</th>
           <th>Total Hours</th>
-         <!--  <th>Project Name</th>
+          <!--  <th>Project Name</th>
           <th>Project Location</th> -->
         </thead>
         <tbody>
@@ -60,9 +58,11 @@ if (isset($_POST['empID'])) {
             $cutoffenddate = $rowcutoff['end_date'];
           }
 
+
+
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";			 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";
-          $sql = "SELECT attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out, attendance.date, attendance.time_in, attendance.time_out, attendance.num_hr, project.project_name, project.project_address, attendance.id as attID  
+          $sql = "SELECT employees.firstname, employees.lastname, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out, attendance.date, attendance.time_in, attendance.time_out, attendance.num_hr, project.project_name, project.project_address, attendance.id as attID  
         FROM attendance 
         LEFT JOIN employees ON employees.employee_id=attendance.employee_id 
 			  LEFT JOIN overtime ON overtime.employee_id=employees.employee_id 
@@ -74,6 +74,7 @@ if (isset($_POST['empID'])) {
           $query = $conn->query($sql);
           while ($row = $query->fetch_assoc()) {
 
+            $empName = $row['firstname'] . ' ' . $row['lastname'];
             $dateAttendance = $row['date'];
             $sqlOT = "SELECT * FROM overtime WHERE employee_id = '$empID' AND date_overtime = '$dateAttendance' ";
             $resultOT = mysqli_query($conn, $sqlOT);
@@ -88,11 +89,13 @@ if (isset($_POST['empID'])) {
               <td class="hidecolumn"><?php echo $row['attID'] ?></td>
               <td><?php echo date("M j, Y", strtotime($row['date'])) ?></td>
               <td><?php echo date('D', strtotime($row['date'])) ?></td>
-              <td><?php echo date('h:i A', strtotime($row['time_in'])) . " - " . date('h:i A', strtotime($row['time_out']));  ?></td>
-              <td><?php echo date('h:i A', strtotime($row['att_time_in'])) . " - " . date('h:i A', strtotime($row['att_time_out']));  ?></td>
+              <td><?php echo date('h:i A', strtotime($row['time_in'])) . " - " . date('h:i A', strtotime($row['time_out']));  ?>
+              </td>
+              <td><?php echo date('h:i A', strtotime($row['att_time_in'])) . " - " . date('h:i A', strtotime($row['att_time_out']));  ?>
+              </td>
               <td><?php echo number_format($rowOT, 2) ?></td>
               <td><?php echo number_format($row['num_hr'] + $rowOT, 2) ?></td>
-         <!--      <td><?php echo $row['project_name']; ?></td>
+              <!--      <td><?php echo $row['project_name']; ?></td>
               <td><?php echo $row['project_address']; ?></td> -->
             </tr>
 
@@ -105,6 +108,8 @@ if (isset($_POST['empID'])) {
     </div>
   </div>
   <!-- DataTables -->
+
+
 
   <script>
     $('#viewAttendanceTable').DataTable({
@@ -123,4 +128,10 @@ if (isset($_POST['empID'])) {
   </script>
 <?php
 }
+
+$data = array(
+  'empName' => $empName
+);
+
+//echo json_encode($data);
 ?>

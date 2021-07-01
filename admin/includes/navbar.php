@@ -1,6 +1,6 @@
 <header class="main-header">
   <!-- Logo -->
-  <a href="home.php" class="logo">
+  <a href="home.php" class="logo" style="position: fixed;">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>RCLC</b></span>
     <!-- logo for regular state and mobile devices -->

@@ -6,46 +6,46 @@ $year = date('Y');
 $month = date('m');
 $day = date('d');
 if (isset($_GET['year'])) {
-  $year = $_GET['year'];
+    $year = $_GET['year'];
 }
 // 11 - 15
 if ($day > 10 && $day < 16) {
-  $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
-  $squerycut = $conn->query($sqlcut);
-  $cutrow = $squerycut->fetch_assoc();
-  $cutstart = $cutrow['start_date'];
-  $cutend = $cutrow['end_date'];
-  $cyear = $year;
-  $cmonth = $month - 1;
-  $cday = 26;
-  $cday_end = 10;
-  $p_day = 15;
-  $cstart = $year . '-' . $cmonth . '-' . $cday;
-  $cend = $year . '-' . $month . '-' . $cday_end;
-  $p_date = $year . '-' . $month . '-' . $p_day;
-  if ($cstart != $cutstart && $cend != $cutend) {
-    $sql = "INSERT INTO cutoff (start_date, end_date, payroll_date) VALUES ('$cstart', '$cend', '$p_date')";
-    $conn->query($sql);
-  }
+    $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
+    $squerycut = $conn->query($sqlcut);
+    $cutrow = $squerycut->fetch_assoc();
+    $cutstart = $cutrow['start_date'];
+    $cutend = $cutrow['end_date'];
+    $cyear = $year;
+    $cmonth = $month - 1;
+    $cday = 26;
+    $cday_end = 10;
+    $p_day = 15;
+    $cstart = $year . '-' . $cmonth . '-' . $cday;
+    $cend = $year . '-' . $month . '-' . $cday_end;
+    $p_date = $year . '-' . $month . '-' . $p_day;
+    if ($cstart != $cutstart && $cend != $cutend) {
+        $sql = "INSERT INTO cutoff (start_date, end_date, payroll_date) VALUES ('$cstart', '$cend', '$p_date')";
+        $conn->query($sql);
+    }
 }
 //26 -31
 if ($day > 25 && $day <= 31) {
-  $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
-  $squerycut = $conn->query($sqlcut);
-  $cutrow = $squerycut->fetch_assoc();
-  $cutstart = $cutrow['start_date'];
-  $cutend = $cutrow['end_date'];
-  $cyear = $year;
-  $cday = 11;
-  $cday_end = 25;
-  $p_day = 30;
-  $cstart = $year . '-' . $month . '-' . $cday;
-  $cend = $year . '-' . $month . '-' . $cday_end;
-  $p_date = $year . '-' . $month . '-' . $p_day;
-  if ($cstart != $cutstart && $cend != $cutend) {
-    $sql = "INSERT INTO cutoff (start_date, end_date, payroll_date) VALUES ('$cstart', '$cend', '$p_date')";
-    $conn->query($sql);
-  }
+    $sqlcut = "SELECT * FROM cutoff ORDER BY cutoff_id DESC";
+    $squerycut = $conn->query($sqlcut);
+    $cutrow = $squerycut->fetch_assoc();
+    $cutstart = $cutrow['start_date'];
+    $cutend = $cutrow['end_date'];
+    $cyear = $year;
+    $cday = 11;
+    $cday_end = 25;
+    $p_day = 30;
+    $cstart = $year . '-' . $month . '-' . $cday;
+    $cend = $year . '-' . $month . '-' . $cday_end;
+    $p_date = $year . '-' . $month . '-' . $p_day;
+    if ($cstart != $cutstart && $cend != $cutend) {
+        $sql = "INSERT INTO cutoff (start_date, end_date, payroll_date) VALUES ('$cstart', '$cend', '$p_date')";
+        $conn->query($sql);
+    }
 }
 
 ?>
@@ -61,19 +61,6 @@ if ($day > 25 && $day <= 31) {
 
         <div class="content-wrapper">
 
-            <div class="box box-solid box-warning">
-                <div class="box-header with-border">
-                    <h3 class="box-title">REMINDERS</h3>
-                    <div class="box-tools pull-right">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div><!-- /.box-tools -->
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                    Please advise that you still have (2) pending overtime for approval.
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
@@ -88,27 +75,27 @@ if ($day > 25 && $day <= 31) {
             <!-- Main content -->
             <section class="content">
                 <?php
-        if (isset($_SESSION['error'])) {
-          echo "
+                if (isset($_SESSION['error'])) {
+                    echo "
             <div class='alert alert-danger alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-warning'></i> Error!</h4>
               " . $_SESSION['error'] . "
             </div>
           ";
-          unset($_SESSION['error']);
-        }
-        if (isset($_SESSION['success'])) {
-          echo "
+                    unset($_SESSION['error']);
+                }
+                if (isset($_SESSION['success'])) {
+                    echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-check'></i> Success!</h4>
               " . $_SESSION['success'] . "
             </div>
           ";
-          unset($_SESSION['success']);
-        }
-        ?>
+                    unset($_SESSION['success']);
+                }
+                ?>
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
                     <div class="col-lg-3 col-xs-6">
@@ -116,11 +103,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM employees";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM employees";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>";
+                                ?>
 
                                 <p>Total Employees</p>
                             </div>
@@ -137,18 +124,18 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM attendance";
-                $query = $conn->query($sql);
-                $total = $query->num_rows;
+                                $sql = "SELECT * FROM attendance";
+                                $query = $conn->query($sql);
+                                $total = $query->num_rows;
 
-                $sql = "SELECT * FROM attendance WHERE status = 1";
-                $query = $conn->query($sql);
-                $early = $query->num_rows;
+                                $sql = "SELECT * FROM attendance WHERE status = 1";
+                                $query = $conn->query($sql);
+                                $early = $query->num_rows;
 
-                $percentage = ($early / $total) * 100;
+                                $percentage = ($early / $total) * 100;
 
-                echo "<h3>" . number_format($percentage, 2) . "<sup style='font-size: 20px'>%</sup></h3>";
-                ?>
+                                echo "<h3>" . number_format($percentage, 2) . "<sup style='font-size: 20px'>%</sup></h3>";
+                                ?>
 
                                 <p>On Time Percentage</p>
                             </div>
@@ -165,11 +152,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-yellow">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 1";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 1";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>"
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>"
+                                ?>
 
                                 <p>On Time Today</p>
                             </div>
@@ -186,11 +173,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-red">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 0";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM attendance WHERE date = '$today' AND status = 0";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>"
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>"
+                                ?>
 
                                 <p>Late Today</p>
                             </div>
@@ -207,11 +194,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-purple">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM project";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM project";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>";
+                                ?>
 
                                 <p>Total Projects</p>
                             </div>
@@ -228,11 +215,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-aqua">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM project WHERE project_status = 'Active'";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM project WHERE project_status = 'Active'";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>";
+                                ?>
 
                                 <p>Active Projects</p>
                             </div>
@@ -249,11 +236,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-red">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM project WHERE project_status ='Pending'";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM project WHERE project_status ='Pending'";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>";
+                                ?>
 
                                 <p>Pending Projects</p>
                             </div>
@@ -270,11 +257,11 @@ if ($day > 25 && $day <= 31) {
                         <div class="small-box bg-green">
                             <div class="inner">
                                 <?php
-                $sql = "SELECT * FROM project WHERE project_status = 'Finish'";
-                $query = $conn->query($sql);
+                                $sql = "SELECT * FROM project WHERE project_status = 'Finished'";
+                                $query = $conn->query($sql);
 
-                echo "<h3>" . $query->num_rows . "</h3>";
-                ?>
+                                echo "<h3>" . $query->num_rows . "</h3>";
+                                ?>
 
                                 <p>Finish Projects</p>
                             </div>
@@ -289,7 +276,7 @@ if ($day > 25 && $day <= 31) {
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-6">
                         <div class="box">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Monthly Attendance Report</h3>
@@ -299,13 +286,13 @@ if ($day > 25 && $day <= 31) {
                                             <label>Select Year: </label>
                                             <select class="form-control input-sm" id="select_year">
                                                 <?php
-                        for ($i = 2015; $i <= 2065; $i++) {
-                          $selected = ($i == $year) ? 'selected' : '';
-                          echo "
-                            <option value='" . $i . "' " . $selected . ">" . $i . "</option>
-                          ";
-                        }
-                        ?>
+                                                for ($i = 2015; $i <= 2065; $i++) {
+                                                    $selected = ($i == $year) ? 'selected' : '';
+                                                    echo "
+                                                        <option value='" . $i . "' " . $selected . ">" . $i . "</option>
+                                                    ";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </form>
@@ -320,6 +307,42 @@ if ($day > 25 && $day <= 31) {
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-6">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <!--  <h3 class="box-title">Monthly Attendance Report</h3> -->
+                                <div class="box box-solid box-warning">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">REMINDERS</h3>
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse"><i
+                                                    class="fa fa-minus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="remove"><i
+                                                    class="fa fa-times"></i></button>
+                                        </div><!-- /.box-tools -->
+                                    </div><!-- /.box-header -->
+
+                                    <div class="box-body">
+                                        <div class="list-group" data-card-widget="edit" title="Click to view "
+                                            data-toggle="tooltip">
+                                            <?php
+                                            $sql = "SELECT * FROM `overtime` WHERE ot_status = 'New'";
+                                            $otCount = $conn->query($sql);
+                                            ?>
+                                            <a href="overtime.php" class="list-group-item" style="font-weight: bold;">
+                                                <span
+                                                    class="badge badge-pending"><?php echo $otCount->num_rows; ?></span>
+                                                Pending overtime for approval.</a>
+                                            <!-- <a href="#" class="list-group-item">Morbi leo risus</a>
+                                            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                                            <a href="#" class="list-group-item">Vestibulum at eros</a> -->
+                                        </div>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div><!-- /.box -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             <!-- right col -->
@@ -331,29 +354,29 @@ if ($day > 25 && $day <= 31) {
 
     <!-- Chart Data -->
     <?php
-  $and = 'AND YEAR(date) = ' . $year;
-  $months = array();
-  $ontime = array();
-  $late = array();
-  for ($m = 1; $m <= 12; $m++) {
-    $sql = "SELECT * FROM attendance WHERE MONTH(date) = '$m' AND status = 1 $and";
-    $oquery = $conn->query($sql);
-    array_push($ontime, $oquery->num_rows);
+    $and = 'AND YEAR(date) = ' . $year;
+    $months = array();
+    $ontime = array();
+    $late = array();
+    for ($m = 1; $m <= 12; $m++) {
+        $sql = "SELECT * FROM attendance WHERE MONTH(date) = '$m' AND status = 1 $and";
+        $oquery = $conn->query($sql);
+        array_push($ontime, $oquery->num_rows);
 
-    $sql = "SELECT * FROM attendance WHERE MONTH(date) = '$m' AND status = 0 $and";
-    $lquery = $conn->query($sql);
-    array_push($late, $lquery->num_rows);
+        $sql = "SELECT * FROM attendance WHERE MONTH(date) = '$m' AND status = 0 $and";
+        $lquery = $conn->query($sql);
+        array_push($late, $lquery->num_rows);
 
-    $num = str_pad($m, 2, 0, STR_PAD_LEFT);
-    $month =  date('M', mktime(0, 0, 0, $m, 1));
-    array_push($months, $month);
-  }
+        $num = str_pad($m, 2, 0, STR_PAD_LEFT);
+        $month =  date('M', mktime(0, 0, 0, $m, 1));
+        array_push($months, $month);
+    }
 
-  $months = json_encode($months);
-  $late = json_encode($late);
-  $ontime = json_encode($ontime);
+    $months = json_encode($months);
+    $late = json_encode($late);
+    $ontime = json_encode($ontime);
 
-  ?>
+    ?>
     <!-- End Chart Data -->
     <?php include 'includes/scripts.php'; ?>
     <script>

@@ -87,8 +87,14 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                                     </div>
                                                     <!-- <button type="button" class="btn btn-success btn-sm btn-flat" id="attendanceprint"><span class="glyphicon glyphicon-print"></span> Print</button> -->
                                                     <!-- <button type="button" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button>-->
-                                                    <!-- <button type="submit" class="btn btn-primary btn-sm btn-flat" id="attendanceemployeeprint"><span class="glyphicon glyphicon-print"></span> Print per Employee</button> -->
-                                                    <!-- <a href="attendance_print.php" class="btn btn-danger btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print All Attendance</a>-->
+                                                    <button type="submit" class="btn btn-primary btn-sm btn-flat"
+                                                        id="attendanceemployeeprint"><span
+                                                            class="glyphicon glyphicon-print"></span> Print per
+                                                        Employee</button>
+                                                    <a href="attendance_print.php"
+                                                        class="btn btn-danger btn-sm btn-flat"><span
+                                                            class="glyphicon glyphicon-print"></span> Print All
+                                                        Attendance</a>
                                                 </form>
                                             </div>
                                         </div>

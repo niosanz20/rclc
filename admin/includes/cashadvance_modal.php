@@ -19,14 +19,14 @@
                             <select class="form-control" name="employee" id="employee" required>
                                 <option value="" selected>- Select -</option>
                                 <?php
-								$sql = "SELECT * FROM employees";
-								$query = $conn->query($sql);
-								while ($prow = $query->fetch_assoc()) {
-									echo "
+                                $sql = "SELECT * FROM employees";
+                                $query = $conn->query($sql);
+                                while ($prow = $query->fetch_assoc()) {
+                                    echo "
                                       <option value='" . $prow['employee_id'] . "'>" . $prow['firstname'] . " " . $prow['lastname'] . "</option>
                                     ";
-								}
-								?>
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="notes" class="col-sm-3 control-label">Notes</label>
+                        <label for="notes" class="col-sm-3 control-label">Purpose</label>
 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="notes" name="notes" required>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_notes" class="col-sm-3 control-label">Notes</label>
+                        <label for="edit_notes" class="col-sm-3 control-label">Purpose</label>
 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="edit_notes" name="notes" required>

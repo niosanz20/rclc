@@ -8,7 +8,7 @@
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-  $.widget.bridge('uibutton', $.ui.button);
+$.widget.bridge('uibutton', $.ui.button);
 </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -44,112 +44,123 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script>
-  $(function() {
+$(function() {
     $('#example1').DataTable({
-      responsive: true,
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
+        responsive: true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
     $('#example2').DataTable({
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
     $('#example3').DataTable({
-      responsive: true,
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
+        responsive: true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
     $('#example5').DataTable({
-      responsive: true,
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
+        responsive: true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
     $('#example4').DataTable({
-      responsive: true,
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
+        responsive: true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
     })
-  })
+    $('#example6').DataTable({
+        responsive: true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false
+    })
+})
 </script>
 <script>
-  $(function() {
+$(function() {
     /** add active class and stay opened when selected */
     var url = window.location;
 
     // for sidebar menu entirely but not cover treeview
     $('ul.sidebar-menu a').filter(function() {
-      return this.href == url;
+        return this.href == url;
     }).parent().addClass('active');
 
     // for treeview
     $('ul.treeview-menu a').filter(function() {
-      return this.href == url;
+        return this.href == url;
     }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 
-  });
+});
 </script>
 <script>
-  $(function() {
+$(function() {
     //Date picker
     $('#datepicker_add').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
+        autoclose: true,
+        format: 'yyyy-mm-dd'
     })
     $('#datepicker_edit').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
+        autoclose: true,
+        format: 'yyyy-mm-dd'
     })
 
     //Timepicker
     $('.timepicker').timepicker({
-      showInputs: false
+        showInputs: false
     })
 
     //Date range picker
     $('#reservation').daterangepicker()
     //Date range picker with time picker
     $('#reservationtime').daterangepicker({
-      timePicker: true,
-      timePickerIncrement: 30,
-      format: 'MM/DD/YYYY h:mm A'
+        timePicker: true,
+        timePickerIncrement: 30,
+        format: 'MM/DD/YYYY h:mm A'
     })
     //Date range as a button
     $('#daterange-btn').daterangepicker({
-        ranges: {
-          'Today': [moment(), moment()],
-          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-          'This Month': [moment().startOf('month'), moment().endOf('month')],
-          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month')
+                    .endOf('month')
+                ]
+            },
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment()
         },
-        startDate: moment().subtract(29, 'days'),
-        endDate: moment()
-      },
-      function(start, end) {
-        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
-      }
+        function(start, end) {
+            $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
     )
 
-  });
+});
 </script>

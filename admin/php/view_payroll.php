@@ -162,8 +162,8 @@ if (isset($_POST['empID2'])) {
             <td width="20%" align="left"><b>NAME</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['firstname'] . ' ' . $rowpayslipcutoff['lastname'] . '</td>
             <td width="10%"></td>
-            <td width="20%" align="left"><b>TAX STATUS</b></td>
-            <td width="10%" align="left">: ' . $rowpayslipcutoff['tax_status'] . '</td>
+            <td width="20%" align="left"></td>
+            <td width="10%" align="left"></td>
           </tr>
           <tr>
             <td width="20%" align="left"><b>PAYROLL DATE</b></td>

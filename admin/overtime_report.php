@@ -55,16 +55,20 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-2">
-                                        <span><strong>Status: </strong></span>
-                                        <select class="form-control" id="ot-filter-status">
-                                            <option value="">Select All</option>
-                                            <option value="Approved">Approved</option>
-                                            <option value="Declined">Declined</option>
-                                        </select>
+                                        <form method="POST" action="php/overtime/generate_all_overtime.php"
+                                            target="_blank">
+                                            <span><strong>Status: </strong></span>
+                                            <select class="form-control filter-record" value="" name="ot-filter-status"
+                                                id="ot-filter-status">
+                                                <option value="">Select All</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Declined">Declined</option>
+                                            </select>
                                     </div>
                                     <div class="col-lg-2">
                                         <span><strong>Select Cutoff Date: </strong></span>
-                                        <select class="form-control cutoffdate" id="ot-filter-date">
+                                        <select class="form-control filter-record" value="" name="ot-filter-date"
+                                            id="ot-filter-date">
                                             <option value="" selected> Select All</option>
                                             <?php
                                             $sqlcutoff = "SELECT * FROM cutoff ORDER BY end_date DESC";
@@ -82,7 +86,8 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                     </div>
                                     <div class="col-lg-2">
                                         <span><strong>Project: </strong></span>
-                                        <select class="form-control cutoffdate" id="ot-filter-project">
+                                        <select class="form-control filter-record" value="" name="ot-filter-project"
+                                            id="ot-filter-project">
                                             <option value="" selected> Select All</option>
                                             <?php
                                             $sql = "SELECT * FROM project ORDER BY project_name";
@@ -112,12 +117,13 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                 </div>
                                 <div class="row">
                                     <center>
-                                        <form method="POST" action="php/generate_all_payroll.php" target="_blank">
-                                            <input type="hidden" value="'.$cutoffID .'" name="cutoff_id">
+                                        <form method="POST" action="php/overtime/generate_all_overtime.php"
+                                            target="_blank">
+                                            <input class="status" type="hidden" value="" name="cutoff_id">
                                             <button type="submit"
-                                                class="generate-all-payrollsdasd btn btn-success btn-lg btn-flat"
-                                                id="'.$cutoffID .'"><span class="glyphicon glyphicon-print"></span>
-                                                Generate Report</button>
+                                                class="generate-all-overtime btn btn-success btn-lg btn-flat"><span
+                                                    class="glyphicon glyphicon-print"></span>
+                                                Generate Overtime Report</button>
                                         </form>
                                     </center>
                                 </div>
@@ -174,8 +180,10 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
         Filter Reports sexy [paaaaaaaats]
         -----------------------------------*/
         $(document).on('click', '.filter-record', function() {
-            filter_data($("#ot-filter-status").val(), $("#ot-filter-date").val(), $(
-                "#ot-filter-project").val());
+
+            filter_data($("#ot-filter-status").val(),
+                $("#ot-filter-date").val(),
+                $("#ot-filter-project").val());
         });
 
         function setHeaderReport() {

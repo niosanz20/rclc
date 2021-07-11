@@ -25,7 +25,7 @@ $projectname = $_GET['projectname'];
                             <select class="form-control" name="worker" id="worker" required>
                                 <option value="" selected>- Select -</option>
                                 <?php
-                                $sql = "SELECT * FROM employees WHERE NOT EXISTS (SELECT * FROM project_employee WHERE project_employee.name = employees.employee_id AND project_employee.status = 'Vacant')";
+                                $sql = "SELECT * FROM employees WHERE NOT EXISTS (SELECT * FROM project_employee WHERE project_employee.name = employees.employee_id AND project_employee.status = 'On going')";
                                 $query = $conn->query($sql);
                                 while ($prow = $query->fetch_assoc()) {
                                     echo "
@@ -149,8 +149,10 @@ $projectname = $_GET['projectname'];
                         <label for="edit_position" class="col-sm-3 control-label">Position</label>
                         <div class="col-sm-9">
                             <?php
-                            //Validate the Condition if it is correct
-                            $isDisabled = date('d') >= 10 && date('d') <= 25 ? "disabled" : "";
+                            //Validate the Condition if it is correct 11-14 && 26-29
+                            $start = date('d') >= 11 && date('d') <= 14;
+                            $end = date('d') >= 26 && date('d') <= 29;
+                            $isDisabled = $start || $end ? "disabled" : "";
                             ?>
                             <select class="form-control" name="position" id="edit_position" <?php echo $isDisabled ?>
                                 required>

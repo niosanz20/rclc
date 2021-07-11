@@ -52,7 +52,7 @@
                                         class="fa fa-plus"></i> New</a>
                             </div>
                             <div class="box-body">
-                                <table id="example1" class="table table-bordered">
+                                <table id="example6" class="table table-bordered">
                                     <thead>
                                         <th>Name</th>
                                         <th>Address</th>
@@ -65,7 +65,6 @@
                                         $sql = "SELECT * FROM project";
                                         $query = $conn->query($sql);
                                         while ($row = $query->fetch_assoc()) {
-
                                         ?>
                                         <tr>
                                             <td><?php echo $row['project_name']; ?></td>
@@ -73,12 +72,13 @@
                                             <td><?php echo $row['project_owner']; ?></td>
                                             <?php
                                                 if ($row['project_status'] == "Active") {
-                                                    echo ' <td class="project-state "><span class="badge badge-active rclc-center"> ' . $row['project_status'] . ' </span></td> ';
-                                                } else if ($row['project_status'] == "Pending") {
-                                                    echo ' <td class="project-state "><span class="badge badge-pending rclc-center"> ' . $row['project_status'] . ' </span></td> ';
+                                                    $project_status = "badge-active";
                                                 } else if ($row['project_status'] == "Finished") {
-                                                    echo ' <td class="project-state "><span class="badge badge-finish rclc-center"> ' . $row['project_status'] . ' </span></td> ';
-                                                }
+                                                    $project_status = "badge-finish";
+                                                } else $project_status = "badge-pending";
+
+                                                echo ' <td class="project-state "><span class="badge ' . $project_status . ' rclc-center"> ' . $row['project_status'] . ' </span></td> ';
+
                                                 ?>
                                             <td>
                                                 <div class="btn-group">
@@ -90,16 +90,9 @@
                                                         <li><a
                                                                 href="project_view.php?project_id=<?php echo $row['project_id'] ?>&start_date=<?php echo $row['project_startdate'] ?>&end_date=<?php echo $row['project_enddate'] ?>&projectname=<?php echo $row['project_name'] ?>">View</a>
                                                         </li>
-
-                                                        <!--<li><a href="project_view.php?project_id=<?php echo $row['project_id'] ?>">View</a></li>-->
-
                                                         <li><a class="edit"
                                                                 data-id="<?php echo $row['project_id']; ?>">Edit</a>
                                                         </li>
-                                                        <!--<li><a href="#">Assign Employee</a></li>
-                                                            <li><a href="#">Assign Materials </a></li> -->
-                                                        <!-- <li class="divider"></li>
-                                                            <li><a class="delete" data-id="<?php echo $row['project_id']; ?>">Delete</a></li> -->
                                                     </ul>
                                                 </div>
 

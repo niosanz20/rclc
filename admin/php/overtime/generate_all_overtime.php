@@ -4,7 +4,7 @@ include '../../includes/conn.php';
 require_once('../../../tcpdf/tcpdf.php');
 $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859-1', false);
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetTitle('Payslip: ' . "RCLC" . ' - ' . "RCLC");
+$pdf->SetTitle('Overtime Records: ');
 $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
 $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -17,19 +17,20 @@ $pdf->SetAutoPageBreak(true, 10);
 $pdf->SetFont('cid0cs', '', 8, '', false);
 $pdf->AddPage();
 // $contents = '<style>' . file_get_contents('../payrollstyle.css') . '</style>';
-$temp = isset($_POST['status']) . "asd";
-echo $temp;
-if (isset($_POST['status'])) {
-	$status = $_POST['report-status'];
-    $start_date = $_POST['report-cutoff-start-date'];
-    $end_date = $_POST['report-cutoff-end-date'];
-    $project_id = $_POST['report-project'];
+// $temp = isset($_POST['status']) . "asd";
+//echo $temp;
 
-    $sqlCutoff =  !empty($start_date) ? "AND overtime.date_overtime BETWEEN '" . date('Y-m-d', strtotime($start_date)) . "' AND '" . date('Y-m-d', strtotime($end_date)) . "' " : "";
-    $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
-    $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
+$status = $_POST['ot-filter-status'];
+$date = $_POST['ot-filter-date'];
+$project_id = $_POST['ot-filter-project'];
+// $end_date = $_POST['report-cutoff-end-date'];
 
-    $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in 
+// echo $status, $date, $project_id;
+$sqlCutoff =  !empty($start_date) ? "AND overtime.date_overtime BETWEEN '" . date('Y-m-d', strtotime($start_date)) . "' AND '" . date('Y-m-d', strtotime($end_date)) . "' " : "";
+$sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
+$sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
+
+$sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in 
             AS ttime_in, attendance.time_out AS ttime_out, project.project_name AS project_name
             FROM overtime 
             LEFT JOIN employees ON employees.employee_id=overtime.employee_id 
@@ -40,24 +41,24 @@ if (isset($_POST['status'])) {
             LEFT JOIN attendance ON attendance.employee_id=employees.employee_id
             WHERE overtime.date_overtime=attendance.date $sqlCutoff $sqlProject $sqlStatus
             ORDER BY date_overtime DESC";
-	echo $sql;
-	$result = $conn->query($sql);
 
-	$count = 0;
-	while ($row = $result->fetch_assoc()) {
-		$count++;
-		$ot_status = "";
-        if ($row['ot_status'] == "Approved") {
-            $ot_status = "
+$result = $conn->query($sql);
+
+$count = 0;
+while ($row = $result->fetch_assoc()) {
+	$count++;
+	$ot_status = "";
+	if ($row['ot_status'] == "Approved") {
+		$ot_status = "
             <span class='badge badge-finish'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
                 ";
-        } else if ($row['ot_status'] == "Declined") {
-            $ot_status = "
+	} else if ($row['ot_status'] == "Declined") {
+		$ot_status = "
             <span class='badge badge-pending'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
 			";
-        }
+	}
 
-		$contents .= "
+	$contents .= "
 		<div class='panel'>
 			<table class='table table-bordered'>
 			<thead>
@@ -85,10 +86,9 @@ if (isset($_POST['status'])) {
 			</table>
 		</div>
 		";
-	}
-	echo $contents;
-	$footertext = '<h3>Total of ' . $count . ' records.</h3>';
-	$pdf->writeHTML($contents);
-	$pdf->writeHTML($footertext, false, true, false, true);
-	$pdf->Output('payslip.pdf', 'I');
 }
+echo $contents;
+$footertext = '<h3>Total of ' . $count . ' records.</h3>';
+$pdf->writeHTML($contents);
+$pdf->writeHTML($footertext, false, true, false, true);
+$pdf->Output('payslip.pdf', 'I');

@@ -32,12 +32,12 @@ if (isset($_POST['dateNow'])) {
       if ($gross != 0) { // para mag-print lang is yung may mga gross sa cut-off date
 
         //cost of damage materials
-        $sqlAdvanceDam = "SELECT * FROM cashadvance as ca, project_materials_log as p WHERE ca.employee_id = p.name AND ca.employee_id = '$empID'";
+        $sqlAdvanceDam = "SELECT SUM(price) as total_price  from project_materials_log where date BETWEEN '$new_start_date' AND '$new_end_date' AND name = '$empID'";
         $resultAdvanceDam = mysqli_query($conn, $sqlAdvanceDam);
         $rowAdvanceDam = mysqli_fetch_assoc($resultAdvanceDam);
 
         $amount = $rowAdvanceDam['amount'];  //cash advance
-        $price = $rowAdvanceDam['price'];   //cost of damage
+        $price = $rowAdvanceDam['total_price'];   //cost of damage
 
 
         //OT
@@ -56,11 +56,11 @@ if (isset($_POST['dateNow'])) {
           $rowCashAd['total_amount'] = 0;
 
         //damage
-        $sqlDamage = "SELECT SUM(price) as total_price  from project_materials_log where date BETWEEN '$new_start_date' AND '$new_end_date' AND name = '$empID'";
-        $resultDamage = mysqli_query($conn, $sqlDamage);
-        $rowDamage = mysqli_fetch_assoc($resultDamage);
-        if ($rowDamage['total_price'] == NULL)
-          $rowDamage['total_price'] = 0;
+        // $sqlDamage = "SELECT SUM(price) as total_price  from project_materials_log where date BETWEEN '$new_start_date' AND '$new_end_date' AND name = '$empID'";
+        // $resultDamage = mysqli_query($conn, $sqlDamage);
+        // $rowDamage = mysqli_fetch_assoc($resultDamage);
+        // if ($rowDamage['total_price'] == NULL)
+        //   $rowDamage['total_price'] = 0;
 
         //sss
         if ($gross < 3250)
@@ -141,9 +141,9 @@ if (isset($_POST['dateNow'])) {
         $sss = $rowYTD['sss'] + $sss;
         $gross = $rowYTD['gross_income'] + $gross;
         $tax_payslip = $rowYTD['tax'] + $tax_payslip;
-        
-	      // dapat mastore 'yung previous value   //done
-	      $sqlYear = "UPDATE yeartodate set
+
+        // dapat mastore 'yung previous value   //done
+        $sqlYear = "UPDATE yeartodate set
                     tax = '$tax_payslip',
                     sss= '$sss',
                     philhealth= '$philhealth',

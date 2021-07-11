@@ -52,28 +52,29 @@
                             <div class="box-body">
                                 <table id="example1" class="table table-bordered">
                                     <thead>
-                                        <!--<th>Materials ID</th>-->
                                         <th>Materials Name</th>
                                         <th>Quantity</th>
-                                        <!--<th>Unit</th>-->
-                                        <!--<th>Price</th>-->
-                                        <!--<th>Stock</th>-->
-                                        <!--<th>Tools</th>-->
+                                        <th>Item borrowed</th>
+                                        <th>Actions</th>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $sql = "SELECT * FROM materials_list";
                                         $query = $conn->query($sql);
                                         while ($row = $query->fetch_assoc()) {
+                                            $sqlLog = "SELECT SUM(quantity1) as itemBorrowed FROM project_materials_log WHERE material = ".$row['list_id']."";
+                                            $queryLog = $conn->query($sqlLog);
+                                            $rowLog = mysqli_fetch_row($queryLog);
+                                            $total = empty($rowLog[0]) ? '0' : $rowLog[0];
                                             echo "
                         <tr>
                         
                           <td>" . $row['materials_name'] . "</td>
                           <td>" . $row['quantity'] . "</td>
-                          
+                          <td>" . $total . "</td>
                           <td>
                          
-                           
+                            <button class='btn btn-primary btn-sm viewDetails btn-flat' data-id='" . $row['list_id'] . "'><i class='fa fa-eye'></i> View Details</button>
                             <button class='btn btn-primary btn-sm addstock btn-flat' data-id='" . $row['list_id'] . "'><i class='fa fa-edit'></i> Add Quantity</button>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='" . $row['list_id'] . "'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='" . $row['list_id'] . "'><i class='fa fa-trash'></i> Delete</button>
@@ -102,19 +103,34 @@
     <script>
         $(function() {
             $(document).on('click', '.edit', function() {
-                // e.preventDefault();
                 $('#edit').modal('show');
                 var list_id = $(this).data('id');
                 getRow(list_id);
             });
 
             $(document).on('click', '.delete', function() {
-                // e.preventDefault();
                 $('#delete').modal('show');
                 var list_id = $(this).data('id');
                 getRow(list_id);
             });
 
+            $(document).on('click', '.viewDetails', function() {
+                var equipmentId = $(this).data('id');
+                $.ajax({
+                type: 'POST',
+                url: 'php/equipment/load_equipment_logs.php',
+                data: {
+                    equipmentId: equipmentId
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    $('#equipmentLog-modal').modal('show');
+                    $('#equipmentLog-details').html(data.output);
+                },
+                error: function(data){console.log(data);}
+                });
+            });
         });
 
         function getRow(list_id) {
@@ -126,18 +142,11 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    //$('.materials_id').html(response.materials_id);
                     $('.list_id').val(response.list_id);
 
                     $('#list_id').val(response.list_id);
                     $('.del_materials_name').html(response.materials_name);
                     $('#edit_material_name').val(response.materials_name);
-
-                    // $('#edit_material_description').val(response.description);
-                    // $('#edit_material_unit').val(response.unit);
-                    // $('#edit_material_price').val(response.price);
-                    // $('#edit_material_pieces').val(response.stock);
-
                 }
             });
         }
@@ -145,7 +154,6 @@
 
         $(function() {
             $(document).on('click', '.addstock', function() {
-                // e.preventDefault();
                 $('#addstock').modal('show');
                 var list_id = $(this).data('id');
                 getRow2(list_id);
@@ -162,7 +170,6 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    //$('.materials_id').html(response.materials_id);
                     $('.list_id').val(response.list_id);
 
                     $('#listid').val(response.list_id);

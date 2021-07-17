@@ -45,13 +45,13 @@ if (isset($_POST['add'])) {
 				$query = $conn->query($sql);
 				$srow = $query->fetch_assoc();
 
-				
+
 				$stime_out = $srow['time_out'];
-				
+
 
 				// Pagkuha ng OT
 				if ($stime_out < $time_out) {
-					$sql= "SELECT * FROM employees LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$emp'";
+					$sql = "SELECT * FROM employees LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$emp'";
 					$query = $conn->query($sql);
 					$prow = $query->fetch_assoc();
 					$position = $prow['description'];
@@ -74,11 +74,11 @@ if (isset($_POST['add'])) {
 
 				$hour = date_diff(date_create($time_in), date_create($time_out))->format('%H');
 				$min = date_diff(date_create($time_in), date_create($time_out))->format('%i');
-				$int = $hour + ($min / 60);
 
-				if ($hour >= 9)
-					$int = $int - 1.0;
-				else if ($hour >= 6 && $hour < 9)
+				// Total hours with breaktime
+				if ($hour >= 9)							// 9=< : 1 hour break
+					$int = $int - 1.0;					// 6-8 : .75 hour break
+				else if ($hour >= 6 && $hour < 9)		// 4-5 : .5 hour break
 					$int = $int - .75;
 				else if (($hour >= 4) && $hour < 6)
 					$int = $int - .5;

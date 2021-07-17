@@ -120,6 +120,7 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
                                         <form method="POST" action="php/overtime/generate_all_overtime.php"
                                             target="_blank">
                                             <input class="status" type="hidden" value="" name="cutoff_id">
+                                            <input id="report-title" type="hidden" value="" name="report-title">
                                             <button type="submit"
                                                 class="generate-all-overtime btn btn-success btn-lg btn-flat"><span
                                                     class="glyphicon glyphicon-print"></span>
@@ -197,7 +198,9 @@ $range_from = date('m/d/Y', strtotime('-30 day', strtotime($range_to)));
             var headerProjectName = $("#ot-filter-project").val() != 0 ? "<br> Project Name: " + projectName
                 .options[projectName.selectedIndex].text : "";
 
+
             $('#ot-header-report').html(headerStatus + headerCutoffDate + headerProjectName);
+            document.getElementById('report-title').value = headerStatus + headerCutoffDate + headerProjectName;
         }
 
         function filter_data(status, cutoff_date, project_id) {

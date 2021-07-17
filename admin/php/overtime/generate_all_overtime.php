@@ -1,10 +1,16 @@
 <?php
 include '../../includes/conn.php';
 
+if (!empty($_POST['report-title'])) {
+	$report_title = $_POST['report-title'];
+} else $report_title = "Overtime Report";
+
+
+
 require_once('../../../tcpdf/tcpdf.php');
 $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'ISO-8859-1', false);
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetTitle('Overtime Records: ');
+$pdf->SetTitle('OVERTIME REPORT');
 $pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
 $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 $pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
@@ -15,17 +21,24 @@ $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(true);
 $pdf->SetAutoPageBreak(true, 10);
 $pdf->SetFont('cid0cs', '', 8, '', false);
-$pdf->AddPage();
-// $contents = '<style>' . file_get_contents('../payrollstyle.css') . '</style>';
+$pdf->AddPage('L', 'LEGAL');
+$pdf->Cell(0, 15, str_replace('<br>', ' | ', $report_title), 0, true, 'C', 0, '', 0, true, 'M', 'M');
+$contents = '<style>' . file_get_contents('../payrollstyle.css') . '</style>';
 // $temp = isset($_POST['status']) . "asd";
 //echo $temp;
 
-$status = $_POST['ot-filter-status'];
-$date = $_POST['ot-filter-date'];
-$project_id = $_POST['ot-filter-project'];
-// $end_date = $_POST['report-cutoff-end-date'];
 
-// echo $status, $date, $project_id;
+$status = $_POST['ot-filter-status'];
+$project_id = $_POST['ot-filter-project'];
+$start_date = $end_date = "";
+
+if (!empty($_POST['ot-filter-date'])) {
+	$range = $_POST['ot-filter-date'];
+	$ex = explode(' - ', $range);
+	$start_date = date('Y-m-d', strtotime($ex[0]));
+	$end_date = date('Y-m-d', strtotime($ex[1]));
+}
+
 $sqlCutoff =  !empty($start_date) ? "AND overtime.date_overtime BETWEEN '" . date('Y-m-d', strtotime($start_date)) . "' AND '" . date('Y-m-d', strtotime($end_date)) . "' " : "";
 $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
 $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
@@ -41,8 +54,26 @@ $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out
             LEFT JOIN attendance ON attendance.employee_id=employees.employee_id
             WHERE overtime.date_overtime=attendance.date $sqlCutoff $sqlProject $sqlStatus
             ORDER BY date_overtime DESC";
-
+// echo $sql;
 $result = $conn->query($sql);
+
+$contents .= '
+		<div class="panel">
+			<table class="greyGridTable">
+				<thead>
+					<tr>
+						<th width="15%" align="center" class="title">Employee Name</th>
+						<th width="12%" align="center" class="title">Project Name</th>
+						<th width="11%" align="center" class="title">Shift Schedule</th>
+						<th width="15%" align="center" class="title">QR Logs</th>
+						<th width="7%" align="center" class="title">Minutes of OT</th>
+						<th width="7%" align="center" class="title">OT Amount</th>
+						<th width="15%" align="center" class="title">Status | Timestamps</th>
+						<th width="17%" align="center" class="title">Reasons</th>
+					</tr>
+				</thead>
+				<tbody>
+			';
 
 $count = 0;
 while ($row = $result->fetch_assoc()) {
@@ -50,44 +81,35 @@ while ($row = $result->fetch_assoc()) {
 	$ot_status = "";
 	if ($row['ot_status'] == "Approved") {
 		$ot_status = "
-            <span class='badge badge-finish'><i class=' glyphicon glyphicon-ok-circle'></i> Approved on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
+            <span>Approved on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
                 ";
 	} else if ($row['ot_status'] == "Declined") {
 		$ot_status = "
-            <span class='badge badge-pending'><i class=' glyphicon glyphicon-ban-circle'></i> Declined on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
+            <span>Declined on " . date('M d, Y h:i A', strtotime($row['timestamp'])) . "</span>
 			";
 	}
 
-	$contents .= "
-		<div class='panel'>
-			<table class='table table-bordered'>
-			<thead>
-				<th>Name</th>
-				<th>Project Name</th>
-				<th>Shift Schedule</th>
-				<th>QR Logs</th>
-				<th>Minutes of OT</th>
-				<th>OT Amount</th>
-				<th>Status | Timestamps</th>
-				<th>Reasons</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td><strong>" . $row['firstname'] . ' ' . $row['lastname'] . '</strong> | ' . $row['description'] . "</td>
-					<td>" . $row['project_name'] . "</td>
-					<td>" . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . "</td> 
-					<td><strong>" . date('M d, Y', strtotime($row['date_overtime'])) . '</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . "</td>
-					<td>" . $row['hours'] . "</td>
-					<td>" . number_format($row['amount'], 2) . "</td>
-					<td>  $ot_status </td>
-					<td>" .  $row['reason']  . "</td>
-				</tr>
-			</tbody>
+	$contents .= '
+					<tr>
+						<td width="15%" align="left">' . $row['firstname'] . ' ' . $row['lastname'] . ' | ' . $row['description'] . '</td>
+						<td width="12%" align="left">' . $row['project_name'] . '</td>
+						<td width="11%" align="center">' . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . '</td> 
+						<td width="15%" align="center"><strong>' . date('M d, Y', strtotime($row['date_overtime'])) . '</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . '</td>
+						<td width="7%" align="center">' . $row['hours'] . '</td>
+						<td width="7%" align="center">' . number_format($row['amount'], 2) . '</td>
+						<td width="15%" align="center">' . $ot_status . '</td>
+						<td width="17%" align="center">' . $row['reason'] . '</td>
+					</tr>
+				';
+}
+
+$contents .= '
+				</tbody>
 			</table>
 		</div>
-		";
-}
-echo $contents;
+';
+// echo json_encode($contents);
+// echo $contents;
 $footertext = '<h3>Total of ' . $count . ' records.</h3>';
 $pdf->writeHTML($contents);
 $pdf->writeHTML($footertext, false, true, false, true);

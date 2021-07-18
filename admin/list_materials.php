@@ -62,16 +62,12 @@
                                         $sql = "SELECT * FROM materials_list";
                                         $query = $conn->query($sql);
                                         while ($row = $query->fetch_assoc()) {
-                                            $sqlLog = "SELECT SUM(quantity1) as itemBorrowed FROM project_materials_log WHERE material = ".$row['list_id']."";
-                                            $queryLog = $conn->query($sqlLog);
-                                            $rowLog = mysqli_fetch_row($queryLog);
-                                            $total = empty($rowLog[0]) ? '0' : $rowLog[0];
                                             echo "
                         <tr>
                         
                           <td>" . $row['materials_name'] . "</td>
                           <td>" . $row['quantity'] . "</td>
-                          <td>" . $total . "</td>
+                          <td>" . $row['item_borrowed'] . "</td>
                           <td>
                          
                             <button class='btn btn-primary btn-sm viewDetails btn-flat' data-id='" . $row['list_id'] . "'><i class='fa fa-eye'></i> View Details</button>
@@ -124,7 +120,6 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
                     $('#equipmentLog-modal').modal('show');
                     $('#equipmentLog-details').html(data.output);
                 },

@@ -74,6 +74,7 @@ if (isset($_POST['add'])) {
 
 				$hour = date_diff(date_create($time_in), date_create($time_out))->format('%H');
 				$min = date_diff(date_create($time_in), date_create($time_out))->format('%i');
+				$int = $hour + ($min / 60);
 
 				// Total hours with breaktime
 				if ($hour >= 9)							// 9=< : 1 hour break

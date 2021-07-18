@@ -3,19 +3,8 @@ $projectname = $_GET['projectname'];
 
 ?>
 <script>
-// $(document).ready(function() {
-//             $(document).on('click', '.material', function() {
-//                 get_material($("#description").val());
-//             });
-//             <?php ?>
+//function materials
 
-//             $material_name = $_POST['description'];
-//             $sql = "SELECT price FROM materials where description = $materials_name";
-//             $query = $conn->query($sql);
-//             $prow = $query->fetch_assoc();
-//             echo $prow['price'];
-//    
-//         },
 function mult(value) {
     var x, y;
     x = 100;

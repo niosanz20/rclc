@@ -16,23 +16,23 @@ if (isset($_POST['empID'])) {
   // $row = $query->fetch_assoc();
 
 ?>
-  <div class="panel" id="payrollSummary">
+<div class="panel" id="payrollSummary">
     <div class="box-body">
 
-      <table id="viewAttendanceTable" class="table table-bordered">
-        <thead>
-          <th class="hidecolumn">ID</th>
-          <th>Date</th>
-          <th>Day</th>
-          <th>Shift Schedule</th>
-          <th>QR Logs</th>
-          <th>OT (hrs.)</th>
-          <th>Total Hours</th>
-          <!--  <th>Project Name</th>
+        <table id="viewAttendanceTable" class="table table-bordered">
+            <thead>
+                <th class="hidecolumn">ID</th>
+                <th>Date</th>
+                <th>Day</th>
+                <th>Shift Schedule</th>
+                <th>QR Logs</th>
+                <th>OT (hrs.)</th>
+                <th>Total Hours</th>
+                <!--  <th>Project Name</th>
           <th>Project Location</th> -->
-        </thead>
-        <tbody>
-          <!--
+            </thead>
+            <tbody>
+                <!--
                 Position - Employee table link to Position table
                 Total_Hr - sum of num_hr in attendance table
                 Cash Advance - cashadvance table
@@ -41,7 +41,7 @@ if (isset($_POST['empID'])) {
                 OT - Attendance table
               -->
 
-          <?php
+                <?php
           //assumming "0" ay default value or current cut off date
           if ($cutoffID != 0) {
             $sql2 = "SELECT * FROM cutoff WHERE cutoff_id = '$cutoffID'";
@@ -62,7 +62,7 @@ if (isset($_POST['empID'])) {
 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";			 
           // $sql = "SELECT *, attendance.employee_id AS empid FROM attendance LEFT JOIN employees ON employees.employee_id=attendance.employee_id LEFT JOIN project_employee ON project_employee.name=employees.employee_id LEFT JOIN project ON project.project_id=project_employee.projectid LEFT JOIN position ON position.id=employees.position_id WHERE employees.employee_id = '$empID'";
-          $sql = "SELECT employees.firstname, employees.lastname, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out, attendance.date, attendance.time_in, attendance.time_out, attendance.num_hr, project.project_name, project.project_address, attendance.id as attID  
+          $sql = "SELECT employees.firstname, employees.lastname, attendance.employee_id AS empid, attendance.time_in as att_time_in, attendance.time_out as att_time_out, attendance.date, attendance.time_in, attendance.time_out, attendance.num_hr, project.project_name, project.project_address, attendance.id as attID, schedules.time_in as sched_timein, schedules.time_out as sched_timeout 
         FROM attendance 
         LEFT JOIN employees ON employees.employee_id=attendance.employee_id 
 			  LEFT JOIN overtime ON overtime.employee_id=employees.employee_id 
@@ -85,47 +85,47 @@ if (isset($_POST['empID'])) {
             } else $rowOT = 0;
 
           ?>
-            <tr>
-              <td class="hidecolumn"><?php echo $row['attID'] ?></td>
-              <td><?php echo date("M j, Y", strtotime($row['date'])) ?></td>
-              <td><?php echo date('D', strtotime($row['date'])) ?></td>
-              <td><?php echo date('h:i A', strtotime($row['time_in'])) . " - " . date('h:i A', strtotime($row['time_out']));  ?>
-              </td>
-              <td><?php echo date('h:i A', strtotime($row['att_time_in'])) . " - " . date('h:i A', strtotime($row['att_time_out']));  ?>
-              </td>
-              <td><?php echo number_format($rowOT, 2) ?></td>
-              <td><?php echo number_format($row['num_hr'] + $rowOT, 2) ?></td>
-              <!--      <td><?php echo $row['project_name']; ?></td>
+                <tr>
+                    <td class="hidecolumn"><?php echo $row['attID'] ?></td>
+                    <td><?php echo date("M j, Y", strtotime($row['date'])) ?></td>
+                    <td><?php echo date('D', strtotime($row['date'])) ?></td>
+                    <td><?php echo date('h:i A', strtotime($row['sched_timein'])) . " - " . date('h:i A', strtotime($row['sched_timeout']));  ?>
+                    </td>
+                    <td><?php echo date('h:i A', strtotime($row['att_time_in'])) . " - " . date('h:i A', strtotime($row['att_time_out']));  ?>
+                    </td>
+                    <td><?php echo number_format($rowOT, 2) ?></td>
+                    <td><?php echo number_format($row['num_hr'] + $rowOT, 2) ?></td>
+                    <!--      <td><?php echo $row['project_name']; ?></td>
               <td><?php echo $row['project_address']; ?></td> -->
-            </tr>
+                </tr>
 
 
-          <?php
+                <?php
           }
           ?>
-        </tbody>
-      </table>
+            </tbody>
+        </table>
     </div>
-  </div>
-  <!-- DataTables -->
+</div>
+<!-- DataTables -->
 
 
 
-  <script>
-    $('#viewAttendanceTable').DataTable({
-      "order": [
+<script>
+$('#viewAttendanceTable').DataTable({
+    "order": [
         [0, "desc"]
-      ],
-      responsive: true,
-      "paging": true,
-      "lengthChange": false,
-      pageLength: 5,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    })
-  </script>
+    ],
+    responsive: true,
+    "paging": true,
+    "lengthChange": false,
+    pageLength: 5,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false
+})
+</script>
 <?php
 }
 

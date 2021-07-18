@@ -59,7 +59,7 @@
 		            $sql = "INSERT INTO project_materials_log (date, name, material, quantity1, time_borrow, status, con_dition, time_return, price, proj_id) VALUES ('$date', '$name','$material','$quantity', '$time_borrow', '$status', '$conditon' , '$time_return' , '$price', '$project_id')";
 			        if($conn->query($sql)) {
 		
-    		            $sql = "UPDATE materials_list SET quantity = quantity - '$quantity' WHERE list_id = '$material'";
+    		            $sql = "UPDATE materials_list SET quantity = quantity - '$quantity', item_borrowed = item_borrowed + '$quantity' WHERE list_id = '$material'";
     				    $conn->query($sql);
     				    $_SESSION['success'] = 'Project Material Log added successfully';
 

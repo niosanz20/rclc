@@ -31,7 +31,7 @@
 // 		    $quanti = $pmrow['quantity1'];
 // 		    $total = $quantity + $quanti;
 		      
-		    $sql = "UPDATE materials_list SET quantity = quantity + '$quantity' WHERE list_id = '$mat'";
+		    $sql = "UPDATE materials_list SET quantity = quantity + '$quantity', item_borrowed = item_borrowed - '$quantity' WHERE list_id = '$mat'";
 			$conn->query($sql);
 		    
 		}

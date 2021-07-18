@@ -20,6 +20,7 @@ if (isset($_POST['status'])) {
     $end_date = $_POST['end_date'];
     $project_id = $_POST['project_id'];
 
+
     $sqlCutoff =  !empty($start_date) ? "AND overtime.date_overtime BETWEEN '" . date('Y-m-d', strtotime($start_date)) . "' AND '" . date('Y-m-d', strtotime($end_date)) . "' " : "";
     $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_id'" : "";
     $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";

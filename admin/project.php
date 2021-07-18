@@ -71,11 +71,11 @@
                                             <td><?php echo $row['project_address']; ?></td>
                                             <td><?php echo $row['project_owner']; ?></td>
                                             <?php
-                                                if ($row['project_status'] == "Active") {
+                                                if ($row['project_status'] == "Active")
                                                     $project_status = "badge-active";
-                                                } else if ($row['project_status'] == "Finished") {
+                                                else if ($row['project_status'] == "Finished")
                                                     $project_status = "badge-finish";
-                                                } else $project_status = "badge-pending";
+                                                else $project_status = "badge-pending";
 
                                                 echo ' <td class="project-state "><span class="badge ' . $project_status . ' rclc-center"> ' . $row['project_status'] . ' </span></td> ';
 

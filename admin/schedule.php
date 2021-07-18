@@ -2,27 +2,27 @@
 <?php include 'includes/header.php'; ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
+    <div class="wrapper">
 
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+        <?php include 'includes/navbar.php'; ?>
+        <?php include 'includes/menubar.php'; ?>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          Schedules
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li>Employees</li>
-          <li class="active">Schedules</li>
-        </ol>
-      </section>
-      <!-- Main content -->
-      <section class="content">
-        <?php
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Schedules
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li>Employees</li>
+                    <li class="active">Schedules</li>
+                </ol>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <?php
         if (isset($_SESSION['error'])) {
           echo "
             <div class='alert alert-danger alert-dismissible'>
@@ -44,22 +44,24 @@
           unset($_SESSION['success']);
         }
         ?>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <div class="box-header with-border">
-                <a href="schedule_employee.php" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-arrow-left"></i></a>
-                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i>New</a>
-              </div>
-              <div class="box-body">
-                <table id="example1" class="table table-bordered">
-                  <thead>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                    <th>Tools</th>
-                  </thead>
-                  <tbody>
-                    <?php
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <a href="schedule_employee.php" class="btn btn-primary btn-sm btn-flat"><i
+                                        class="fa fa-arrow-left"></i></a>
+                                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i
+                                        class="fa fa-plus"></i>New</a>
+                            </div>
+                            <div class="box-body">
+                                <table id="example1" class="table table-bordered">
+                                    <thead>
+                                        <th>Time In</th>
+                                        <th>Time Out</th>
+                                        <th>Tools</th>
+                                    </thead>
+                                    <tbody>
+                                        <?php
                     $sql = "SELECT * FROM schedules";
                     $query = $conn->query($sql);
                     while ($row = $query->fetch_assoc()) {
@@ -75,54 +77,54 @@
                       ";
                     }
                     ?>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-      </section>
+
+        <?php include 'includes/footer.php'; ?>
+        <?php include 'includes/schedule_modal.php'; ?>
     </div>
-
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/schedule_modal.php'; ?>
-  </div>
-  <?php include 'includes/scripts.php'; ?>
-  <script>
+    <?php include 'includes/scripts.php'; ?>
+    <script>
     $(function() {
-      $(document).on('click', '.edit', function() {
-        // e.preventDefault();
-        $('#edit').modal('show');
-        var id = $(this).data('id');
-        getRow(id);
-      });
+        $(document).on('click', '.edit', function() {
+            // e.preventDefault();
+            $('#edit').modal('show');
+            var id = $(this).data('id');
+            getRow(id);
+        });
 
-      $(document).on('click', '.delete', function() {
-        // e.preventDefault();
-        $('#delete').modal('show');
-        var id = $(this).data('id');
-        getRow(id);
-      });
+        $(document).on('click', '.delete', function() {
+            // e.preventDefault();
+            $('#delete').modal('show');
+            var id = $(this).data('id');
+            getRow(id);
+        });
     });
 
     function getRow(id) {
-      $.ajax({
-        type: 'POST',
-        url: 'schedule_row.php',
-        data: {
-          id: id
-        },
-        dataType: 'json',
-        success: function(response) {
-          $('#timeid').val(response.id);
-          $('#edit_time_in').val(response.time_in);
-          $('#edit_time_out').val(response.time_out);
-          $('#del_timeid').val(response.id);
-          $('#del_schedule').html(response.time_in + ' - ' + response.time_out);
-        }
-      });
+        $.ajax({
+            type: 'POST',
+            url: 'schedule_row.php',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('#timeid').val(response.id);
+                $('#edit_time_in').val(response.time_in);
+                $('#edit_time_out').val(response.time_out);
+                $('#del_timeid').val(response.id);
+                $('#del_schedule').html(response.time_in + ' - ' + response.time_out);
+            }
+        });
     }
-  </script>
+    </script>
 </body>
 
 </html>

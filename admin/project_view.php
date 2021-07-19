@@ -582,21 +582,19 @@
     <script>
     //Project Materials
     $(function() {
-        $('.editmaterials').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.editmaterials', function() {
+            // e.preventDefault();
             $('#editmaterials').modal('show');
             var id = $(this).data('id');
             getRow(id);
         });
 
-        $('.deleteprojectmater').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.deleteprojectmater', function() {
+            // e.preventDefault();
             $('#deleteprojectmater').modal('show');
             var id = $(this).data('id');
             getRow(id);
         });
-
-
     });
 
     function getRow(id) {
@@ -624,18 +622,18 @@
 
     //Project Employees
     $(function() {
-        $('.edit').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.edit', function() {
+            // e.preventDefault();
             $('#edit').modal('show');
             var id = $(this).data('id');
-            getRow2(id);
+            getRow(id);
         });
 
-        $('.delete').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.delete', function() {
+            // e.preventDefault();
             $('#delete').modal('show');
             var id = $(this).data('id');
-            getRow2(id);
+            getRow(id);
         });
     });
 
@@ -662,18 +660,18 @@
 
     //Project Material Logs
     $(function() {
-        $('.editmaterialslog').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.editmaterialslog', function() {
+            // e.preventDefault();
             $('#editmaterialslog').modal('show');
             var id = $(this).data('id');
-            getRow3(id);
+            getRow(id);
         });
 
-        $('.deleteprojectmaterlog').click(function(e) {
-            e.preventDefault();
+        $(document).on('click', '.deleteprojectmaterlog', function() {
+            // e.preventDefault();
             $('#deleteprojectmaterlog').modal('show');
             var id = $(this).data('id');
-            getRow3(id);
+            getRow(id);
         });
     });
 

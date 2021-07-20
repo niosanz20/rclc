@@ -2,18 +2,6 @@
 $projectname = $_GET['projectname'];
 
 ?>
-<script>
-//function materials
-
-function mult(value) {
-    var x, y;
-    x = 100;
-    y = x * value;
-
-    document.getElementById('unit_cost').value = x;
-    document.getElementById('amnt_cost').value = y;
-}
-</script>
 
 <!-- Add Project Materials-->
 <div class="modal fade" id="addnewmaterials">
@@ -30,16 +18,16 @@ function mult(value) {
                     <div class="form-group">
                         <label for="description" class="col-sm-3 control-label material">Description</label>
                         <div class="col-sm-9">
-                            <!--<input class="form-control" id="description" name="description"></input> -->
-                            <select class="form-control description" name="description" id="description" required>
+                            <select class="form-control description" name="material_id" id="description" required>
                                 <option value="" selected>- Select -</option>
                                 <?php
                                 $sql = "SELECT * FROM materials";
                                 $query = $conn->query($sql);
                                 while ($prow = $query->fetch_assoc()) {
                                     $name = $prow['name'];
+                                    $value = $prow['materials_id'] . "-" . $prow['price'] . "-" . $prow['unit'];
                                     echo "
-                                        <option value='" . $prow['description'] . "'>" . $prow['name'] . ' | ' . $prow['description'] . "</option>
+                                        <option value='$value'>" . $prow['name'] . ' | ' . $prow['description'] . "</option>
                                      ";
                                 }
                                 ?>
@@ -49,28 +37,28 @@ function mult(value) {
                     <div class="form-group">
                         <label for="quantity" class="col-sm-3 control-label">Quantity</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="quantity" name="quantity" pattern="[0-9]+" required
-                                onkeyup="mult(this.value);"></input>
+                            <input class="form-control" type="number" id="quantity" min="1" name="quantity" pattern="[0-9]+" value="1" onchange="CalculateAmountCost(this.value)" required
+                                ></input>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="unit" class="col-sm-3 control-label">Unit</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="unit" name="unit" required></input>
+                            <input class="form-control" id="unit" name="unit" required disabled></input>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="unit_cost" class="col-sm-3 control-label">Unit Cost</label>
                         <div class="col-sm-9">
                             <input class="form-control" id="unit_cost" name="unit_cost" pattern="[0-9.]+"
-                                required></input>
+                                required disabled></input>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="amnt_cost" class="col-sm-3 control-label">Amount Cost</label>
                         <div class="col-sm-9">
                             <input class="form-control" id="amnt_cost" name="amnt_cost" pattern="[0-9.]+"
-                                required></input>
+                                required disabled></input>
                         </div>
                     </div>
                     <div class="form-group">
@@ -184,3 +172,41 @@ function mult(value) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="script/getData.js"></script>
 <script src=".../js/jquery-3.2.1.min.js"></script>
+
+<script>
+    function GetMaterialPrice(){
+        const element = document.getElementById('description');
+        const options = element.options[element.selectedIndex].value;
+        
+        let materialId = options.split('-')[0];
+        let price = options.split('-')[1];
+        let unit = options.split('-')[2];
+       
+        if(options != "")
+        {
+            document.getElementById('unit_cost').value = price;
+            document.getElementById('unit').value = unit;
+        }
+        else
+        {
+            document.getElementById('unit_cost').value = "Material Item is required!";
+            document.getElementById('unit').value = "Material Item is required!";
+            price = 0;
+        }
+
+        return price;
+    }
+
+    function CalculateAmountCost(quantity){
+        let value = GetMaterialPrice() !== 0 ? quantity * GetMaterialPrice() : "Material Item is required!";
+        document.getElementById('amnt_cost').value = value;
+    }
+
+    /*--
+    Auto-calculation for adding new materials on project
+    -----------------------------------*/
+    $(document).on('change', '.description', function() {
+        let quantity = $('#quantity').val();
+        CalculateAmountCost(quantity);
+    });
+</script>

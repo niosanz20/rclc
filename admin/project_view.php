@@ -1,8 +1,6 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header.php'; ?>
 
-
-
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
@@ -61,43 +59,8 @@
                     $project_budget = $row['project_budget'];
                     $project_status = $row['project_status'];
                     $photo = $row['photo'];
-                    echo "<script>alert($project_id)</script>";
                 }
                 ?>
-
-                <?php
-                //For Status of project employees
-                // if(isset($_GET['project_id'])){
-
-                //  $currentDate = date('Y-m-d');
-                // if($row['timeline_sched'] >= $currentDate && $row['project_date_end'] <= $currentDate){
-                //     $status = "On going";
-                //     $sql = "UPDATE project_employee SET status = '$status' ";
-                //     $query = $conn->query($sql);
-
-                // }
-                // else if($row['timeline_sched'] < $currentDate && $row['project_date_end'] > $currentDate ){
-                //     $status = "Vacant";
-                //     $sql = "UPDATE project_employee SET status = '$status' ";
-                //     $query = $conn->query($sql);
-
-                // }
-
-                //             $currentDate = date('Y-m-d');
-                // 			if($currentDate >= $row['timeline_sched'] && $currentDate < $row['project_date_end'])
-                // 			{
-                // 			    $status = "On going";
-                // 			}
-                // 		    else {
-                // 			    $status = "Vacant";
-                // 			}
-
-
-                // }
-
-                ?>
-
-
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
@@ -357,20 +320,15 @@
                                             <div class="box box-solid box-success">
                                                 <div class="box-header">
                                                     <h1 class="box-title">Project Materials</h1>
-                                                    <!-- employee button sa Gilid -->
                                                     <div class="pull-right">
                                                         <div class="btn-group-horizontal">
                                                             <a href="#addnewmaterials"
-                                                                data-id="<?php echo $row['project_id']; ?>"
                                                                 data-toggle="modal"
                                                                 class="btn btn-primary btn-sm btn-flat"><i
                                                                     class="fa fa-plus"></i> Add Project Materials</a>
-                                                            <!-- /.$row['project_id']; -->
-
                                                         </div>
                                                     </div>
-                                                    <!-- /.employee button sa Gilid -->
-                                                </div><!-- /.box-header -->
+                                                </div>
                                                 <!-- The body of the box -->
                                                 <div class="box-body">
                                                     <!-- Main content for Project Emnployee-->
@@ -388,25 +346,22 @@
                                                                                 <th>Unit</th>
                                                                                 <th>Unit Cost</th>
                                                                                 <th>Amount Cost</th>
-                                                                                <!-- <th>Total Amount Cost</th> -->
                                                                                 <th>Tools</th>
                                                                             </thead>
                                                                             <tbody>
                                                                                 <?php
-                                                                                $sql = "SELECT * FROM project_materials WHERE proj_id = '$project_id'";
+                                                                                $sql = "SELECT * FROM project_materials 
+                                                                                        LEFT JOIN materials ON project_materials.material_id = materials.materials_id 
+                                                                                        WHERE proj_id = '$project_id'";
                                                                                 $query = $conn->query($sql);
                                                                                 while ($row = $query->fetch_assoc()) {
                                                                                 ?>
                                                                                 <tr>
-                                                                                    <td><?php echo $row['description']; ?>
-                                                                                    </td>
-                                                                                    <td><?php echo $row['quantity']; ?>
-                                                                                    </td>
+                                                                                    <td><?php echo $row['description']; ?></td>
+                                                                                    <td><?php echo $row['quantity']; ?></td>
                                                                                     <td><?php echo $row['unit']; ?></td>
-                                                                                    <td><?php echo $row['unit_cost']; ?>
-                                                                                    </td>
-                                                                                    <td><?php echo $row['amnt_cost']; ?>
-                                                                                    </td>
+                                                                                    <td><?php echo $row['price']; ?></td>
+                                                                                    <td><?php echo $row['amnt_cost']; ?></td>
                                                                                     <td>
                                                                                         <button type="button"
                                                                                             name="#editmaterials"

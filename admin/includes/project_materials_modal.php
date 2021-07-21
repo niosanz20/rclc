@@ -12,9 +12,9 @@ $projectname = $_GET['projectname'];
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><b>Add Project Materials of <?php echo $projectname ?></b></h4>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" method="POST" action="project_materials_add.php"
+            <form class="form-horizontal" method="POST" action="project_materials_add.php"
                     enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="description" class="col-sm-3 control-label material">Description</label>
                         <div class="col-sm-9">
@@ -28,7 +28,7 @@ $projectname = $_GET['projectname'];
                                     $value = $prow['materials_id'] . "-" . $prow['price'] . "-" . $prow['unit'];
                                     echo "
                                         <option value='$value'>" . $prow['name'] . ' | ' . $prow['description'] . "</option>
-                                     ";
+                                    ";
                                 }
                                 ?>
                             </select>
@@ -57,7 +57,7 @@ $projectname = $_GET['projectname'];
                     <div class="form-group">
                         <label for="amnt_cost" class="col-sm-3 control-label">Amount Cost</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="amnt_cost" name="amnt_cost" pattern="[0-9.]+"
+                            <input class="form-control" id="total_amount" name="amnt_cost" pattern="[0-9.]+"
                                 required disabled></input>
                         </div>
                     </div>
@@ -65,16 +65,17 @@ $projectname = $_GET['projectname'];
                         <div class="col-sm-9">
                             <input type="hidden" value="<?php echo $project_id ?>" ; class="form-control"
                                 name="projectid" id="projectid"></input>
+                            <input type="hidden" value="" name="totalAmount" id="totalAmount">
                         </div>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
-                        class="fa fa-close"></i> Close</button>
-                <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i>
-                    Save</button>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i
+                            class="fa fa-close"></i> Close</button>
+                    <button type="submit" class="btn btn-primary btn-flat" name="add"><i class="fa fa-save"></i>
+                        Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -199,7 +200,8 @@ $projectname = $_GET['projectname'];
 
     function CalculateAmountCost(quantity){
         let value = GetMaterialPrice() !== 0 ? quantity * GetMaterialPrice() : "Material Item is required!";
-        document.getElementById('amnt_cost').value = value;
+        document.getElementById('total_amount').value = value;
+        document.getElementById('totalAmount').value = value;
     }
 
     /*--

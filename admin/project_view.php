@@ -360,8 +360,8 @@
                                                                                     <td><?php echo $row['description']; ?></td>
                                                                                     <td><?php echo $row['quantity']; ?></td>
                                                                                     <td><?php echo $row['unit']; ?></td>
-                                                                                    <td><?php echo $row['price']; ?></td>
-                                                                                    <td><?php echo $row['amnt_cost']; ?></td>
+                                                                                    <td>₱ <?php echo $row['price']; ?></td>
+                                                                                    <td>₱ <?php echo $row['amnt_cost']; ?></td>
                                                                                     <td>
                                                                                         <button type="button"
                                                                                             name="#editmaterials"

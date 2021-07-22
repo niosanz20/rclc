@@ -23,7 +23,7 @@ if (isset($_POST['cutoff_id'])) {
 
 	//assumming "0" ay default value or current cut off date
 	if ($cutoffID != 0) {
-		$sqlCutoffpayslip = "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth 
+		$sqlCutoffpayslip = "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth, payslip.tax as ps_tax  
 							FROM employees LEFT JOIN payslip ON payslip.employee_id=employees.employee_id 
 							LEFT JOIN project_employee ON project_employee.name=employees.employee_id
 							LEFT JOIN cutoff ON cutoff.cutoff_id = payslip.cutoff_id
@@ -31,7 +31,7 @@ if (isset($_POST['cutoff_id'])) {
 							WHERE payslip.cutoff_id='$cutoffID'";
 	} else {
 		//bago magload yung page ito yung e-eexcute niya (current cutoff date)
-		$sqlCutoffpayslip = "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth 
+		$sqlCutoffpayslip = "SELECT *, employees.sss as empsss, employees.philhealth as empphil, employees.pagibig as emppag, employees.tin as emptin, yeartodate.sss as sss_ytd, payslip.sss as ps_sss, payslip.philhealth as ps_philhealth, payslip.tax as ps_tax  
 							FROM employees 
 							LEFT JOIN payslip ON payslip.employee_id=employees.employee_id
 							LEFT JOIN cutoff ON cutoff.employee_id = payslip.employee_id
@@ -103,7 +103,7 @@ if (isset($_POST['cutoff_id'])) {
 						<td width="20%" align="left" class="title">RATE per HOUR</td>
 						<td width="10%" align="left">' . number_format($rowpayslipcutoff['rate'], 2) . '</td>
 						<td width="20%" align="left" class="title">TAX</td>
-						<td width="10%" align="right">' . number_format($rowpayslipcutoff['tax'], 2) . '</td>
+						<td width="10%" align="right">' . number_format($rowpayslipcutoff['ps_tax'], 2) . '</td>
 						<td width="20%" align="left" class="title">TAX</td>
 						<td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_tax'], 2) . '</td>
 					</tr>

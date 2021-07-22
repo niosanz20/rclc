@@ -113,45 +113,55 @@ if (isset($_POST['dateNow'])) {
         $deduction_contribution = $total_cashad + $sss_payslip + $philhealth_payslip + $pagibig_payslip + $material_loss; //total deduction per cut-of
 
         //tax computation
-        $salary_annual = ($gross - $deduction_contribution) * 12;
+        $salary = ($compensation_total - $deduction_contribution);
 
-        if ($salary_annual <= 250000)
+        if ($salary <= 10417)   //1
           $tax_income = 0;
-        else if ($salary_annual > 250000 && $salary_annual <= 400000)
-          $tax_income = ((($gross * 12) - 250000) * .20) / 12;
-        else if ($salary_annual > 400000 && $salary_annual <= 800000)
-          $tax_income = (((($gross * 12) - 400000) * .20) + 30000) / 12;
-        else if ($salary_annual > 800000 && $salary_annual <= 2000000)
-          $tax_income = (((($gross * 12) - 800000) * .20) + 130000) / 12;
+        else if ($salary > 10417 && $salary <= 16666)   //2
+        {
+          $tax_income = (($salary - 10417) * .20) + 0;
+        } else if ($salary > 16666 && $salary <= 33332)   //3
+        {
+          $tax_income = (($salary - 16667) * .25) + 1250;
+        } else if ($salary > 33332 && $salary <= 83332)   //4
+        {
+          $tax_income = (($salary - 33333) * .30) + 5416.67;
+        } else if ($salary > 83332 && $salary <= 333332)    //5
+        {
+          $tax_income = (($salary - 83333) * .32) + 20416.67;
+        } else if ($salary > 333332)    //6
+        {
+          $tax_income = (($salary - 333333) * .35) + 100416.67;
+        }
 
-        $tax_payslip = $tax_income / 2;
+        // $tax_payslip = $tax_income;
 
-        $deduction_total = $deduction_contribution + $tax_payslip;
+        $deduction_total = $deduction_contribution + $tax_income;
 
         $netpay = $compensation_total - $deduction_total; //net pay per cut-off
 
 
         //insert to yeartodate
         $sqlYTD = "SELECT * from yeartodate WHERE employee_id = '$empID'";
-        $resultYTD = mysqli_query($conn, $sqlYTD);
-        $rowYTD = mysqli_fetch_assoc($resultYTD);
+        $queryYTD = $conn->query($sqlYTD);
+        $rowYTD = $queryYTD->fetch_assoc();
 
-        $philhealth = $rowYTD['philhealth'] + $philhealth;
-        $pagibig = $rowYTD['pagibig'] + $pagibig;
-        $sss = $rowYTD['sss'] + $sss;
-        $gross = $rowYTD['gross_income'] + $gross;
-        $tax_payslip = $rowYTD['tax'] + $tax_payslip;
+        $philhealthYTD = $rowYTD['philhealth'] + $philhealth;
+        $pagibigYTD = $rowYTD['pagibig'] + $pagibig;
+        $sssYTD = $rowYTD['sss'] + $sss;
+        $grossYTD = $rowYTD['gross_income'] + $gross;
+        $tax_payslipYTD = $rowYTD['tax'] + $tax_income;
 
         // dapat mastore 'yung previous value   //done
-        $sqlYear = "UPDATE yeartodate set
-                    tax = '$tax_payslip',
-                    sss= '$sss',
-                    philhealth= '$philhealth',
-                    pagibig= '$pagibig', 
-                    gross_income = '$gross'
-                    WHERE employee_id = '$empID'";
-        $conn->query($sqlYear) ? 'working' : "Error3." . $sqlYear . "<br>" . $conn->error;
 
+        $sqlYear = "UPDATE yeartodate SET 
+                sss = '$sssYTD',
+                philhealth = '$philhealthYTD',
+                pagibig = '$pagibigYTD', 
+                tax = '$tax_payslipYTD',
+                gross_income = '$grossYTD'
+                WHERE employee_id = '$empID'";
+        $conn->query($sqlYear) ? 'working' : "Error3." . $sqlYear . "<br>" . $conn->error;
 
         // Postion & Rate
         $sqlp = "SELECT *, employees.id AS empid FROM employees LEFT JOIN position ON position.id=employees.position_id LEFT JOIN schedules ON schedules.id=employees.schedule_id WHERE employees.employee_id='$empID'";
@@ -167,8 +177,6 @@ if (isset($_POST['dateNow'])) {
         $projectname = $rowproj['empproj'];
 
 
-        // $empID, $cutoff_id, $position, $tax_stat, $gross_payslip, $total_ot, $total_cashad, $sss_payslip, $philhealth_payslip, $pagibig_payslip, $tax_payslip,$material_loss, $sss, $philhealth, $pagibig, $gross, $compensation_total, $deduction_total, $netpay 
-
         $sqlpayslipdisplay = "SELECT * FROM payslip WHERE '$cutoff_id'=cutoff_id AND '$empID'=employee_id";
         $querypayslipdisplay = $conn->query($sqlpayslipdisplay);
         $rowpayslipdisplay = $querypayslipdisplay->fetch_assoc();
@@ -177,9 +185,8 @@ if (isset($_POST['dateNow'])) {
         $payslip_empID = $rowpayslipdisplay['employee_id'];
         if ($cutoff_id != $payslip_cutoffID && $empID != $payslip_empID) {
 
-          $sqlpayslip = "INSERT INTO payslip 
-        (employee_id, cutoff_id, project_name, position, rate, tax_status, basic_pay, total_hour, ot_hours, ot, cash_advance, sss, philhealth, hdmif, tax, material_cost, ytd_sss, ytd_philhealth, ytd_hdmif, ytd_grossincome, total_compensation, total_deduc, netpay) 
-        VALUES ('$empID', '$cutoff_id', '$projectname', '$position', '$rph', '$tax_stat', '$gross_payslip', '$total_hour', '$ot_hours', '$total_ot', '$total_cashad', '$sss_payslip', '$philhealth_payslip', '$pagibig_payslip', '$tax_payslip', '$material_loss', '$sss', '$philhealth', '$pagibig', '$gross', '$compensation_total', '$deduction_total', '$netpay')";
+          $sqlpayslip = "INSERT INTO payslip (employee_id, cutoff_id, project_name, position, rate, tax_status, basic_pay, total_hour, ot_hours, ot, cash_advance, sss, philhealth, hdmif, tax, material_cost, ytd_sss, ytd_philhealth, ytd_hdmif, ytd_tax, ytd_grossincome, total_compensation, total_deduc, netpay) 
+                                      VALUES ('$empID', '$cutoff_id', '$projectname', '$position', '$rph', '$tax_stat', '$gross_payslip', '$total_hour', '$ot_hours', '$total_ot', '$total_cashad', '$sss_payslip', '$philhealth_payslip', '$pagibig_payslip', '$tax_income', '$material_loss', '$sssYTD', '$philhealthYTD', '$pagibigYTD', '$tax_payslipYTD', '$gross', '$compensation_total', '$deduction_total', '$netpay')";
 
           $data = $conn->query($sqlpayslip) ? 'working' : "Error3." . $sqlpayslip . "<br>" . $conn->error;
           if ($data  == NULL) {

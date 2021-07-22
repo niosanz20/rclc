@@ -322,8 +322,7 @@
                                                     <h1 class="box-title">Project Materials</h1>
                                                     <div class="pull-right">
                                                         <div class="btn-group-horizontal">
-                                                            <a href="#addnewmaterials"
-                                                                data-toggle="modal"
+                                                            <a href="#addnewmaterials" data-toggle="modal"
                                                                 class="btn btn-primary btn-sm btn-flat"><i
                                                                     class="fa fa-plus"></i> Add Project Materials</a>
                                                         </div>
@@ -357,11 +356,16 @@
                                                                                 while ($row = $query->fetch_assoc()) {
                                                                                 ?>
                                                                                 <tr>
-                                                                                    <td><?php echo $row['description']; ?></td>
-                                                                                    <td><?php echo $row['quantity']; ?></td>
+                                                                                    <td><?php echo '<b>' . $row['name'] . '</b> | ' . $row['description']; ?>
+                                                                                    </td>
+                                                                                    <td><?php echo $row['quantity']; ?>
+                                                                                    </td>
                                                                                     <td><?php echo $row['unit']; ?></td>
-                                                                                    <td>₱ <?php echo $row['price']; ?></td>
-                                                                                    <td>₱ <?php echo $row['amnt_cost']; ?></td>
+                                                                                    <td>₱ <?php echo $row['price']; ?>
+                                                                                    </td>
+                                                                                    <td>₱
+                                                                                        <?php echo $row['amnt_cost']; ?>
+                                                                                    </td>
                                                                                     <td>
                                                                                         <button type="button"
                                                                                             name="#editmaterials"
@@ -417,7 +421,7 @@
                                         </div>
 
 
-                                        <!-- /.tab-pane MATERIAL LOGS-->
+                                        <!-- /.tab-pane EQUIPMENTS LOGS-->
                                         <div class="tab-pane" id="tab_4">
                                             <div class="box box-solid box-success">
                                                 <div class="box-header">

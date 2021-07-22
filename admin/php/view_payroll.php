@@ -159,36 +159,36 @@ if (isset($_POST['empID2'])) {
         </thead>
         <tbody>
           <tr>
-            <td width="20%" align="left"><b>NAME</b></td>
+            <td width="15%" align="left"><b>NAME</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['firstname'] . ' ' . $rowpayslipcutoff['lastname'] . '</td>
             <td width="10%"></td>
             <td width="20%" align="left"></td>
             <td width="10%" align="left"></td>
           </tr>
           <tr>
-            <td width="20%" align="left"><b>PAYROLL DATE</b></td>
+            <td width="15%" align="left"><b>PAYROLL DATE</b></td>
             <td width="10%" align="left">: ' . date("M j, Y", strtotime($rowpayslipcutoff['payroll_date'])) . '</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>TIN</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['emptin'] . '</td>
           </tr>
           <tr>
-            <td width="20%" align="left"><b>DATE COVERED</b></td>
+            <td width="15%" align="left"><b>DATE COVERED</b></td>
             <td width="20%" align="left">: (' . date("M j, Y", strtotime($rowpayslipcutoff['start_date'])) . ' - ' . $end_date = date("M j, Y", strtotime($rowpayslipcutoff['end_date'])) . ')</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>SSS NO.</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['empsss'] . '</td>
           </tr>
           <tr>
-            <td width="20%" align="left"><b>POSITION</b></td>
+            <td width="15%" align="left"><b>POSITION</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['position'] . '</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>PHILHEALTH NO.</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['empphil'] . '</td>
           </tr>
           <tr>
-            <td width="20%" align="left"><strong>PROJECT NAME: </strong></td>
-            <td width="10%" align="left">: ' . $rowpayslipcutoff['project_name'] . '</td>
+            <td width="15%" align="left"><strong>PROJECT NAME: </strong></td>
+            <td width="15%" align="left">: ' . $rowpayslipcutoff['project_name'] . '</td>
             <td width="10%"></td>
             <td width="20%" align="left"><b>HDMIF NO.</b></td>
             <td width="10%" align="left">: ' . $rowpayslipcutoff['emppag'] . '</td>
@@ -255,8 +255,8 @@ if (isset($_POST['empID2'])) {
             <td width="10%" align="right"></td>
             <td width="20%" align="left"><b>MATERIAL LOST</b></td>
             <td width="10%" align="right">' . number_format($rowpayslipcutoff['material_cost'], 2) . '</td>
-            <td width="20%" align="left"><b>GROSS INCOME</b></td>
-            <td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_grossincome'], 2) . '</td>
+            <td width="20%" align="left"></td>
+            <td width="10%" align="right"></td>
           </tr>
           <tr>
             <td width="20%" align="left"><b></b></td>
@@ -268,65 +268,6 @@ if (isset($_POST['empID2'])) {
           </tr>
         </tbody>
       </table>
-
-      <div class="flexDisplay">
-        <div class="legend">
-          <table style="border:none">
-            <thead>
-              <th colspan="4">LEGEND</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>LH -</td>
-                <td>Legal Holiday</td>
-                <td>OT -</td>
-                <td>Overtime</td>
-              </tr>
-              <tr>
-                <td>SH -</td>
-                <td>Special Holiday &nbsp</td>
-                <td>RD -</td>
-                <td>Rest Day</td>
-              </tr>
-              <tr>
-                <td>DH -</td>
-                <td>Double Holiday</td>
-                <td></td>
-                <td></td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-
-        <div class="legend">
-          <table style="border:none">
-            <thead>
-              <th colspan="4">COMPUTATION</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Computation ng rate per hour</td>
-                <td>(OT)</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Computation for TAX</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   ';
 

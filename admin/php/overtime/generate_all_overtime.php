@@ -23,7 +23,7 @@ $pdf->SetAutoPageBreak(true, 10);
 $pdf->SetFont('cid0cs', '', 8, '', false);
 $pdf->AddPage('L', 'LEGAL');
 $pdf->Cell(0, 15, str_replace('<br>', ' | ', $report_title), 0, true, 'C', 0, '', 0, true, 'M', 'M');
-$contents = '<style>' . file_get_contents('../payrollstyle.css') . '</style>';
+$contents = '<style>' . file_get_contents('../otreport.css') . '</style>';
 // $temp = isset($_POST['status']) . "asd";
 //echo $temp;
 
@@ -44,7 +44,7 @@ $sqlProject = !empty($project_id) ? "AND project_employee.projectid = '$project_
 $sqlStatus = !empty($status) ? "AND overtime.ot_status = '$status'" : "AND overtime.ot_status != 'New'";
 
 $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out, attendance.time_in 
-            AS ttime_in, attendance.time_out AS ttime_out, project.project_name AS project_name
+            AS ttime_in, attendance.time_out AS ttime_out, overtime.reason AS rs, project.project_name AS project_name
             FROM overtime 
             LEFT JOIN employees ON employees.employee_id=overtime.employee_id 
             LEFT JOIN position ON position.id=employees.position_id 
@@ -54,9 +54,11 @@ $sql = "SELECT *, schedules.time_in AS stime_in, schedules.time_out AS stime_out
             LEFT JOIN attendance ON attendance.employee_id=employees.employee_id
             WHERE overtime.date_overtime=attendance.date $sqlCutoff $sqlProject $sqlStatus
             ORDER BY date_overtime DESC";
-// echo $sql;
-$result = $conn->query($sql);
 
+
+
+$result = $conn->query($sql);
+//echo $sql;
 $contents .= '
 		<div class="panel">
 			<table class="greyGridTable">
@@ -68,8 +70,7 @@ $contents .= '
 						<th width="15%" align="center" class="title">QR Logs</th>
 						<th width="7%" align="center" class="title">Minutes of OT</th>
 						<th width="7%" align="center" class="title">OT Amount</th>
-						<th width="15%" align="center" class="title">Status | Timestamps</th>
-						<th width="17%" align="center" class="title">Reasons</th>
+						<th width="32%" align="center" class="title">Status & Timestamps | Reasons</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -94,11 +95,10 @@ while ($row = $result->fetch_assoc()) {
 						<td width="15%" align="left">' . $row['firstname'] . ' ' . $row['lastname'] . ' | ' . $row['description'] . '</td>
 						<td width="12%" align="left">' . $row['project_name'] . '</td>
 						<td width="11%" align="center">' . date('h:i A', strtotime($row['stime_in'])) . ' - ' . date('h:i A', strtotime($row['stime_out'])) . '</td> 
-						<td width="15%" align="center"><strong>' . date('M d, Y', strtotime($row['date_overtime'])) . '</strong> | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . '</td>
+						<td width="15%" align="center">' . date('M d, Y', strtotime($row['date_overtime'])) . ' | ' . date('h:i A', strtotime($row['ttime_in'])) . ' - ' . date('h:i A', strtotime($row['ttime_out'])) . '</td>
 						<td width="7%" align="center">' . $row['hours'] . '</td>
 						<td width="7%" align="center">' . number_format($row['amount'], 2) . '</td>
-						<td width="15%" align="center">' . $ot_status . '</td>
-						<td width="17%" align="center">' . $row['reason'] . '</td>
+						<td width="32%" align="center">' . $ot_status . ' | ' . $row['rs'] . '</td>
 					</tr>
 				';
 }

@@ -63,36 +63,79 @@ if (isset($_POST['dateNow'])) {
         //   $rowDamage['total_price'] = 0;
 
         //sss
-        if ($gross < 3250)
+        $sss_gross = $gross * 2;
+        if ($sss_gross < 3250)
           $sss = 135;
-        else if (3749.99 >= $gross && $gross > 3250)
+        else if (3749.99 >= $sss_gross && $sss_gross > 3250)
           $sss = 157.50;
-        else if (4249.99 >= $gross && $gross > 3750)
+        else if (4249.99 >= $sss_gross && $sss_gross > 3750)
           $sss = 180;
-        else if (4749.99 >= $gross && $gross > 4250)
+        else if (4749.99 >= $sss_gross && $sss_gross > 4250)
           $sss = 202.5;
-        else if (5249.99 >= $gross && $gross > 4750)
+        else if (5249.99 >= $sss_gross && $sss_gross > 4750)
           $sss = 225;
-        else if (5749.99 >= $gross && $gross > 5250)
+        else if (5749.99 >= $sss_gross && $sss_gross > 5250)
           $sss = 247.5;
-        else if (6249.99 >= $gross && $gross > 5750)
+        else if (6249.99 >= $sss_gross && $sss_gross > 5750)
           $sss = 270;
-        else if (6749.99 >= $gross && $gross > 6250)
+        else if (6749.99 >= $sss_gross && $sss_gross > 6250)
           $sss = 292.5;
-        else if (7249.99 >= $gross && $gross > 6750)
+        else if (7249.99 >= $sss_gross && $sss_gross > 6750)
           $sss = 315;
-        else if (7749.99 >= $gross && $gross > 7250)
+        else if (7749.99 >= $sss_gross && $sss_gross > 7250)
           $sss = 337.5;
-        else if (8249.99 >= $gross && $gross > 7750)
+        else if (8249.99 >= $sss_gross && $sss_gross > 7750)
           $sss = 360;
-        else if (8749.99 >= $gross && $gross > 8250)
+        else if (8749.99 >= $sss_gross && $sss_gross > 8250)
           $sss = 382.5;
-        else if (9249.99 >= $gross && $gross > 8750)
+        else if (9249.99 >= $sss_gross && $sss_gross > 8750)
           $sss = 405;
-        else if (9749.99 >= $gross && $gross > 9250)
+        else if (9749.99 >= $sss_gross && $sss_gross > 9250)
           $sss = 427.5;
-        else if (10249.99 >= $gross && $gross > 9750)
+        else if (10249.99 >= $sss_gross && $sss_gross > 9750)
           $sss = 450;
+        else if (10749.99 >= $sss_gross && $sss_gross > 10250)
+          $sss = 472.50;
+        else if (11249.99 >= $sss_gross && $sss_gross > 10750)
+          $sss = 495;
+        else if (11749.99 >= $sss_gross && $sss_gross > 11250)
+          $sss = 517.5;
+        else if (12249.99 >= $sss_gross && $sss_gross > 11750)
+          $sss = 540;
+        else if (12749.99 >= $sss_gross && $sss_gross > 12250)
+          $sss = 562.5;
+        else if (13249.99 >= $sss_gross && $sss_gross > 12750)
+          $sss = 585;
+        else if (13749.99 >= $sss_gross && $sss_gross > 13250)
+          $sss = 607.5;
+        else if (14249.99 >= $sss_gross && $sss_gross > 13750)
+          $sss = 630;
+        else if (14749.99 >= $sss_gross && $sss_gross > 14250)
+          $sss = 652.5;
+        else if (15249.99 >= $sss_gross && $sss_gross > 14750)
+          $sss = 675;
+        else if (15749.99 >= $sss_gross && $sss_gross > 15250)
+          $sss = 697.5;
+        else if (16249.99 >= $sss_gross && $sss_gross > 15750)
+          $sss = 720;
+        else if (16749.99 >= $sss_gross && $sss_gross > 16250)
+          $sss = 742.5;
+        else if (17249.99 >= $sss_gross && $sss_gross > 16750)
+          $sss = 765;
+        else if (17749.99 >= $sss_gross && $sss_gross > 17250)
+          $sss = 787.5;
+        else if (18249.99 >= $sss_gross && $sss_gross > 17750)
+          $sss = 810;
+        else if (18749.99 >= $sss_gross && $sss_gross > 18250)
+          $sss = 832.5;
+        else if (19249.99 >= $sss_gross && $sss_gross > 18750)
+          $sss = 855;
+        else if (19749.99 >= $sss_gross && $sss_gross > 19250)
+          $sss = 877.5;
+        else if ($sss_gross > 19750)
+          $sss = 900;
+
+        $sss = $sss / 2;
 
 
 

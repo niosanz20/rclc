@@ -136,8 +136,8 @@ if (isset($_POST['cutoff_id'])) {
 						<td width="10%"></td>
 						<td width="20%" align="left" class="title">MATERIAL LOST</td>
 						<td width="10%" align="right">' . number_format($rowpayslipcutoff['material_cost'], 2) . '</td>
-						<td width="20%" align="left" class="title">GROSS INCOME</td>
-						<td width="10%" align="right">' . number_format($rowpayslipcutoff['ytd_grossincome'], 2) . '</td>
+						<td width="20%" align="left" class="title"></td>
+						<td width="10%" align="right"></td>
 					</tr>
 					<tr>
 						<td width="20%" align="left"></td>

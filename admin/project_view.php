@@ -361,10 +361,10 @@
                                                                                     <td><?php echo $row['quantity']; ?>
                                                                                     </td>
                                                                                     <td><?php echo $row['unit']; ?></td>
-                                                                                    <td>₱ <?php echo $row['price']; ?>
+                                                                                    <td>₱ <?php echo number_format($row['price'], 2); ?>
                                                                                     </td>
                                                                                     <td>₱
-                                                                                        <?php echo $row['amnt_cost']; ?>
+                                                                                        <?php echo number_format($row['amnt_cost'], 2); ?>
                                                                                     </td>
                                                                                     <td>
                                                                                         <button type="button"
@@ -401,9 +401,9 @@
                                                                                 $sql = "SELECT SUM(amnt_cost) FROM project_materials WHERE proj_id = '$project_id'";
                                                                                 $query = $conn->query($sql);
                                                                                 while ($row = $query->fetch_assoc()) {
-                                                                                    $sum = $row['SUM(amnt_cost)'];
+                                                                                    $sum = number_format($row['SUM(amnt_cost)'], 2);
                                                                                     echo "
-                                                                                            <td>$sum</td>
+                                                                                            <td>₱ $sum</td>
                                                                                             <td></td>";
                                                                                 }
                                                                                 ?>
@@ -565,12 +565,14 @@
             },
             dataType: 'json',
             success: function(response) {
-                $('#projmaterid').val(response.id);
+                $('#projmaterid').val(response.proj_id);
+                $('materialId').val(response.material_id);
                 $('#edit_description').val(response.description);
                 $('#edit_quantity').val(response.quantity);
                 $('#edit_unit').val(response.unit);
-                $('#edit_unit_cost').val(response.unit_cost);
+                $('#edit_unit_cost').val(response.price);
                 $('#edit_amnt_cost').val(response.amnt_cost);
+                $('#edit_materialId').val(response.id);
 
                 $('#delprojmaterid').val(response.id);
                 $('#del_description').html(response.description);

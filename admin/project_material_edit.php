@@ -2,14 +2,12 @@
 	include 'includes/session.php';
 
 	if(isset($_POST['edit'])){
-		$id = $_POST['id'];
-		$description = $_POST['description'];
+		$id = $_POST['materialId'];
 	    $quantity = $_POST['quantity'];
-	    $unit = $_POST['unit'];
-	    $unit_cost = $_POST['unit_cost'];
-	    $amnt_cost = $_POST['amnt_cost'];
+	    $amnt_cost = $_POST['totalAmount'];
 
-		$sql = "UPDATE project_materials SET description = '$description', quantity = '$quantity', unit = '$unit', unit_cost = '$unit_cost', amnt_cost = '$amnt_cost' WHERE id = '$id'";
+		$sql = "UPDATE project_materials SET quantity = '$quantity', amnt_cost = '$amnt_cost'
+		WHERE id = '$id'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Project Material updated successfully';
 		}

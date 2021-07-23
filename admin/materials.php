@@ -47,7 +47,8 @@
                     <div class="col-xs-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+                                <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i
+                                        class="fa fa-plus"></i> New</a>
                             </div>
                             <div class="box-body">
                                 <table id="example1" class="table table-bordered">
@@ -57,7 +58,7 @@
                                         <th>Description</th>
                                         <th>Unit</th>
                                         <th>Price</th>
-                                        <th>Stock</th>
+                                        <!-- <th>Stock</th> -->
                                         <th>Tools</th>
                                     </thead>
                                     <tbody>
@@ -72,7 +73,7 @@
                           <td>" . $row['description'] . "</td>
                           <td>" . $row['unit'] . "</td>
                           <td>" . $row['price'] . "</td>
-                          <td>" . $row['stock'] . "</td>
+                          <!-- <td>" . $row['stock'] . "</td> -->
                           <td>
                          
                            
@@ -101,75 +102,75 @@
     </div>
     <?php include 'includes/scripts.php'; ?>
     <script>
-        $(function() {
-            $(document).on('click', '.edit', function() {
-                // e.preventDefault();
-                $('#edit').modal('show');
-                var materials_id = $(this).data('id');
-                getRow(materials_id);
-            });
-
-            $(document).on('click', '.delete', function() {
-                // e.preventDefault();
-                $('#delete').modal('show');
-                var materials_id = $(this).data('id');
-                getRow(materials_id);
-            });
-
+    $(function() {
+        $(document).on('click', '.edit', function() {
+            // e.preventDefault();
+            $('#edit').modal('show');
+            var materials_id = $(this).data('id');
+            getRow(materials_id);
         });
 
-        function getRow(materials_id) {
-            $.ajax({
-                type: 'POST',
-                url: 'materials_row.php',
-                data: {
-                    materials_id: materials_id
-                },
-                dataType: 'json',
-                success: function(response) {
-                    //$('.materials_id').html(response.materials_id);
-                    $('.materials_id').val(response.materials_id);
-
-                    $('#materials_id').val(response.materials_id);
-                    $('.del_materials_name').html(response.name);
-                    $('#edit_material_name').val(response.name);
-                    $('#edit_material_description').val(response.description);
-                    $('#edit_material_unit').val(response.unit);
-                    $('#edit_material_price').val(response.price);
-                    $('#edit_material_pieces').val(response.stock);
-
-                }
-            });
-        }
-
-
-        $(function() {
-            $(document).on('click', '.addstock', function() {
-                // e.preventDefault();
-                $('#addstock').modal('show');
-                var materials_id = $(this).data('id');
-                getRow2(materials_id);
-            });
-
+        $(document).on('click', '.delete', function() {
+            // e.preventDefault();
+            $('#delete').modal('show');
+            var materials_id = $(this).data('id');
+            getRow(materials_id);
         });
 
-        function getRow2(materials_id) {
-            $.ajax({
-                type: 'POST',
-                url: 'material_stock_add_row.php',
-                data: {
-                    materials_id: materials_id
-                },
-                dataType: 'json',
-                success: function(response) {
-                    //$('.materials_id').html(response.materials_id);
-                    $('.materials_id').val(response.materials_id);
+    });
 
-                    $('#materialsid').val(response.materials_id);
-                    $('#edit_stock').val(response.stock);
-                }
-            });
-        }
+    function getRow(materials_id) {
+        $.ajax({
+            type: 'POST',
+            url: 'materials_row.php',
+            data: {
+                materials_id: materials_id
+            },
+            dataType: 'json',
+            success: function(response) {
+                //$('.materials_id').html(response.materials_id);
+                $('.materials_id').val(response.materials_id);
+
+                $('#materials_id').val(response.materials_id);
+                $('.del_materials_name').html(response.name);
+                $('#edit_material_name').val(response.name);
+                $('#edit_material_description').val(response.description);
+                $('#edit_material_unit').val(response.unit);
+                $('#edit_material_price').val(response.price);
+                $('#edit_material_pieces').val(response.stock);
+
+            }
+        });
+    }
+
+
+    $(function() {
+        $(document).on('click', '.addstock', function() {
+            // e.preventDefault();
+            $('#addstock').modal('show');
+            var materials_id = $(this).data('id');
+            getRow2(materials_id);
+        });
+
+    });
+
+    function getRow2(materials_id) {
+        $.ajax({
+            type: 'POST',
+            url: 'material_stock_add_row.php',
+            data: {
+                materials_id: materials_id
+            },
+            dataType: 'json',
+            success: function(response) {
+                //$('.materials_id').html(response.materials_id);
+                $('.materials_id').val(response.materials_id);
+
+                $('#materialsid').val(response.materials_id);
+                $('#edit_stock').val(response.stock);
+            }
+        });
+    }
     </script>
 
 </body>
